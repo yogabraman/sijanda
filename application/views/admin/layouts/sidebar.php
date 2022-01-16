@@ -43,35 +43,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item <?php echo $this->uri->segment(1) == 'grafik' || $this->uri->segment(2) == 'grafik1' || $this->uri->segment(2) == 'grafik2' ? 'active' : ''; ?>">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Grafik Penggunaan</span>
-                </a>
-                <div id="collapseUtilities" class="collapse <?php echo $this->uri->segment(2) == 'grafik1' || $this->uri->segment(2) == 'grafik2' ? 'show' : ''; ?>" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header"></h6>
-                        <a class="collapse-item <?php echo $this->uri->segment(2) == 'grafik1' ? 'active' : ''; ?>" href="<?= site_url('grafik/grafik1') ?>">Beban 1</a>
-                        <a class="collapse-item <?php echo $this->uri->segment(2) == 'grafik2' ? 'active' : ''; ?>" href="<?= site_url('grafik/grafik2') ?>">Beban 2</a>
-                    </div>
-                </div>
-            </li>
-
             <!-- Nav Item - pulsa -->
             <li class="nav-item <?php echo $this->uri->segment(1) == 'user' ? 'active' : ''; ?>">
                 <a class="nav-link" href="<?= site_url('user') ?>">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Users</span></a>
-            </li>
-
-            <!-- Nav Item - pulsa -->
-            <li class="nav-item <?php echo $this->uri->segment(1) == 'token' ? 'active' : ''; ?>">
-                <a class="nav-link" href="<?= site_url('token') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Token</span></a>
             </li>
 
         <?php } else { ?>
@@ -82,28 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <span>Riwayat Penggunaan</span></a>
             </li>
 
-            <!-- Nav Item - pulsa -->
-            <li class="nav-item <?php echo $this->uri->segment(1) == 'grafik' ? 'active' : ''; ?>">
-                <a class="nav-link" href="<?= site_url('grafik') ?>">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Grafik Penggunaan</span></a>
-            </li>
-
         <?php } ?>
-
-            <!-- Nav Item - pulsa -->
-            <li class="nav-item <?php echo $this->uri->segment(1) == 'pulsa' ? 'active' : ''; ?>">
-                <a class="nav-link" href="<?= site_url('pulsa') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pulsa</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item <?php echo $this->uri->segment(1) == 'kontrol' ? 'active' : ''; ?>">
-                <a class="nav-link" href="<?= site_url('kontrol') ?>">
-                    <i class="fas fa-fw fa-power-off"></i>
-                    <span>Kontrol</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
