@@ -32,7 +32,7 @@ class Agenda extends CI_Controller {
 		$this->load->view('admin/layouts/footer',$data);
     }
 
-	public function list() {
+	public function list2() {
 		
 		$agenda = $this->db->query("SELECT * FROM tbl_agenda ORDER by tgl_agenda DESC, waktu_agenda DESC ")->result();
 		$data = array(
@@ -47,7 +47,7 @@ class Agenda extends CI_Controller {
 		$this->load->view('admin/layouts/footer',$data);
 	}
 
-	public function cetak() {
+	public function cetak2() {
 		
 		// $sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
 		$data = array(

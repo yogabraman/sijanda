@@ -54,8 +54,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header"></h6>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list2' ? 'active' : ''; ?>" href="<?= site_url('agenda/list') ?>">List Agenda</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'cetak2' ? 'active' : ''; ?>" href="<?= site_url('agenda/cetak') ?>">Cetak</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list2' ? 'active' : ''; ?>" href="<?= site_url('agenda/list2') ?>">List Agenda</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'cetak2' ? 'active' : ''; ?>" href="<?= site_url('agenda/cetak2') ?>">Cetak</a>
                         </div>
                     </div>
                 </li>
