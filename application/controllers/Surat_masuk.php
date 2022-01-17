@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Riwayat extends CI_Controller {
+class Surat_masuk extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
@@ -36,22 +36,37 @@ class Riwayat extends CI_Controller {
 		$this->load->view('admin/layouts/footer',$data);
     }
 
-	public function beban1() {
+	public function list() {
 		
-		$sensor1 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 1")->result();
+		$masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat")->result();
 		$data = array(
-			'title' => "Riwayat Beban 1",
-			'sensor1' => $sensor1,
+			'title' => "List Surat Masuk",
+			'masuk' => $masuk,
 			//'count_usulan' => $count_usulan,
 			//'count_instansi' => $count_instansi,
 			//'iklan' => $iklan
 		);
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/riwayat/v_beban1', $data);
+		$this->load->view('admin/surat_masuk/v_list', $data);
 		$this->load->view('admin/layouts/footer',$data);
 	}
 
-	public function beban2() {
+	public function cetak() {
+		
+		// $sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
+		$data = array(
+			'title' => "Cetak Surat Masuk",
+			// 'sensor2' => $sensor2,
+			//'count_usulan' => $count_usulan,
+			//'count_instansi' => $count_instansi,
+			//'iklan' => $iklan
+		);
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/surat_masuk/v_cetak', $data);
+		$this->load->view('admin/layouts/footer',$data);
+	}
+
+	public function cetakbydate() {
 		
 		$sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
 		$data = array(

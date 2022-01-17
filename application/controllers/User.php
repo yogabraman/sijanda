@@ -15,16 +15,12 @@ class User extends CI_Controller {
 
 	public function index() {
 		
-		$users = $this->db->query("SELECT * FROM users LEFT JOIN sensor USING(id_user)")->result();
-        $kamar = $this->db->query("SELECT * FROM sensor WHERE status_kamar = 0")->result();
-        $count_kamar = $this->db->query("SELECT * FROM sensor WHERE status_kamar = 0")->num_rows();
+		$users = $this->db->query("SELECT * FROM tbl_user")->result();
         // print_r($count_kamar);
         // exit();
 		$data = array(
 			'title' => "Data User",
-			'users' => $users,
-            'kamar' => $kamar,
-            'count_kamar' => $count_kamar
+			'users' => $users
 			//'count_usulan' => $count_usulan,
 			//'count_instansi' => $count_instansi,
 			//'iklan' => $iklan

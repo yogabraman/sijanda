@@ -53,7 +53,7 @@ class Login extends CI_Controller {
                 'lastlogin' => $waktu
             );
 
-            $login = $this->db->query("SELECT * FROM users WHERE username ='$username' AND password ='$password' AND status = 1")->result_array();
+            $login = $this->db->query("SELECT * FROM tbl_user WHERE username ='$username' AND password ='$password' AND status = 1")->result_array();
 
             
             if(!empty($login)) {
@@ -65,7 +65,7 @@ class Login extends CI_Controller {
                     'id_user' => $login[0]['id_user'],
                     'nama' => $username,
                     'status' => "login",
-                    'level' => $login[0]['level']
+                    'level' => $login[0]['admin']
                 );
 
                 // print_r($data_login);

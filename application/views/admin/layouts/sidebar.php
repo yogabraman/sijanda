@@ -29,16 +29,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <?php if ($this->session->userdata('level') == 1) { ?>
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item <?php echo $this->uri->segment(1) == 'riwayat' || $this->uri->segment(2) == 'beban1' || $this->uri->segment(2) == 'beban2' ? 'active' : ''; ?>">
+            <li class="nav-item <?php echo $this->uri->segment(1) == 'surat_masuk' || $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'cetak' ? 'active' : ''; ?>">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Riwayat Penggunaan</span>
+                    <i class="fas fa-fw fa-inbox"></i>
+                    <span>Surat Masuk</span>
                 </a>
-                <div id="collapseTwo" class="collapse <?php echo $this->uri->segment(2) == 'beban1' || $this->uri->segment(2) == 'beban2' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'cetak' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item <?php echo $this->uri->segment(2) == 'beban1' ? 'active' : ''; ?>" href="<?= site_url('riwayat/beban1') ?>">Beban 1</a>
-                        <a class="collapse-item <?php echo $this->uri->segment(2) == 'beban2' ? 'active' : ''; ?>" href="<?= site_url('riwayat/beban2') ?>">Beban 2</a>
+                        <a class="collapse-item <?php echo $this->uri->segment(2) == 'list' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list') ?>">List Surat</a>
+                        <a class="collapse-item <?php echo $this->uri->segment(2) == 'cetak' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/cetak') ?>">Cetak</a>
                     </div>
                 </div>
             </li>

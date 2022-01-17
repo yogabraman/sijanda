@@ -15,31 +15,30 @@ class Dashboard extends CI_Controller {
 	public function index() {
 
 		$id_user = $this->session->userdata('id_user');
-		$level = $this->session->userdata('level');
-		
-		if($level == 2){
+		$level = $this->session->userdata('admin');
 
-			$dashboard_user = $this->db->query("SELECT transaksi_sensor.* FROM transaksi_sensor JOIN sensor USING(id_sensor) WHERE id_user = '$id_user' ORDER BY id_transaksi DESC LIMIT 1")->result();
-			$id_sensor = $dashboard_user[0]->id_sensor;
-		} else {
-			$dashboard_user = $this->db->query("SELECT transaksi_sensor.* FROM transaksi_sensor JOIN sensor USING(id_sensor) WHERE id_user = '$id_user' ORDER BY id_transaksi DESC LIMIT 1")->result();
-			$id_sensor = 0;
-		}
+		//menghitung jumlah surat masuk
+		$count1 = $this->db->query("SELECT * FROM tbl_surat_masuk")->num_rows();
 
-		$dashboard1 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 1 ORDER BY created_at DESC LIMIT 1")->result();
-		$dashboard2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2 ORDER BY created_at DESC LIMIT 1")->result();
+		//menghitung jumlah surat keluar
+		$count2 = $this->db->query("SELECT * FROM tbl_surat_keluar")->num_rows();
 
-		$grafik = $this->db->query("SELECT transaksi_sensor.* FROM transaksi_sensor JOIN sensor USING(id_sensor) WHERE id_user = '$id_user'")->result();
+		//menghitung jumlah disposisi
+		$count3 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE status_dispo=0")->num_rows();
 
-		$prediksi1 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 1 ORDER BY id_transaksi DESC")->row();
+		//menghitung jumlah disposisi
+		$count4 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE status_dispo=1")->num_rows();
 
-		$prediksi2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2 ORDER BY id_transaksi DESC")->row();
+		//menghitung jumlah user
+		$count5 = $this->db->query("SELECT * FROM tbl_user")->num_rows();
 
 		$data = array(
 			'title' => "Dashboard",
-			// 'created_at' => $created_at,
-			'dashboard_user' => $dashboard_user,
-			// 'pulsa' => $pulsa,
+			'count1' => $count1,
+			'count2' => $count2,
+			'count3' => $count3,
+			'count4' => $count4,
+			'count5' => $count5,
 		);
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/dashboard/v_dashboard', $data);

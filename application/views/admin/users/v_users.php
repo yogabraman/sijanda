@@ -27,12 +27,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Password</th>
-                                            <th>Id Pelanggan</th>
-                                            <th>Kamar</th>
-                                            <th>Pulsa</th>
-                                            <th>Saklar</th>
-                                            <th>Status</th>
+                                            <th>Nama <br> Bidang</th>
+                                            <th>Level</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -40,37 +36,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <?php foreach ($users as $rows) {?>
                                         <tr>
                                             <td><?= $rows->username ?></td>
-                                            <td><?= $rows->password_text ?></td>
+                                            <td><?= $rows->nama ?><br><?= $rows->nip ?></td>
                                             <td>
-                                                <?php if ($rows->id_pelanggan == NULL) { ?>
-                                                    Tidak ada
+                                                <?php if ($rows->admin == 1) { ?>
+                                                    Admin
+                                                <?php } elseif($rows->admin == 4) { ?>
+                                                    Tata Usaha
+                                                <?php } elseif($rows->admin == 2) { ?>
+                                                    Stuktural
                                                 <?php } else { ?>
-                                                    <?= $rows->id_pelanggan ?>
-                                                <?php } ?>
-                                            </td>
-                                            <td>
-                                                <?php if ($rows->nama == NULL) { ?>
-                                                    Tidak ada
-                                                <?php } else { ?>
-                                                    <?= $rows->nama ?>
-                                                <?php } ?>
-                                                    
-                                            </td>
-                                            <td><?= number_format($rows->pulsa) ?> Kwh</td>
-                                            <td>
-                                                <?php if ($rows->saklar == 1) { ?>
-                                                    <div class="badge badge-success">ON</div>
-                                                <?php } elseif ($rows->saklar != NULL) { ?>
-                                                    <div class="badge badge-danger">OFF</div>
-                                                <?php } elseif ($rows->saklar == NULL) { ?>
-                                                    Tidak ada
-                                                <?php } ?>
-                                            </td>
-                                            <td>
-                                                <?php if ($rows->status == 1) { ?>
-                                                    <div class="badge badge-success">AKTIF</div>
-                                                <?php } else { ?>
-                                                    <div class="badge badge-danger">TIDAK AKTIF</div>
+                                                    Pegawai
                                                 <?php } ?>
                                             </td>
                                             <td>
