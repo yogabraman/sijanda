@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Surat_masuk extends CI_Controller {
+class Agenda extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
@@ -21,29 +21,29 @@ class Surat_masuk extends CI_Controller {
     	// }
 
 		$data = array(
-			'title' => "Surat Masuk",
+			'title' => "Agenda",
 			// 'sensor' => $sensor,
 			//'count_usulan' => $count_usulan,
 			//'count_instansi' => $count_instansi,
 			//'iklan' => $iklan
 		);
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/surat_masuk/v_list', $data);
+		$this->load->view('admin/riwayat/v_riwayat', $data);
 		$this->load->view('admin/layouts/footer',$data);
     }
 
 	public function list() {
 		
-		$masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat")->result();
+		$agenda = $this->db->query("SELECT * FROM tbl_agenda ORDER by tgl_agenda DESC, waktu_agenda DESC ")->result();
 		$data = array(
-			'title' => "List Surat Masuk",
-			'masuk' => $masuk,
+			'title' => "List Agenda",
+			'agenda' => $agenda,
 			//'count_usulan' => $count_usulan,
 			//'count_instansi' => $count_instansi,
 			//'iklan' => $iklan
 		);
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/surat_masuk/v_list', $data);
+		$this->load->view('admin/agenda/v_list2', $data);
 		$this->load->view('admin/layouts/footer',$data);
 	}
 
@@ -51,14 +51,14 @@ class Surat_masuk extends CI_Controller {
 		
 		// $sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
 		$data = array(
-			'title' => "Cetak Surat Masuk",
+			'title' => "Cetak Agenda",
 			// 'sensor2' => $sensor2,
 			//'count_usulan' => $count_usulan,
 			//'count_instansi' => $count_instansi,
 			//'iklan' => $iklan
 		);
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/surat_masuk/v_cetak', $data);
+		$this->load->view('admin/agenda/v_cetak2', $data);
 		$this->load->view('admin/layouts/footer',$data);
 	}
 
@@ -73,7 +73,7 @@ class Surat_masuk extends CI_Controller {
 			//'iklan' => $iklan
 		);
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/riwayat/v_beban2', $data);
+		$this->load->view('admin/agenda/v_cetak2', $data);
 		$this->load->view('admin/layouts/footer',$data);
 	}
 
