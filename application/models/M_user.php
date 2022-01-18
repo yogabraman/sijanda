@@ -24,18 +24,6 @@ class M_User extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function update_kamar($data, $id)
-    {
-        $this->db->update('sensor', $data, array('id_sensor' => $id));
-        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-    }
-
-    public function updel_kamar($data, $id)
-    {
-        $this->db->update('sensor', $data, array('id_user' => $id));
-        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-    }
-
     public function delete_user($id)
     {
         // $this->_deleteImage($id);

@@ -70,7 +70,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
                                     <button class="btn btn-success edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></button>
                                     <a href="<?= base_url('') ?><?= $rows->id_surat ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-                                    <a href="<?= base_url('surat_masuk/hapus/') ?><?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
+                                    <a href="" data-toggle="modal" data-target="#logoutModal<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php } ?>

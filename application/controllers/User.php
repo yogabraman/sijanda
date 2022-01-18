@@ -1,305 +1,80 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class User extends CI_Controller {
-	public function __construct()
+class User extends CI_Controller
+{
+    public function __construct()
     {
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->model('m_user');
-        
-        if($this->session->userdata('status') != "login"){
+
+        if ($this->session->userdata('status') != "login") {
             redirect('login');
         }
     }
 
-	public function index() {
-		
-		$users = $this->db->query("SELECT * FROM tbl_user")->result();
+    public function index()
+    {
+
+        $users = $this->db->query("SELECT * FROM tbl_user")->result();
         // print_r($count_kamar);
         // exit();
-		$data = array(
-			'title' => "Data User",
-			'users' => $users
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
-		);
-		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/users/v_users', $data);
-		$this->load->view('admin/layouts/footer',$data);
-	}
+        $data = array(
+            'title' => "Data User",
+            'users' => $users
+            //'count_usulan' => $count_usulan,
+            //'count_instansi' => $count_instansi,
+            //'iklan' => $iklan
+        );
+        $this->load->view('admin/layouts/header', $data);
+        $this->load->view('admin/users/v_users', $data);
+        $this->load->view('admin/layouts/footer', $data);
+    }
 
-    public function tambah_user() {
+    public function tambah_user()
+    {
 
         date_default_timezone_set('Asia/Jakarta');
         $waktu = date('Y-m-d H:i:s');
 
         $password = md5($this->input->post('password'));
-        $id_sensor = $this->input->post('id_sensor');
+        $data_user = array(
+            'username' => $this->input->post('username'),
+            'password' => $password,
+            'level' => $this->input->post('level'),
+            'status' => 0,
+            'created_at' => $waktu
+        );
 
-        if ($id_sensor == 0) {
-                $data_user = array(
-                    'username' => $this->input->post('username'),
-                    'password' => $password,
-                    'password_text' => $this->input->post('password'),
-                    'level' => $this->input->post('level'),
-                    'status' => 0,
-                    'created_at' => $waktu
-                );
+        $result = $this->m_user->simpan_user($data_user);
 
-                $result = $this->m_user->simpan_user($data_user);
-
-                if ($result) {
-                    $this->session->set_flashdata('warning', 'User Berhasil disimpan, Tetapi User tidak dapat Login!!.');
-                    redirect(site_url('user'));
-                } else {
-                    $this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
-                    redirect(site_url('user'));
-                }
-
+        if ($result) {
+            $this->session->set_flashdata('success', 'User Berhasil Disimpan!!.');
+            redirect(site_url('user'));
         } else {
-
-            $data_user = array(
-                'username' => $this->input->post('username'),
-                'password' => $password,
-                'password_text' => $this->input->post('password'),
-                'level' => $this->input->post('level'),
-                'status' => $this->input->post('status'),
-                'created_at' => $waktu
-            );
-
-            if ($hasil_user = $this->m_user->simpan_user($data_user)) {
-                    $last_id_user = $this->db->insert_id();
-            }
-
-            $data_kamar = array(
-                'id_user' => $last_id_user,
-                'status_kamar' => 1
-            );
-
-            $result = $this->m_user->update_kamar($data_kamar, $id_sensor);
-
-            if ($result) {
-                $this->session->set_flashdata('success', 'User Berhasil Disimpan!!.');
-                redirect(site_url('user'));
-            } else {
-                $this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
-                redirect(site_url('user'));
-            }
-
+            $this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
+            redirect(site_url('user'));
         }
-        
-
     }
 
-	public function get_user() {
-		
-		$id = $this->input->post("userId");
+    public function get_user()
+    {
 
+        $id = $this->input->post("userId");
 
-        $kamar = $this->db->query("SELECT * FROM sensor WHERE status_kamar = 0")->result();
-
-        foreach ($kamar as $rows) {
-            $id_sensor = $rows->id_sensor;
-            $nama = $rows->nama;
-        }
-
-        $count_kamar = $this->db->query("SELECT * FROM sensor WHERE status_kamar = 0")->num_rows();
-
-        if(isset($id) and !empty($id)){
-            $record = $this->db->query("SELECT * FROM users LEFT JOIN sensor USING(id_user) WHERE users.id_user='$id'")->result();
-
-                if ($record[0]->level == 1) {
-                    error_reporting(0);
-                    $level1 = "selected";
-                } else {
-                    error_reporting(0);
-                    $level2 = "selected";
-                }
-
-                if ($record[0]->id_sensor == 1) {
-                    error_reporting(0);
-                    $kamar1 = "selected";
-                } else {
-                    error_reporting(0);
-                    $kamar2 = "selected";
-                }
-
-                if ($record[0]->status == 1) {
-                    error_reporting(0);
-                    $status1 = "selected";
-                } else {
-                    error_reporting(0);
-                    $status0 = "selected";
-                }
-
-
-        if ($record[0]->level == 2) {
-
-            if ($record[0]->id_sensor == NULL) {
-
-                if ($count_kamar > 0) {
-
-                $a = '                      <div class="col-md-12 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Pilih Kamar</label>
-                                                    <select class="form-control" name="id_sensor">
-
-                                                            <option value="'.$id_sensor.'">'.$nama.'</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Level User</label>
-                                                    <select class="form-control" name="level">
-                                                        <option value="1" '.$level1.'>Admin</option>
-                                                        <option value="2" '.$level2.'>Pengguna</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Status User</label>
-                                                    <select class="form-control" id="status" name="status">
-                                                        <option value="1" '.$status1.'>Aktif</option>
-                                                        <option value="0" '.$status0.'>Tidak Aktif</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                    ';
-
-
-                } else {
-
-                $a = '                      <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <input type="hidden" name="id_sensor" class="form-control" value="0">
-                                                    <label class="control-label">Pilih Kamar</label>
-                                                    <input type="text" class="form-control" name="kamar" value="Kamar Penuh" disabled="">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Level User</label>
-                                                    <select class="form-control" name="level">
-                                                        <option value="1" '.$level1.'>Admin</option>
-                                                        <option value="2" '.$level2.'>Pengguna</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                ';
-                                                    
-                }
-
-            } else {
-
-                if ($count_kamar > 0) {
-
-                $a = '                      <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Pindah Kamar</label>
-                                                    <select class="form-control" name="id_sensor">
-                                                            <option value="0">Pilih Kamar</option>
-                                                            <option value="'.$id_sensor.'">'.$nama.'</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Keluar Kamar</label>
-                                                    <select class="form-control" name="keluar">
-                                                        <option value="1">Tidak</option>
-                                                        <option value="0">Ya</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Level User</label>
-                                                    <select class="form-control" name="level">
-                                                        <option value="1" '.$level1.'>Admin</option>
-                                                        <option value="2" '.$level2.'>Pengguna</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Status User</label>
-                                                    <select class="form-control" id="status" name="status">
-                                                        <option value="1" '.$status1.'>Aktif</option>
-                                                        <option value="0" '.$status0.'>Tidak Aktif</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                    ';
-
-
-                } else {
-
-                $a = '                      <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <input type="hidden" name="id_sensor" class="form-control" value="0">
-                                                    <label class="control-label">Pilih Kamar</label>
-                                                    <input type="text" class="form-control" name="kamar" value="'.$record[0]->nama.'" disabled="">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Keluar Kamar</label>
-                                                    <select class="form-control" name="keluar">
-                                                        <option value="1">Tidak</option>
-                                                        <option value="0">Ya</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Level User</label>
-                                                    <select class="form-control" name="level">
-                                                        <option value="1" '.$level1.'>Admin</option>
-                                                        <option value="2" '.$level2.'>Pengguna</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Status User</label>
-                                                    <select class="form-control" id="status" name="status">
-                                                        <option value="1" '.$status1.'>Aktif</option>
-                                                        <option value="0" '.$status0.'>Tidak Aktif</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                ';
-                                                    
-                }
-
-            }
-
-        } else {
-            $a = '<input class="form-control" type="hidden" name="level" value="'.$record[0]->level.'">';
-        }
-        
+        if (isset($id) and !empty($id)) {
+            $record = $this->db->query("SELECT * FROM tbl_user WHERE id_user='$id'")->result();
+            $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
 
             $output = "";
+            $abc = "";
+
+            foreach ($struk as $row) {
+                $abc .= '<option value="' . $row->id_struk . '">' . $row->nama . '</option>';
+            }
 
             foreach ($record as $rows) {
-
 
                 $output .= '
                     <div class="modal-content">
@@ -309,7 +84,7 @@ class User extends CI_Controller {
                         </div>
                         <div class="modal-body">
                             <div class="card-body">
-                                <form action="'. site_url("user/edit_user").'" method="post" enctype="multipart/form-data">
+                                <form action="' . site_url("user/edit_user") . '" method="post" enctype="multipart/form-data">
 
                                     <div class="form-body">
 
@@ -318,25 +93,36 @@ class User extends CI_Controller {
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label class="control-label">Username</label>
-                                                    <input class="form-control" type="hidden" name="id_user" value="'.$rows->id_user.'">
-                                                    <input class="form-control" type="text" name="username" value="'.$rows->username.'">
+                                                    <input class="form-control" type="hidden" name="id_user" value="' . $rows->id_user . '">
+                                                    <input class="form-control" type="text" name="username" value="' . $rows->username . '">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label class="control-label">Password</label>
-                                                    <input class="form-control" type="text" name="password" value="'.$rows->password_text.'">
+                                                    <input class="form-control" type="text" name="password" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Nama</label>
+                                                    <input class="form-control" type="text" name="nama" value="' . $rows->nama . '">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Bidang</label>
+                                                    <select class="form-control" id="bidang" type="text" name="bidang" required>
+                                                        <option value="' . $rows->nip . '" >' . $rows->nip . '</option>
+                                                        '.$abc.'
+                                                    </select>
                                                 </div>
                                             </div>
 
                                         </div> 
-
-                                        <div class="row">
-
-                                            '.$a.'
-
-                                        </div>
 
                                         <div class="row" align="right">
                                             <div class="col-md-12">
@@ -359,9 +145,9 @@ class User extends CI_Controller {
         } else {
             echo "";
         }
-	}
+    }
 
-	function edit_user()
+    function edit_user()
     {
         date_default_timezone_set('Asia/Jakarta');
         $waktu = date('Y-m-d H:i:s');
@@ -386,7 +172,7 @@ class User extends CI_Controller {
 
         $saldo = $saldoku + $kwh;
 
-        
+
 
         if ($search) {
 
@@ -401,35 +187,31 @@ class User extends CI_Controller {
             $result = $this->m_pulsa->update_token($data_token, $id_token);
             $this->session->set_flashdata('success', 'Top Up Berhasil!!.');
             redirect(site_url('pulsa'));
-            
         } else {
 
             $this->session->set_flashdata('error', 'Token Salah Atau Token Sudah Digunakan!!.');
             redirect(site_url('pulsa'));
         }
-
-        
     }
 
-    function hapus($id) {
+    function hapus($id)
+    {
 
-       $query = $this->db->query("SELECT * FROM users LEFT JOIN sensor USING(id_user) WHERE users.id_user='$id'")->result();
+        $query = $this->db->query("SELECT * FROM users LEFT JOIN sensor USING(id_user) WHERE users.id_user='$id'")->result();
 
-       if ($query[0]->id_sensor == NULL) {
+        if ($query[0]->id_sensor == NULL) {
 
-           $result = $this->m_user->delete_user($id);
+            $result = $this->m_user->delete_user($id);
 
-           if($result){
+            if ($result) {
 
                 $this->session->set_flashdata('success', 'Data User Berhasil dihapus!!.');
                 redirect(site_url('user'));
-
-           } else {
+            } else {
                 $this->session->set_flashdata('error', 'Data User Gagal dihapus!!.');
                 redirect(site_url('user'));
-           }
-
-       } else {
+            }
+        } else {
 
             $data_sensor =  array(
                 'id_user' => 0,
@@ -446,10 +228,6 @@ class User extends CI_Controller {
                 $this->session->set_flashdata('error', 'Data User Gagal dihapus!!.');
                 redirect(site_url('user'));
             }
-       }
-
+        }
     }
-
-
-
 }
