@@ -2,6 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <!-- Begin Page Content -->
+<?= $id_surat = "" ?>
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -32,6 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             $y = substr($rows->tgl_surat, 0, 4);
                             $m = substr($rows->tgl_surat, 5, 2);
                             $d = substr($rows->tgl_surat, 8, 2);
+                            $id_surat = $rows->id_surat;
 
                             if ($m == "01") {
                                 $nm = "Januari";
@@ -68,9 +70,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td><?= $rows->isi ?></td>
                                 <td class="text-center" style="min-width:180px;">
                                     <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
-                                    <button class="btn btn-success edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></button>
+                                    <button class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></button>
                                     <a href="<?= base_url('') ?><?= $rows->id_surat ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-                                    <a href="" data-toggle="modal" data-target="#logoutModal<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
+                                    <a href="" data-toggle="modal" data-target="#hapusMasuk<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -82,6 +84,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 </div>
 <!-- /.container-fluid -->
+
+<!-- Modal Edit -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" id="edit_result">
+
+        <!-- Modal content-->
+        <!-- <div id="edit_result"></div> -->
+
+    </div>
+</div>
 
 </div>
 <!-- End of Main Content -->

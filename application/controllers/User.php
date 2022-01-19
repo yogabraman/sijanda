@@ -37,14 +37,18 @@ class User extends CI_Controller
 
         date_default_timezone_set('Asia/Jakarta');
         $waktu = date('Y-m-d H:i:s');
+        
+        $id_bidang = $this->input->post('bidang');
+        $nama_bidang = $this->db->limit(1)->query("SELECT nama FROM `tbl_struktural` WHERE id_struk=$id_bidang")->row()->nama;
 
         $password = md5($this->input->post('password'));
         $data_user = array(
             'username' => $this->input->post('username'),
             'password' => $password,
-            'level' => $this->input->post('level'),
-            'status' => 0,
-            'created_at' => $waktu
+            'nama' => $this->input->post('nama'),
+            'nip' => $nama_bidang,
+            'admin' => $this->input->post('admin'),
+            'status' => 1
         );
 
         $result = $this->m_user->simpan_user($data_user);
@@ -122,6 +126,16 @@ class User extends CI_Controller
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Status</label>
+                                                    <select class="form-control" id="status" name="status">
+                                                        <option value="1">Aktif</option>
+                                                        <option value="0">Tidak Aktif</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                         </div> 
 
                                         <div class="row" align="right">
@@ -153,81 +167,53 @@ class User extends CI_Controller
         $waktu = date('Y-m-d H:i:s');
 
         $id_user = $this->input->post("id_user");
-        $id_sensor = $this->input->post("id_sensor");
-        $username = $this->input->post("username");
-        $password = md5($this->input->post('password'));
-        $password_text = $this->input->post('password');
-        $level = $this->input->post("level");
+        $pw = $this->input->post("password");
 
-        $saldoku = $this->input->post("pulsa");
-        $token = $this->input->post("token");
+        $id_bidang = $this->input->post('bidang');
+        $nama_bidang = $this->db->limit(1)->query("SELECT nama FROM `tbl_struktural` WHERE id_struk=$id_bidang")->row()->nama;
 
-        $search = $this->db->query("SELECT * FROM token WHERE token = '$token' AND status_token = 0 AND id_pelanggan = '$id'")->result_array();
-
-        $kwh = $search[0]['kwh'];
-        $id_token = $search[0]['id_token'];
-
-        // print_r($kwh);
-        // exit();
-
-        $saldo = $saldoku + $kwh;
-
-
-
-        if ($search) {
-
-            $data_token = array(
-                'status_token' => 1
+        //ganti password
+        if(!empty($pw)){
+            $data_user = array(
+                'username' => $this->input->post('username'),
+                'password' => md5($pw),
+                'nama' => $this->input->post('nama'),
+                'nip' => $nama_bidang,
+                'admin' => $this->input->post('admin'),
+                'status' => $this->input->post('status')
             );
-            $data_saldo = array(
-                'pulsa' => $saldo
+        } else{
+            $data_user = array(
+                'username' => $this->input->post('username'),
+                'nama' => $this->input->post('nama'),
+                'nip' => $nama_bidang,
+                'admin' => $this->input->post('admin'),
+                'status' => $this->input->post('status')
             );
+        }
 
-            $result = $this->m_pulsa->isi_pulsa($data_saldo, $id);
-            $result = $this->m_pulsa->update_token($data_token, $id_token);
-            $this->session->set_flashdata('success', 'Top Up Berhasil!!.');
-            redirect(site_url('pulsa'));
+        $result = $this->m_user->update_user($data_user, $id_user);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'User Berhasil Diupdate!!.');
+            redirect(site_url('user'));
         } else {
-
-            $this->session->set_flashdata('error', 'Token Salah Atau Token Sudah Digunakan!!.');
-            redirect(site_url('pulsa'));
+            $this->session->set_flashdata('error', 'Gagal Update Data!!.');
+            redirect(site_url('user'));
         }
     }
 
     function hapus($id)
     {
-
-        $query = $this->db->query("SELECT * FROM users LEFT JOIN sensor USING(id_user) WHERE users.id_user='$id'")->result();
-
-        if ($query[0]->id_sensor == NULL) {
-
-            $result = $this->m_user->delete_user($id);
+        $result = $this->m_user->delete_user($id);
 
             if ($result) {
-
                 $this->session->set_flashdata('success', 'Data User Berhasil dihapus!!.');
                 redirect(site_url('user'));
             } else {
                 $this->session->set_flashdata('error', 'Data User Gagal dihapus!!.');
                 redirect(site_url('user'));
             }
-        } else {
-
-            $data_sensor =  array(
-                'id_user' => 0,
-                'status_kamar' => 0
-            );
-
-            $update_kamar = $this->m_user->updel_kamar($data_sensor, $id);
-            $result = $this->m_user->delete_user($id);
-
-            if ($update_kamar && $result) {
-                $this->session->set_flashdata('success', 'Data User Berhasil dihapus!!.');
-                redirect(site_url('user'));
-            } else {
-                $this->session->set_flashdata('error', 'Data User Gagal dihapus!!.');
-                redirect(site_url('user'));
-            }
-        }
+            
     }
 }

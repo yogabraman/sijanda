@@ -43,7 +43,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </td>
                                 <td>
                                     <button class="btn btn-primary edit-user" id="<?= $rows->id_user ?>"><i class="far fa-edit"></i> edit</button>
-                                    <a href="<?= site_url('user/hapus') ?>/<?= $rows->id_user ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+                                    <!-- <a href="<?= site_url('user/hapus') ?>/<?= $rows->id_user ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a> -->
+                                    <button class="btn btn-danger hapus-user" id="<?= $rows->id_user ?>"><i class="fa fa-trash"></i> Hapus</button>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -124,8 +125,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="row" align="right">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                 </div>
                             </div>
 
@@ -143,7 +144,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 
-
 <!-- Modal Edit -->
 <div id="editModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" id="edit_result">
@@ -151,6 +151,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Modal content-->
         <!-- <div id="edit_result"></div> -->
 
+    </div>
+</div>
+
+<!-- Modal Hapus -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingin Menghapus Data?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Klik hapus untuk menghapus data <?= $this->input->post("userId") ?>sdfa</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a>
+            </div>
+        </div>
     </div>
 </div>
 
