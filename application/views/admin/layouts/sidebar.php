@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <!-- Nav Item - Utilities Collapse Menu -->
                 <li class="nav-item <?php echo $this->uri->segment(1) == 'spt' || $this->uri->segment(2) == 'pgw' || $this->uri->segment(2) == 'spt' || $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpt" aria-expanded="true" aria-controls="collapseSpt">
-                        <i class="fas fa-fw fa-print"></i>
+                        <i class="fas fa-fw fa-plane"></i>
                         <span>SPT</span>
                     </a>
                     <div id="collapseSpt" class="collapse <?php echo $this->uri->segment(2) == 'pgw' || $this->uri->segment(2) == 'spt' || $this->uri->segment(2) == 'sppd' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
