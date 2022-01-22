@@ -85,6 +85,134 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 <!-- /.container-fluid -->
 
+<!-- Modal Tambah -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Surat Masuk</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
+                        <div class="form-body">
+
+                            <div class="row">
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Pilih tipe Surat</label>
+                                        <select class="form-control tipe_surat" name="tipe_surat" required>
+                                            <option value="0">Surat Biasa</option>
+                                            <option value="1">Undangan</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Nomor Agenda</label>
+                                        <input class="form-control" type="number" name="no_agenda" value="1111" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Asal Surat</label>
+                                        <input class="form-control" type="text" name="asal_surat" value="keker" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Nomor Surat</label>
+                                        <input class="form-control" type="text" name="no_surat" value="212" placeholder="Nomor Surat">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Tanggal Surat</label>
+                                        <input class="form-control" type="date" name="tgl_surat">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Perihal</label>
+                                        <input class="form-control" type="text" value="kawen" name="isi">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">File</label>
+                                        <input class="form-control" type="file" name="filex">
+                                        <small class="red-text">*Format file yang diperbolehkan *.JPG, *.PNG, *.DOC, *.DOCX, *.PDF dan ukuran maksimal file 2 MB!</small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div id="undangan">
+                                <div class="row">
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Tanggal Acara</label>
+                                            <input class="form-control" type="date" name="tgl_agenda">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Tempat Acara</label>
+                                            <input class="form-control" type="text" name="tempat" placeholder="tempat">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Waktu Acara</label>
+                                            <input class="form-control" type="time" name="waktu_agenda">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row" align="right">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+
+        </div>
+    </div>
+
+</div>
+</div>
+
 <!-- Modal Edit -->
 <div id="editModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" id="edit_result">

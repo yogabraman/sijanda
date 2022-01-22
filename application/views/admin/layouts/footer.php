@@ -91,7 +91,9 @@ $result = date_format($date, "Y");
         $('#dataTable').DataTable();
         $('#dataTable').on('click', '.hapus-user', function() {
             var userId = $(this).attr('id');
+            $('#test').empty();
             $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('user/hapus/') ?>' + userId + '">Hapus</a>');
         });
     });
 </script>
@@ -114,7 +116,30 @@ $result = date_format($date, "Y");
 
 <script src="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
 
+        var undangan = document.getElementById("undangan");
+
+        undangan.style.display = "none";
+
+        $('.tipe_surat').on('change', function(e) {
+            var id = $(this).val();
+
+
+            if (id == '0') {
+                undangan.style.display = "none";
+
+            }
+            if (id == '1') {
+                undangan.style.display = "block";
+
+            }
+
+        });
+
+    });
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
