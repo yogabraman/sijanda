@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Surat_masuk extends CI_Controller
+class Dispo extends CI_Controller
 {
 	public function __construct()
 	{
@@ -14,24 +14,23 @@ class Surat_masuk extends CI_Controller
 		}
 	}
 
-	public function index()
+	public function get_dispo($id)
 	{
 
 		$id_user = $this->session->userdata('id_user');
+        $id_surat = $this->input->post("suratId");
 
-		// foreach ($forname as $rows) {
-		// 	$nama = "Riwayat Beban ". $rows->nama;
-		// }
+		$dispo = $this->db->query("SELECT * FROM tbl_disposisi WHERE id_surat ='$id'")->result();
 
 		$data = array(
-			'title' => "Surat Masuk",
-			// 'sensor' => $sensor,
+			'title' => "Disposisi",
+			'dispo' => $dispo,
 			//'count_usulan' => $count_usulan,
 			//'count_instansi' => $count_instansi,
 			//'iklan' => $iklan
 		);
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/surat_masuk/v_list', $data);
+		$this->load->view('admin/dispo/v_dispo', $data);
 		$this->load->view('admin/layouts/footer', $data);
 	}
 

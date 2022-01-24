@@ -7,38 +7,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Surat Masuk</h1>
+        <h1 class="h3 mb-0 text-gray-800">Disposisi</h1>
     </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
-                <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
-            <?php } else {
-                echo "";
-            } ?>
-            
+            <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Disposisi</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No. Agenda</th>
-                            <th>No. Surat<br />Tgl Surat</th>
-                            <th>Asal Surat</th>
-                            <th>Perihal</th>
+                            <th>No</th>
+                            <th>Tujuan Disposisi</th>
+                            <th>Perintah Disposisi</th>
+                            <th>Isi Disposisi</th>
+                            <th>Sifat<br />Tgl Dispo</th>
                             <th>Action</th>
-                            <th>created at</th>
+                            <th>tgl dispo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($masuk as $rows) { ?>
+                        <?php $no=1; foreach ($dispo as $rows) { ?>
                             <?php
-                            $y = substr($rows->tgl_surat, 0, 4);
-                            $m = substr($rows->tgl_surat, 5, 2);
-                            $d = substr($rows->tgl_surat, 8, 2);
+                            $y = substr($rows->tgl_dispo, 0, 4);
+                            $m = substr($rows->tgl_dispo, 5, 2);
+                            $d = substr($rows->tgl_dispo, 8, 2);
                             $id_surat = $rows->id_surat;
 
                             if ($m == "01") {
@@ -68,45 +64,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             }
                             ?>
                             <tr>
-                                <td><?= $rows->no_agenda ?></td>
-                                <td><?= $rows->no_surat ?> <br>
+                                <td><?= $no++ ?></td>
+                                <td><?= $rows->tujuan ?></td>
+                                <td><?= $rows->perintah ?></td>
+                                <td><?= $rows->isi_disposisi ?></td>
+                                <td><?= $rows->sifat ?> <br>
                                     <hr /> <?= $d . " " . $nm . " " . $y ?>
                                 </td>
-                                <td><?= $rows->asal_surat ?></td>
-                                <td><?= $rows->isi ?></td>
                                 <td class="text-center">
-                                    <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
-
-                                        <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
-
-                                        <?php if ($rows->status_dispo == 0) { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a>
-                                        <?php } else { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } ?>
-
-                                        <a target="_blank" href="<?= base_url() ?><?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-
-                                        <a href="" data-toggle="modal" data-target="#hapusMasuk<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
+                                    <?php if ($this->session->userdata('level') == 1) { ?>
+                                        
+                                        <a target="_blank" href="<?= base_url() ?><?= $rows->id_disposisi ?>" class="btn btn-warning" title="cetak dispo"><i class="fa fa-print"></i></a>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
-                                        <?php if ($rows->status_dispo == 0) { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a>
-                                        <?php } else { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } ?>
+                                        <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
 
-                                    <?php } elseif ($this->session->userdata('level') == 3) { ?>
-                                        <?php if ($rows->status_dispo == 0) { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } else { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } ?>
+                                        <a href="" data-toggle="modal" data-target="#hapusMasuk<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a> 
+
                                     <?php } ?>
                                     
                                 </td>
-                                <td><?= $rows->tgl_diterima ?></td>
+                                <td><?= $rows->tgl_dispo ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>

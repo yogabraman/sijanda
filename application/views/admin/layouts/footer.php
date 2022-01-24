@@ -8,6 +8,14 @@ $date = date_create($waktu);
 $result = date_format($date, "Y");
 ?>
 
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+
 <!-- Footer -->
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
@@ -17,12 +25,6 @@ $result = date_format($date, "Y");
     </div>
 </footer>
 <!-- End of Footer -->
-
-</div>
-<!-- End of Content Wrapper -->
-
-</div>
-<!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
@@ -86,12 +88,78 @@ $result = date_format($date, "Y");
     });
 </script>
 
+
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTable').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTable1').on('click', '.edit-sm', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var smId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('surat_masuk/get_sm') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    smId: smId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<script type="text/javascript">
+     // Start jQuery function after page is loaded
+        $(document).ready(function(){
+         // Initiate DataTable function comes with plugin
+         var tabel = $('#dataTable1').DataTable({
+            columnDefs: [
+                { targets: [5], visible: false}
+            ],
+            order: [[5, 'desc']]
+         });
+         
+     });  
+
+    </script>
+
+    <script type="text/javascript">
+     // Start jQuery function after page is loaded
+        $(document).ready(function(){
+         // Initiate DataTable function comes with plugin
+         var tabel = $('#dataTable2').DataTable({
+            columnDefs: [
+                { targets: [6], visible: false}
+            ],
+            order: [[6, 'desc']]
+         });
+         
+     });  
+
+    </script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dataTable').DataTable();
         $('#dataTable').on('click', '.hapus-user', function() {
             var userId = $(this).attr('id');
+            $('#test').empty();
             $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('user/hapus/') ?>' + userId + '">Hapus</a>');
         });
     });
 </script>
@@ -114,7 +182,30 @@ $result = date_format($date, "Y");
 
 <script src="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
 
+        var undangan = document.getElementById("undangan");
+
+        undangan.style.display = "none";
+
+        $('.tipe_surat').on('change', function(e) {
+            var id = $(this).val();
+
+
+            if (id == '0') {
+                undangan.style.display = "none";
+
+            }
+            if (id == '1') {
+                undangan.style.display = "block";
+
+            }
+
+        });
+
+    });
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
