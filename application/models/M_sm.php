@@ -25,6 +25,12 @@ class M_sm extends CI_Model
         return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
     }
 
+    public function update_agenda($data, $id_agenda)
+    {
+        $this->db->update('tbl_agenda', $data, array('id_agenda' => $id_agenda));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
+
     public function add_sm($data)
     {
         $this->load->database();

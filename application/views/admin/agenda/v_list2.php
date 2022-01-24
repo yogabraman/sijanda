@@ -98,64 +98,55 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="modal-body">
                 <div class="card-body">
                     <div class="form-body">
-                        <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= site_url('agenda/add_agenda') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Acara</label>
-                                        <input class="form-control" type="date" name="">
+                                        <input class="form-control" type="date" name="tgl_acara">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tempat Acara</label>
-                                        <input class="form-control" type="text" name="">
+                                        <input class="form-control" type="text" name="tempat">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Waktu Acara</label>
-                                        <input class="form-control" type="time" name="">
+                                        <input class="form-control" type="time" name="wkt_acara">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Dari</label>
-                                        <input class="form-control" type="text" name="" placeholder="Dari">
+                                        <input class="form-control" type="text" name="dari" >
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Acara</label>
-                                        <input class="form-control" type="text" name="" placeholder="Isi Acara">
+                                        <input class="form-control" type="text" name="isi" >
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Bidang</label>
-                                        <!-- <div class="custom-control custom-checkbox">
-                                            <?php
-                                            $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-                                            foreach ($struk as $rows) {
-                                                echo '<input class="custom-control-input" id="bidang" type="checkbox" name="bidang">';
-                                                echo '<label class="custom-control-label" value=' . $rows->id_struk . ' for="bidang">' . $rows->nama . '</label>';
-                                            }
-                                            ?>
-                                        </div> -->
+                                        <label class="control-label">Bidang :</label>
                                         <?php
-                                            $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-                                            foreach ($struk as $rows) {
-                                                echo '<input class="custom-control-input" id="bidang" type="checkbox" name="bidang">';
-                                                echo '<label class="custom-control-label" value=' . $rows->id_struk . ' for="bidang">' . $rows->nama . '</label>';
-                                            }
-                                            ?>
+                                        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
+                                        foreach ($struk as $rows) {
+                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
+                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                        }
+                                        ?>
                                     </div>
                                 </div>
 
