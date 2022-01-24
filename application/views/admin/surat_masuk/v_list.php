@@ -18,7 +18,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php } else {
                 echo "";
             } ?>
-            
+
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -104,7 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
                                         <?php } ?>
                                     <?php } ?>
-                                    
+
                                 </td>
                                 <td><?= $rows->tgl_diterima ?></td>
                             </tr>
@@ -130,8 +130,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="modal-body">
                 <div class="card-body">
-                        <div class="form-body">
-                    <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
+                    <div class="form-body">
+                        <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 
@@ -223,16 +223,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             </div>
 
-                        <div class="row" align="right">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <div class="row" align="right">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
                             </div>
-                        </div>
 
-
-</form>
-                        </div>
+                        </form>
+                    </div>
                 </div>
 
 
