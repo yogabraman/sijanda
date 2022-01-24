@@ -13,9 +13,15 @@ class M_sm extends CI_Model
         return $this->db->get_where($table, $where);
     }
 
-    public function update_sm($data, $username)
+    public function update_sm($data, $id_surat)
     {
-        $this->db->update('tbl_surat_masuk', $data, array('username' => $username));
+        $this->db->update('tbl_surat_masuk', $data, array('id_surat' => $id_surat));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
+
+    public function update_ag($data, $id_surat)
+    {
+        $this->db->update('tbl_agenda', $data, array('id_surat' => $id_surat));
         return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
     }
 
@@ -26,10 +32,17 @@ class M_sm extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function add_ag($data)
+    {
+        $this->load->database();
+        $this->db->insert('tbl_agenda', $data);
+        return $this->db->insert_id();
+    }
+
     public function _uploadFile($file)
     {
-        $config['upload_path']          = './assets/surat_masuk/';
-        $config['allowed_types']        = 'gif|jpg|png|pdf';
+        $config['upload_path']          = './assets/img/suratmasuk/';
+        $config['allowed_types']        = 'pdf|gif|jpg|png';
         // $config['file_name']            = $gambar;
         $config['overwrite']            = true;
         $config['max_size']             = 10240; // 10MB
@@ -37,10 +50,11 @@ class M_sm extends CI_Model
         // $config['max_height']           = 768;
 
         $this->load->library('upload', $config);
+        // $this->upload->initialize($config);
 
         if ($this->upload->do_upload('filex')) {
-            return "assets/surat_masuk/" . $this->upload->data("file_name");
+            return "assets/img/suratmasuk/" . $this->upload->data("file_name");
         }
-        return "/assets/surat_masuk/noimage.png";
+        return "/assets/img/suratmasuk/noimage.png";
     }
 }

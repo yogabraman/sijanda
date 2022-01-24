@@ -130,8 +130,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="modal-body">
                 <div class="card-body">
-                    <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
                         <div class="form-body">
+                    <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 
@@ -152,21 +152,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Nomor Agenda</label>
-                                        <input class="form-control" type="number" name="no_agenda" value="1111" required>
+                                        <input class="form-control" type="number" name="no_agenda" required>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Asal Surat</label>
-                                        <input class="form-control" type="text" name="asal_surat" value="keker" required>
+                                        <input class="form-control" type="text" name="asal_surat" required>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Nomor Surat</label>
-                                        <input class="form-control" type="text" name="no_surat" value="212" placeholder="Nomor Surat">
+                                        <input class="form-control" type="text" name="no_surat" placeholder="Nomor Surat">
                                     </div>
                                 </div>
 
@@ -180,15 +180,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
-                                        <input class="form-control" type="text" value="kawen" name="isi">
+                                        <input class="form-control" type="text" name="isi">
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">File</label>
-                                        <input class="form-control" type="file" name="filex">
-                                        <small class="red-text">*Format file yang diperbolehkan *.JPG, *.PNG, *.DOC, *.DOCX, *.PDF dan ukuran maksimal file 2 MB!</small>
+                                        <input type="file" name="filex" class="form-control">
+                                        <small class="red-text">*Format file yang diperbolehkan *.JPG, *.PNG, *.DOC, *.DOCX, *.PDF dan ukuran maksimal file 10 MB!</small>
                                     </div>
                                 </div>
 
@@ -223,8 +223,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             </div>
 
-                        </div>
-
                         <div class="row" align="right">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
@@ -232,8 +230,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
 
+
+</form>
+                        </div>
                 </div>
-                </form>
+
+
             </div>
 
 
