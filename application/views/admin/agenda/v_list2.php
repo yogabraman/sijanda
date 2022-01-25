@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTableAgenda" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Tanggal</th>
@@ -71,8 +71,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td><?= substr($rows->isi, 0, 200) ?></td>
                                 <td><?= $disp ?></td>
                                 <td class="text-center" style="min-width:100px;">
-                                    <button class="btn btn-info edit-sm" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
-                                    <a href="<?= base_url('surat_masuk/hapus/') ?><?= $rows->id_agenda ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
+                                    <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                    <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -173,6 +173,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 
+</div>
+
+<!-- Modal Edit -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" id="edit_result">
+
+        <!-- Modal content-->
+        <!-- <div id="edit_result"></div> -->
+
+    </div>
+</div>
+
+<!-- Modal Hapus -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingin Menghapus Data?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Klik hapus untuk menghapus data <?= $this->input->post("userId") ?>sdfa</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <!-- <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a> -->
+                <div id="test"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div>

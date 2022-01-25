@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTableSM" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No. Agenda</th>
@@ -74,7 +74,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </td>
                                 <td><?= $rows->asal_surat ?></td>
                                 <td><?= $rows->isi ?></td>
-                                <td class="text-center">
+                                <td class="text-center" style="min-width:180px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
 
                                         <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>

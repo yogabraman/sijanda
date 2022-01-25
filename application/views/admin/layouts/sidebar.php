@@ -28,7 +28,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <span>Dashboard</span></a>
             </li>
 
-            <?php if ($this->session->userdata('level') == 1) { ?>
+            <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item <?php echo $this->uri->segment(1) == 'surat_masuk' || $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'cetak' ? 'active' : ''; ?>">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasuk" aria-expanded="true" aria-controls="collapseMasuk">

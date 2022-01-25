@@ -55,13 +55,14 @@ $result = date_format($date, "Y");
 
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
+<!-- Edit User -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded
     $(document).ready(function() {
         // Initiate DataTable function comes with plugin
-        $('#dataTable').DataTable();
+        $('#dataTableUser').DataTable();
         // Start jQuery click function to view Bootstrap modal when view info button is clicked
-        $('#dataTable').on('click', '.edit-user', function() {
+        $('#dataTableUser').on('click', '.edit-user', function() {
             // Get the id of selected phone and assign it in a variable called phoneData
             var userId = $(this).attr('id');
             // Start AJAX function
@@ -88,14 +89,45 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Hapus User -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableUser').DataTable();
+        $('#dataTableUser').on('click', '.hapus-user', function() {
+            var userId = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('user/hapus/') ?>' + userId + '">Hapus</a>');
+        });
+    });
+</script>
 
+<!-- Tabel Surat Masuk -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded
     $(document).ready(function() {
         // Initiate DataTable function comes with plugin
-        $('#dataTable').DataTable();
+        var tabel = $('#dataTableSM').DataTable({
+            columnDefs: [{
+                targets: [5],
+                visible: false
+            }],
+            order: [
+                [5, 'desc']
+            ]
+        });
+
+    });
+</script>
+
+<!-- Edit Surat Masuk -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableSM').DataTable();
         // Start jQuery click function to view Bootstrap modal when view info button is clicked
-        $('#dataTable1').on('click', '.edit-sm', function() {
+        $('#dataTableSM').on('click', '.edit-sm', function() {
             // Get the id of selected phone and assign it in a variable called phoneData
             var smId = $(this).attr('id');
             // Start AJAX function
@@ -122,44 +154,127 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Hapus Surat Masuk -->
 <script type="text/javascript">
-     // Start jQuery function after page is loaded
-        $(document).ready(function(){
-         // Initiate DataTable function comes with plugin
-         var tabel = $('#dataTable1').DataTable({
-            columnDefs: [
-                { targets: [5], visible: false}
-            ],
-            order: [[5, 'desc']]
-         });
-         
-     });  
+    $(document).ready(function() {
+        $('#dataTableSM').DataTable();
+        $('#dataTableSM').on('click', '.hapus-sm', function() {
+            var smId = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('surat_masuk/hapus/') ?>' + smId + '">Hapus</a>');
+        });
+    });
+</script>
 
-    </script>
+<!-- Tabel Dispo -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        var tabel = $('#dataTableDispo').DataTable({
+            columnDefs: [{
+                targets: [6],
+                visible: false
+            }],
+            order: [
+                [6, 'desc']
+            ]
+        });
 
-    <script type="text/javascript">
-     // Start jQuery function after page is loaded
-        $(document).ready(function(){
-         // Initiate DataTable function comes with plugin
-         var tabel = $('#dataTable2').DataTable({
-            columnDefs: [
-                { targets: [6], visible: false}
-            ],
-            order: [[6, 'desc']]
-         });
-         
-     });  
+    });
+</script>
 
-    </script>
+<!-- Edit Dispo -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableAgenda').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableAgenda').on('click', '.edit-agenda', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var agId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('agenda/get_agenda') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    agId: agId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
 
+<!-- Hapus Agenda -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableAgenda').DataTable();
+        $('#dataTableAgenda').on('click', '.hapus-agenda', function() {
+            var agId = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('agenda/hapus/') ?>' + agId + '">Hapus</a>');
+        });
+    });
+</script>
+
+<!-- Edit Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTable').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTable2').on('click', '.edit-sm', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var smId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('surat_masuk/get_sm') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    smId: smId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<!-- Hapus Surat Masuk -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dataTable').DataTable();
-        $('#dataTable').on('click', '.hapus-user', function() {
-            var userId = $(this).attr('id');
+        $('#dataTable').on('click', '.hapus-sm', function() {
+            var smId = $(this).attr('id');
             $('#test').empty();
             $('#hapusModal').modal('show');
-            $('#test').append('<a class="btn btn-danger" href="<?= site_url('user/hapus/') ?>' + userId + '">Hapus</a>');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('surat_masuk/hapus/') ?>' + smId + '">Hapus</a>');
         });
     });
 </script>

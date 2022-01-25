@@ -13,24 +13,6 @@ class M_sm extends CI_Model
         return $this->db->get_where($table, $where);
     }
 
-    public function update_sm($data, $id_surat)
-    {
-        $this->db->update('tbl_surat_masuk', $data, array('id_surat' => $id_surat));
-        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-    }
-
-    public function update_ag($data, $id_surat)
-    {
-        $this->db->update('tbl_agenda', $data, array('id_surat' => $id_surat));
-        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-    }
-
-    public function update_agenda($data, $id_agenda)
-    {
-        $this->db->update('tbl_agenda', $data, array('id_agenda' => $id_agenda));
-        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-    }
-
     public function add_sm($data)
     {
         $this->load->database();
@@ -62,5 +44,35 @@ class M_sm extends CI_Model
             return "assets/img/suratmasuk/" . $this->upload->data("file_name");
         }
         return "/assets/img/suratmasuk/noimage.png";
+    }
+
+    public function update_sm($data, $id_surat)
+    {
+        $this->db->update('tbl_surat_masuk', $data, array('id_surat' => $id_surat));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
+
+    public function update_ag($data, $id_surat)
+    {
+        $this->db->update('tbl_agenda', $data, array('id_surat' => $id_surat));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
+
+    public function update_agenda($data, $id_agenda)
+    {
+        $this->db->update('tbl_agenda', $data, array('id_agenda' => $id_agenda));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
+    
+    public function hapus_sm($id)
+    {
+        $this->db->delete('tbl_surat_masuk', array('id_surat' => $id));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
+
+    public function hapus_agenda($id)
+    {
+        $this->db->delete('tbl_agenda', array('id_agenda' => $id));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
     }
 }
