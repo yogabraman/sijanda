@@ -74,7 +74,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td class="text-center">
                                     <?php if ($this->session->userdata('level') == 1) { ?>
                                         
-                                        <a target="_blank" href="<?= base_url() ?><?= $rows->id_disposisi ?>" class="btn btn-warning" title="cetak dispo"><i class="fa fa-print"></i></a>
+                                        <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-warning" title="cetak dispo"><i class="fa fa-print"></i></a>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
