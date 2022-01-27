@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
 
-                                        <a href="" data-toggle="modal" data-target="#hapusMasuk<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
+                                        <a href="" data-toggle="modal" data-target="#hapusDispo<?= $rows->id_disposisi ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
 
                                     <?php } ?>
 
@@ -201,6 +201,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Modal content-->
         <!-- <div id="edit_result"></div> -->
 
+    </div>
+</div>
+
+<!-- Modal Hapus -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingin Menghapus Data?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Klik hapus untuk menghapus data.</div>
+            <div class="modal-footer">
+                <div id="test"></div>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <!-- <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a> -->
+            </div>
+        </div>
     </div>
 </div>
 

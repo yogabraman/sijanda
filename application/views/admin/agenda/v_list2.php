@@ -195,11 +195,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Klik hapus untuk menghapus data <?= $this->input->post("userId") ?>sdfa</div>
+            <div class="modal-body">Klik hapus untuk menghapus data.</div>
             <div class="modal-footer">
+                <div id="test"></div>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                 <!-- <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a> -->
-                <div id="test"></div>
             </div>
         </div>
     </div>
