@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Disposisi</button>
+            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Disposisi</button> -->
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -30,7 +30,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no=1; foreach ($dispo as $rows) { ?>
+                        <?php $no = 1;
+                        foreach ($dispo as $rows) { ?>
                             <?php
                             $y = substr($rows->tgl_dispo, 0, 4);
                             $m = substr($rows->tgl_dispo, 5, 2);
@@ -62,28 +63,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             } elseif ($m == "12") {
                                 $nm = "Desember";
                             }
+                            $tujuan = !empty($rows->tujuan) ? implode("<br>",json_decode($rows->tujuan)): "";
+                            $perintah = !empty($rows->perintah) ? implode("<br>",json_decode($rows->perintah)): "";
                             ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td><?= $rows->tujuan ?></td>
-                                <td><?= $rows->perintah ?></td>
+                                <td><?= $tujuan ?></td>
+                                <td><?= $perintah ?></td>
                                 <td><?= $rows->isi_disposisi ?></td>
                                 <td><?= $rows->sifat ?> <br>
                                     <hr /> <?= $d . " " . $nm . " " . $y ?>
                                 </td>
                                 <td class="text-center">
-                                    <?php if ($this->session->userdata('level') == 1) { ?>
-                                        
+                                    <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
+
                                         <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-warning" title="cetak dispo"><i class="fa fa-print"></i></a>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
                                         <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
 
-                                        <a href="" data-toggle="modal" data-target="#hapusMasuk<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a> 
+                                        <a href="" data-toggle="modal" data-target="#hapusMasuk<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
 
                                     <?php } ?>
-                                    
+
                                 </td>
                                 <td><?= $rows->tgl_dispo ?></td>
                             </tr>
@@ -109,109 +112,74 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="modal-body">
                 <div class="card-body">
-                        <div class="form-body">
-                    <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
+                    <div class="form-body">
+                        <form action="<?= site_url('dispo/add_agenda') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 
-                                <div class="col-md-12 col-12">
+                                <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Pilih tipe Surat</label>
-                                        <select class="form-control tipe_surat" name="tipe_surat" required>
-                                            <option value="0">Surat Biasa</option>
-                                            <option value="1">Undangan</option>
+                                        <label class="control-label">Kepada Yth:</label>
+                                        <?php
+                                        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
+                                        foreach ($struk as $rows) {
+                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
+                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Untuk :</label>
+                                        <?php
+                                        $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
+                                        foreach ($struk as $rows) {
+                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]">';
+                                            echo '<label for="' . $rows->id_perintah . '" for="perintah">&nbsp' . $rows->perintah . '</label>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Pilih Sifat Disposisi</label>
+                                        <select class="form-control" id="sifat" type="text" name="sifat" required>
+                                            <option value="Biasa">Biasa</option>
+                                            <option value="Penting">Penting</option>
+                                            <option value="Segera">Segera</option>
+                                            <option value="Rahasia">Rahasia</option>
                                         </select>
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <div class="row">
-
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Nomor Agenda</label>
-                                        <input class="form-control" type="number" name="no_agenda" required>
+                                        <label class="control-label">Isi Disposisi</label>
+                                        <input class="form-control" type="text" name="isi_disposisi">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Asal Surat</label>
-                                        <input class="form-control" type="text" name="asal_surat" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Nomor Surat</label>
-                                        <input class="form-control" type="text" name="no_surat" placeholder="Nomor Surat">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Tanggal Surat</label>
-                                        <input class="form-control" type="date" name="tgl_surat">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Perihal</label>
-                                        <input class="form-control" type="text" name="isi">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">File</label>
-                                        <input type="file" name="filex" class="form-control">
-                                        <small class="red-text">*Format file yang diperbolehkan *.JPG, *.PNG, *.DOC, *.DOCX, *.PDF dan ukuran maksimal file 10 MB!</small>
+                                        <label class="control-label">Catatan</label>
+                                        <input class="form-control" type="text" name="catatan">
                                     </div>
                                 </div>
 
                             </div>
 
-
-                            <div id="undangan">
-                                <div class="row">
-
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Tanggal Acara</label>
-                                            <input class="form-control" type="date" name="tgl_agenda">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Tempat Acara</label>
-                                            <input class="form-control" type="text" name="tempat" placeholder="tempat">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Waktu Acara</label>
-                                            <input class="form-control" type="time" name="waktu_agenda">
-                                        </div>
-                                    </div>
-
+                            <div class="row" align="right">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                 </div>
-
                             </div>
 
-                        <div class="row" align="right">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                            </div>
-                        </div>
-
-
-</form>
-                        </div>
+                        </form>
+                    </div>
                 </div>
 
 
@@ -224,7 +192,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 
-</div>
 </div>
 
 <!-- Modal Edit -->

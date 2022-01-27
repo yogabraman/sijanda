@@ -7,10 +7,13 @@ class M_sm extends CI_Model
         parent::__construct();
     }
 
-    public function cek_sm($table, $where)
+    public function cek_sm()
     {
         //set query
-        return $this->db->get_where($table, $where);
+        $this->db->from('tbl_surat_masuk');
+        $this->db->order_by("tgl_diterima", "DESC");
+        $query = $this->db->get(); 
+        return $query->result();
     }
 
     public function add_sm($data)

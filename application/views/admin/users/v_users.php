@@ -156,7 +156,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <!-- Modal Hapus -->
 <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ingin Menghapus Data?</h5>
@@ -164,11 +164,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Klik hapus untuk menghapus data <?= $this->input->post("userId") ?>sdfa</div>
+            <div class="modal-body">Klik hapus untuk menghapus data.</div>
             <div class="modal-footer">
+                <div id="test"></div>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                 <!-- <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a> -->
-                <div id="test"></div>
             </div>
         </div>
     </div>

@@ -109,11 +109,12 @@ $result = date_format($date, "Y");
         // Initiate DataTable function comes with plugin
         var tabel = $('#dataTableSM').DataTable({
             columnDefs: [{
-                targets: [5],
+                targets: [5,6],
                 visible: false
             }],
             order: [
-                [5, 'desc']
+                [5, 'asc'],
+                [6, 'desc']
             ]
         });
 
@@ -163,6 +164,19 @@ $result = date_format($date, "Y");
             $('#test').empty();
             $('#hapusModal').modal('show');
             $('#test').append('<a class="btn btn-danger" href="<?= site_url('surat_masuk/hapus/') ?>' + smId + '">Hapus</a>');
+        });
+    });
+</script>
+
+<!-- Tambah Dispo -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableSM').DataTable();
+        $('#dataTableSM').on('click', '.add-dispo', function() {
+            var smId = $(this).attr('id');
+            $('#ids').empty();
+            $('#dispoModal').modal('show');
+            $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="'+smId+'">');
         });
     });
 </script>

@@ -140,15 +140,13 @@ class Surat_masuk extends CI_Controller
 
 	public function list()
 	{
-
-		$masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER BY tgl_diterima DESC")->result();
+		$masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER BY status_dispo")->result();
+        // $masuk = $this->m_sm->cek_sm();
 		$data = array(
 			'title' => "List Surat Masuk",
-			'masuk' => $masuk,
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
+			'masuk' => $masuk
 		);
+        $this->db->reconnect();
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/surat_masuk/v_list', $data);
 		$this->load->view('admin/layouts/footer', $data);
@@ -441,6 +439,20 @@ class Surat_masuk extends CI_Controller
 
         }
 
+    }
+
+    function hapus($id)
+    {
+        $result = $this->m_sm->hapus_sm($id);
+
+            if ($result) {
+                $this->session->set_flashdata('success', 'Data Berhasil dihapus!!.');
+                redirect(site_url('surat_masuk/list'));
+            } else {
+                $this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
+                redirect(site_url('surat_masuk/list'));
+            }
+            
     }
 
 	public function cetak()

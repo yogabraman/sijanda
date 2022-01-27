@@ -30,6 +30,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Asal Surat</th>
                             <th>Perihal</th>
                             <th>Action</th>
+                            <th>status</th>
                             <th>created at</th>
                         </tr>
                     </thead>
@@ -79,33 +80,37 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
 
+                                        <a target="_blank" href="<?= base_url() ?><?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+
+                                        <button class="btn btn-danger hapus-sm" id="<?= $rows->id_surat ?>" title="Hapus"><i class="fa fa-trash"></i></button>
+
                                         <?php if ($rows->status_dispo == 0) { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a>
+                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
                                         <?php } else { ?>
                                             <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
                                         <?php } ?>
 
-                                        <a target="_blank" href="<?= base_url() ?><?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-
-                                        <a href="" data-toggle="modal" data-target="#hapusMasuk<?= $rows->id_surat ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
-
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
+                                        <a target="_blank" href="<?= base_url() ?><?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+
                                         <?php if ($rows->status_dispo == 0) { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a>
+                                            <button class="btn btn-success add-dispo" id="<?= $rows->id_surat ?> title="Disposisi"><i class="fa fa-pen"></i></button>
+                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
                                         <?php } else { ?>
                                             <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
                                         <?php if ($rows->status_dispo == 0) { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a> -->
                                         <?php } else { ?>
                                             <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary edit-sm" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
                                         <?php } ?>
                                     <?php } ?>
 
                                 </td>
+                                <td><?= $rows->status_dispo ?></td>
                                 <td><?= $rows->tgl_diterima ?></td>
                             </tr>
                         <?php } ?>
@@ -254,6 +259,116 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Modal content-->
         <!-- <div id="edit_result"></div> -->
 
+    </div>
+</div>
+
+<!-- Modal Hapus -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingin Menghapus Data?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Klik hapus untuk menghapus data.</div>
+            <div class="modal-footer">
+                <div id="test"></div>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <!-- <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Dispo -->
+<div class="modal fade" id="dispoModal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Dispo</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-body">
+                        <form action="<?= site_url('dispo/add_dispo') ?>" method="post" enctype="multipart/form-data">
+
+                            <div class="row">
+                                <div id="ids"></div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Kepada Yth: </label>
+                                        <?php
+                                        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
+                                        foreach ($struk as $rows) {
+                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
+                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Untuk :</label>
+                                        <?php
+                                        $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
+                                        foreach ($struk as $rows) {
+                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]">';
+                                            echo '<label for="' . $rows->id_perintah . '" for="perintah">&nbsp' . $rows->perintah . '</label>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Pilih Sifat Disposisi</label>
+                                        <select class="form-control" id="sifat" type="text" name="sifat" required>
+                                            <option value="Biasa">Biasa</option>
+                                            <option value="Penting">Penting</option>
+                                            <option value="Segera">Segera</option>
+                                            <option value="Rahasia">Rahasia</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Isi Disposisi</label>
+                                        <input class="form-control" type="text" name="isi_disposisi">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Catatan</label>
+                                        <input class="form-control" type="text" name="catatan">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row" align="right">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
     </div>
 </div>
 
