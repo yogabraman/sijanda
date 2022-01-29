@@ -109,7 +109,7 @@ $result = date_format($date, "Y");
         // Initiate DataTable function comes with plugin
         var tabel = $('#dataTableSM').DataTable({
             columnDefs: [{
-                targets: [5,6],
+                targets: [5, 6],
                 visible: false
             }],
             order: [
@@ -168,6 +168,44 @@ $result = date_format($date, "Y");
     });
 </script>
 
+
+
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableSM').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#btnSearch').click(function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var start = $('#start').val();
+            var end = $('#end').val();
+
+
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo base_url('surat_masuk/get_cetak') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    start: start,
+                    end: end
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    //alert("What follows is blank: " + data);
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#cari').html(data);
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
 <!-- Tambah Dispo -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -176,7 +214,7 @@ $result = date_format($date, "Y");
             var smId = $(this).attr('id');
             $('#ids').empty();
             $('#dispoModal').modal('show');
-            $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="'+smId+'">');
+            $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="' + smId + '">');
         });
     });
 </script>

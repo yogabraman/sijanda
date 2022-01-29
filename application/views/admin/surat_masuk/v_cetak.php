@@ -12,26 +12,49 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-print"></i>  Cetak</h6>
+            Cetak Surat Masuk
         </div>
         <div class="card-body">
 
 
-            <form>
+            <form action="<?= site_url('surat_masuk/cetakbydate') ?>" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="col-sm-4 mb-3 mb-sm-0 col-12">
                         <label>Dari Tanggal</label>
-                        <input type="date" class="form-control" id="from" required>
+                        <input type="date" class="form-control" id="start" name="start" required>
                     </div>
-                    <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="col-sm-4 mb-3 mb-sm-0 col-12">
                         <label>Sampai Tanggal</label>
-                        <input type="date" class="form-control" id="to" required>
+                        <input type="date" class="form-control" id="end" name="end" required>
+                    </div>
+                    <div class="col-sm-4 col-12" style="padding: 30px">
+                        <a id="btnSearch" class="btn btn-primary btn-user">
+                           <i class="fa fa-eye"></i> TAMPILKAN
+                        </a>
+                        <button type="submit" class="btn btn-warning btn-user" formtarget="_blank">
+                           <i class="fa fa-print"></i> CETAK
+                        </button>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-user" onclick="Encrypt()">
-                    TAMPILKAN
-                </button>
             </form>
+
+            <div class="table-responsive">
+                      <table class="table table-striped" id="dataTableSM">
+                        <thead>                                 
+                          <tr>
+                            <th class="text-center">No</th>
+                            <th>Asal Surat</th>
+                            <th>Perihal</th>
+                            <th>Tanggal Surat</th>
+                            <th>Tanggal Paraf</th>
+                            <th>Dispo</th>
+                          </tr>
+                        </thead>
+                        <tbody id="cari">
+                          
+                        </tbody>
+                      </table>
+                    </div>
 
         </div>
     </div>

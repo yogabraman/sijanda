@@ -94,15 +94,22 @@ class Agenda extends CI_Controller
 		$abc = "";
 
 		foreach ($struk as $row) {
-			if (in_array($row->nama, json_decode($nama_bidang))) {
+			if (!empty($nama_bidang)){
+				if (in_array($row->nama, json_decode($nama_bidang))) {
+					$abc .= '
+				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]" checked>
+				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+				} else {
+					$abc .= '
+				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
+				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+				}
+			} else{
 				$abc .= '
-			<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]" checked>
-			<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
-			} else {
-				$abc .= '
-			<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
-			<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
+				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
 			}
+			
 		}
 
 		foreach ($record as $rows) {
@@ -210,6 +217,20 @@ class Agenda extends CI_Controller
 			redirect(site_url('agenda/list2'));
 		}
 	}
+
+    function hapus($id)
+    {
+        $result = $this->m_sm->hapus_agenda($id);
+
+            if ($result) {
+                $this->session->set_flashdata('success', 'Data Berhasil dihapus!!.');
+                redirect(site_url('agenda/list2'));
+            } else {
+                $this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
+                redirect(site_url('agenda/list2'));
+            }
+            
+    }
 
 	public function cetak2()
 	{

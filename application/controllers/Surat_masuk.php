@@ -8,6 +8,7 @@ class Surat_masuk extends CI_Controller
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('m_sm');
+        $this->load->library('pdf');
 
 		if ($this->session->userdata('status') != "login") {
 			redirect('login');
@@ -471,19 +472,88 @@ class Surat_masuk extends CI_Controller
 		$this->load->view('admin/layouts/footer', $data);
 	}
 
+	public function get_cetak()
+    {
+
+        function tgl_indo($tanggal){
+            $bulan = array (
+                1 =>    'Januari',
+                        'Februari',
+                        'Maret',
+                        'April',
+                        'Mei',
+                        'Juni',
+                        'Juli',
+                        'Agustus',
+                        'September',
+                        'Oktober',
+                        'November',
+                        'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
+  
+            // variabel pecahkan 0 = tanggal
+            // variabel pecahkan 1 = bulan
+            // variabel pecahkan 2 = tahun
+ 
+            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+        }
+
+        $start = $this->input->post("start");
+        $end = $this->input->post("end");
+
+        // $a = date_create($start);
+        // $mulai = date_format($a,"Y-m-d");
+
+        // $b = date_create($end);
+        // $selesai = date_format($b,"Y-m-d");
+
+        if(isset($start) and !empty($end)){
+            $record = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.tgl_dispo BETWEEN '$start' AND '$end'")->result();
+
+            $output = "";
+            $no = 1;
+
+            foreach ($record as $rows) {
+
+                $output .= '
+                        <tr>
+                            <td>'. $no++ .'</td>
+                            <td>'. $rows->asal_surat .'</td>
+                            <td>'. $rows->isi .'</td>
+                            <td>'. tgl_indo($rows->tgl_surat) .'</td>
+                            <td>'. tgl_indo($rows->tgl_dispo) .'</td>
+                            <td>'. $rows->tujuan .'</td>
+                          </tr>
+                ';
+
+            }
+
+            echo $output;
+        } else {
+            echo "gagal";
+        }
+    }
+
 	public function cetakbydate()
 	{
 
-		// $sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
-		$data = array(
-			'title' => "Riwayat Beban 2",
-			// 'sensor2' => $sensor2,
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
-		);
-		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/riwayat/v_beban2', $data);
-		$this->load->view('admin/layouts/footer', $data);
+		date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
+
+        $start = $this->input->post("start");
+        $end = $this->input->post("end");
+    
+        // $data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
+        $data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.tgl_dispo BETWEEN '$start' AND '$end'")->result();
+
+        $data['start'] = $start;
+        $data['end'] = $end;
+
+        // $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+        $this->pdf->filename = "print-sm-".$waktu.".pdf";
+		$this->pdf->set_option('isRemoteEnabled', true);
+        $this->pdf->load_view('admin/surat_masuk/print_sm', $data);
+        $this->pdf->render();
 	}
 }
