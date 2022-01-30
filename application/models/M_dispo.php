@@ -13,12 +13,6 @@ class M_dispo extends CI_Model
         return $this->db->get_where($table, $where);
     }
 
-    public function update_dispo($data, $id_dispo)
-    {
-        $this->db->update('tbl_disposisi', $data, array('id_dispo' => $id_dispo));
-        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-    }
-
     public function add_dispo($data)
     {
         $this->load->database();
@@ -26,4 +20,15 @@ class M_dispo extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function update_dispo($data, $id_dispo)
+    {
+        $this->db->update('tbl_disposisi', $data, array('id_disposisi' => $id_dispo));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
+    
+    public function hapus_dispo($id)
+    {
+        $this->db->delete('tbl_disposisi', array('id_disposisi' => $id));
+        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+    }
 }

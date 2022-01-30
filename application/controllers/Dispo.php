@@ -9,7 +9,7 @@ class Dispo extends CI_Controller
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('m_dispo');
 		$this->load->model('m_sm');
-        $this->load->library('pdf');
+		$this->load->library('pdf');
 
 		if ($this->session->userdata('status') != "login") {
 			redirect('login');
@@ -20,7 +20,7 @@ class Dispo extends CI_Controller
 	{
 
 		$id_user = $this->session->userdata('id_user');
-        $id_surat = $this->input->post("suratId");
+		$id_surat = $this->input->post("suratId");
 
 		$dispo = $this->db->query("SELECT * FROM tbl_disposisi WHERE id_surat ='$id'")->result();
 
@@ -33,7 +33,8 @@ class Dispo extends CI_Controller
 		$this->load->view('admin/layouts/footer', $data);
 	}
 
-	public function add_dispo(){
+	public function add_dispo()
+	{
 		date_default_timezone_set('Asia/Jakarta');
 		$waktu = date('Y-m-d H:i:s');
 
@@ -63,14 +64,14 @@ class Dispo extends CI_Controller
 		$data_ag = array(
 			'dispo' => $bidang
 		);
-		
+
 		$result = $this->m_dispo->add_dispo($data_dispo);
 		//update surat masuk
-		$this->m_sm->update_sm($data_sm,$id_surat);
+		$this->m_sm->update_sm($data_sm, $id_surat);
 
 		if ($result) {
 			if ($tipe_surat == 1) {
-				$this->m_sm->update_ag($data_ag,$id_surat);
+				$this->m_sm->update_ag($data_ag, $id_surat);
 			}
 			$this->session->set_flashdata('success', 'Data Berhasil Disimpan!!.');
 			redirect(site_url('surat_masuk/list'));
@@ -80,18 +81,193 @@ class Dispo extends CI_Controller
 		}
 	}
 
-    public function print_dispo($id)
-    {
-        date_default_timezone_set('Asia/Jakarta');
-        $waktu = date('Y-m-d H:i:s');
-    
-        $data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
-        $data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
+	public function getdisp()
+	{
+		$id = $this->input->post("dispoId");
 
-        // $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
-        $this->pdf->filename = "print-disposisi-".$waktu.".pdf";
+		$record = $this->db->query("SELECT * FROM tbl_disposisi WHERE id_disposisi ='$id'")->result();
+		$struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
+		$pr = $this->db->query("SELECT * FROM tbl_perintah")->result();
+		$nama_bidang = $this->db->limit(1)->query("SELECT tujuan FROM tbl_disposisi WHERE id_disposisi ='$id'")->row()->tujuan;
+		$perintah = $this->db->limit(1)->query("SELECT perintah FROM tbl_disposisi WHERE id_disposisi ='$id'")->row()->perintah;
+
+		$output = "";
+		$abc = "";
+		$def = "";
+
+		foreach ($struk as $row) {
+			if (!empty($nama_bidang)) {
+				if (in_array($row->nama, json_decode($nama_bidang))) {
+					$abc .= '
+				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]" checked>
+				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+				} else {
+					$abc .= '
+				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
+				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+				}
+			} else {
+				$abc .= '
+				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
+				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+			}
+		}
+
+		foreach ($pr as $row) {
+			if (!empty($perintah)) {
+				if (in_array($row->perintah, json_decode($perintah))) {
+					$def .= '
+				<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]" checked>
+				<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
+				} else {
+					$def .= '
+				<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]">
+				<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
+				}
+			} else {
+				$def .= '
+				<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]">
+				<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
+			}
+		}
+
+		foreach ($record as $rows) {
+			$output .= '
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Disposisi</h4>
+						<button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+					</div>
+					<div class="modal-body">
+						<div class="card-body">
+							<form action="' . base_url("dispo/edit_dispo") . '" method="post" enctype="multipart/form-data">
+								<div class="form-body">
+
+									<div class="row">
+
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+
+									<input class="form-control" type="hidden" name="id_surat" value="' . $rows->id_surat . '">
+									<input class="form-control" type="hidden" name="id_disposisi" value="' . $rows->id_disposisi . '">
+									<label class="control-label">Kepada Yth:</label>
+                                        ' . $abc . '
+								</div>
+							</div>
+
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label class="control-label">Untuk :</label>
+									' . $def . '
+								</div>
+							</div>
+
+							<div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Pilih Sifat Disposisi</label>
+                                        <select class="form-control" id="sifat" type="text" name="sifat" value="' . $rows->sifat . '">
+                                            <option value="Biasa">Biasa</option>
+                                            <option value="Penting">Penting</option>
+                                            <option value="Segera">Segera</option>
+                                            <option value="Rahasia">Rahasia</option>
+                                        </select>
+                                    </div>
+                             </div>
+
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label class="control-label">Isi Disposisi</label>
+									<input class="form-control" type="text" name="isi_disposisi" value="' . $rows->isi_disposisi . '">
+								</div>
+							</div>
+
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label class="control-label">Catatan</label>
+									<input class="form-control" type="text" name="catatan" value="' . $rows->catatan . '">
+								</div>
+							</div>
+
+						</div>
+
+									<div class="row" align="right">
+										<div class="col-md-12">
+											<button type="submit" class="btn btn-warning"><i class="fa fa-check"></i> Update</button>
+											<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+					</div>
+				</div>
+			';
+		}
+		echo $output;
+	}
+
+	function edit_dispo()
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$waktu = date('Y-m-d H:i:s');
+
+		$id_disposisi = $this->input->post("id_disposisi");
+		$id_surat = $this->input->post("id_surat");
+
+		$data = array(
+			'tujuan' => json_encode($this->input->post('bidang')),
+			'perintah' => json_encode($this->input->post('perintah')),
+			'isi_disposisi' => $this->input->post('isi_disposisi'),
+			'sifat' => $this->input->post('sifat'),
+			'tgl_dispo' => $waktu,
+			'catatan' => $this->input->post('catatan')
+		);
+
+		$result = $this->m_dispo->update_dispo($data, $id_disposisi);
+
+		if ($result) {
+			$this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');
+			redirect(site_url('dispo/get_dispo/'.$id_surat));
+		} else {
+			$this->session->set_flashdata('error', 'Gagal Ubah Data!!.');
+			redirect(site_url('dispo/get_dispo/'.$id_surat));
+		}
+	}
+
+	function hapus($id)
+	{
+		$id_surat = $this->db->limit(1)->query("SELECT id_surat FROM tbl_disposisi WHERE id_disposisi ='$id'")->row()->id_surat;
+
+		$data_sm = array(
+			'status_dispo' => 0
+		);
+
+		$result = $this->m_dispo->hapus_dispo($id);
+		$this->m_sm->update_sm($data_sm, $id_surat);
+
+		if ($result) {
+			$this->session->set_flashdata('success', 'Data Berhasil dihapus!!.');
+			redirect(site_url('surat_masuk/list'));
+		} else {
+			$this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
+			redirect(site_url('surat_masuk/list'));
+		}
+	}
+
+	public function print_dispo($id)
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$waktu = date('Y-m-d H:i:s');
+
+		$data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
+		$data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
+
+		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+		$this->pdf->filename = "print-disposisi-" . $waktu . ".pdf";
 		$this->pdf->set_option('isRemoteEnabled', true);
-        $this->pdf->load_view('admin/dispo/print_dispo', $data);
-        $this->pdf->render();
-    }
+		$this->pdf->load_view('admin/dispo/print_dispo', $data);
+		$this->pdf->render();
+	}
 }

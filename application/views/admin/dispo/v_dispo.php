@@ -81,9 +81,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
-                                        <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <button class="btn btn-info edit-dispo" id="<?= $rows->id_disposisi ?>" title="Edit"><i class="far fa-edit"></i></button>
 
-                                        <a href="" data-toggle="modal" data-target="#hapusDispo<?= $rows->id_disposisi ?>" class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
+                                        <button class="btn btn-danger hapus-dispo" id="<?= $rows->id_disposisi ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
                                     <?php } ?>
 

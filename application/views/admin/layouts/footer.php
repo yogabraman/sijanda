@@ -250,7 +250,7 @@ $result = date_format($date, "Y");
             // Start AJAX function
             $.ajax({
                 // Path for controller function which fetches selected phone data
-                url: "<?php echo site_url('dispo/get_dispo') ?>",
+                url: "<?php echo site_url('dispo/getdisp') ?>",
                 // Method of getting data
                 method: "POST",
                 // Data is sent to the server

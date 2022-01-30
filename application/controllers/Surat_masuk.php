@@ -43,7 +43,8 @@ class Surat_masuk extends CI_Controller
 		$waktu = date('Y-m-d H:i:s');
 
 		$id_user = $this->session->userdata('id_user');
-		$new = $this->input->post("filex");
+		// $new = $this->input->post("filex");
+        $new = $_FILES["filex"]["name"];
 		$jenis_surat = $this->input->post('tipe_surat');
 
 		// print_r($new);
@@ -369,13 +370,14 @@ class Surat_masuk extends CI_Controller
 
         $tipe_surat = $this->input->post("tipe_surat");
         $id_surat = $this->input->post("id_surat");
+        $new = $this->input->post("filex");
 
         if ($tipe_surat == 1) {
 
             if (!empty($_FILES["filex"]["name"])) {
 
-                $new = $this->input->post("filex");
-                $files = $this->m_frontend->_uploadImage($new);
+                $new = $_FILES["filex"]["name"];
+                $files = $this->m_sm->_uploadFile($new);
             } else {
                 $files = $this->input->post("old_file");
             }
@@ -413,8 +415,8 @@ class Surat_masuk extends CI_Controller
 
             if (!empty($_FILES["filex"]["name"])) {
 
-                $new = $this->input->post("filex");
-                $files = $this->m_frontend->_uploadImage($new);
+                $new = $_FILES["filex"]["name"];
+                $files = $this->m_sm->_uploadFile($new);
             } else {
                 $files = $this->input->post("old_file");
             }

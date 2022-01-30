@@ -32,9 +32,14 @@ class M_sm extends CI_Model
 
     public function _uploadFile($file)
     {
-        $config['upload_path']          = './assets/img/suratmasuk/';
+        date_default_timezone_set('Asia/Jakarta');
+        $rand = date("YmdHis");
+
+        // echo $file;
+
+        $config['upload_path']          = './assets/suratmasuk/';
         $config['allowed_types']        = 'pdf|gif|jpg|png';
-        // $config['file_name']            = $gambar;
+        $config['file_name']            = $rand."-".$file;
         $config['overwrite']            = true;
         $config['max_size']             = 10240; // 10MB
         // $config['max_width']            = 1024;
@@ -44,9 +49,9 @@ class M_sm extends CI_Model
         // $this->upload->initialize($config);
 
         if ($this->upload->do_upload('filex')) {
-            return "assets/img/suratmasuk/" . $this->upload->data("file_name");
+            return $this->upload->data("file_name");
         }
-        return "/assets/img/suratmasuk/noimage.png";
+        return $rand . "-noimage.png";
     }
 
     public function update_sm($data, $id_surat)
