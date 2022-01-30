@@ -8,6 +8,7 @@ class Agenda extends CI_Controller
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('m_sm');
+        $this->load->library('pdf');
 
 		if ($this->session->userdata('status') != "login") {
 			redirect('login');
@@ -234,33 +235,99 @@ class Agenda extends CI_Controller
 
 	public function cetak2()
 	{
-
-		// $sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
 		$data = array(
-			'title' => "Cetak Agenda",
-			// 'sensor2' => $sensor2,
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
+			'title' => "Cetak Agenda"
 		);
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/agenda/v_cetak2', $data);
 		$this->load->view('admin/layouts/footer', $data);
 	}
 
-	public function cetakbydate()
+	public function get_cetak2()
+    {
+
+        function tgl_indo($tanggal){
+            $bulan = array (
+                1 =>    'Januari',
+                        'Februari',
+                        'Maret',
+                        'April',
+                        'Mei',
+                        'Juni',
+                        'Juli',
+                        'Agustus',
+                        'September',
+                        'Oktober',
+                        'November',
+                        'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
+  
+            // variabel pecahkan 0 = tanggal
+            // variabel pecahkan 1 = bulan
+            // variabel pecahkan 2 = tahun
+ 
+            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+        }
+
+        $start = $this->input->post("start");
+        $end = $this->input->post("end");
+
+        // $a = date_create($start);
+        // $mulai = date_format($a,"Y-m-d");
+
+        // $b = date_create($end);
+        // $selesai = date_format($b,"Y-m-d");
+
+        if(isset($start) and !empty($end)){
+            $record = $this->db->query("SELECT * FROM tbl_agenda WHERE tgl_agenda BETWEEN '$start' AND '$end'")->result();
+
+            $output = "";
+            $no = 1;
+
+            foreach ($record as $rows) {
+
+				$dispo = !empty($rows->dispo) ? implode("<br>",json_decode($rows->dispo)): "";
+
+                $output .= '
+                        <tr>
+                            <td>'. $no++ .'</td>
+                            <td>'. tgl_indo($rows->tgl_agenda) .'</td>
+                            <td>'. $rows->waktu_agenda .'</td>
+                            <td>'. $rows->asal .'</td>
+                            <td>'. $rows->tempat .'</td>
+                            <td>'. $rows->isi .'</td>
+                            <td>'. $dispo .'</td>
+                          </tr>
+                ';
+
+            }
+
+            echo $output;
+        } else {
+            echo "Belum pilih Tanggal";
+        }
+    }
+
+	public function cetakbydate2()
 	{
 
-		// $sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
-		$data = array(
-			'title' => "Riwayat Beban 2",
-			// 'sensor2' => $sensor2,
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
-		);
-		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/agenda/v_cetak2', $data);
-		$this->load->view('admin/layouts/footer', $data);
+		date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
+
+        $start = $this->input->post("start");
+        $end = $this->input->post("end");
+    
+        // $data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
+        $data['agenda'] = $this->db->query("SELECT * FROM tbl_agenda WHERE tbl_agenda.tgl_agenda BETWEEN '$start' AND '$end'")->result();
+
+        $data['start'] = $start;
+        $data['end'] = $end;
+
+        // $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+        $this->pdf->filename = "print-agenda-".$waktu.".pdf";
+		$this->pdf->set_option('isRemoteEnabled', true);
+        $this->pdf->load_view('admin/agenda/print_agenda', $data);
+        $this->pdf->render();
 	}
 }

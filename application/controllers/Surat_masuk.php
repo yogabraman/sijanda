@@ -460,14 +460,8 @@ class Surat_masuk extends CI_Controller
 
 	public function cetak()
 	{
-
-		// $sensor2 = $this->db->query("SELECT * FROM transaksi_sensor WHERE id_sensor = 2")->result();
-		$data = array(
-			'title' => "Cetak Surat Masuk",
-			// 'sensor2' => $sensor2,
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
+        $data = array(
+			'title' => "Cetak Surat Masuk"
 		);
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/surat_masuk/v_cetak', $data);
@@ -518,6 +512,8 @@ class Surat_masuk extends CI_Controller
 
             foreach ($record as $rows) {
 
+                $tujuan = !empty($rows->tujuan) ? implode("<br>",json_decode($rows->tujuan)): "";
+
                 $output .= '
                         <tr>
                             <td>'. $no++ .'</td>
@@ -525,7 +521,7 @@ class Surat_masuk extends CI_Controller
                             <td>'. $rows->isi .'</td>
                             <td>'. tgl_indo($rows->tgl_surat) .'</td>
                             <td>'. tgl_indo($rows->tgl_dispo) .'</td>
-                            <td>'. $rows->tujuan .'</td>
+                            <td>'. $tujuan .'</td>
                           </tr>
                 ';
 
@@ -533,7 +529,7 @@ class Surat_masuk extends CI_Controller
 
             echo $output;
         } else {
-            echo "gagal";
+            echo "Belum pilih Tanggal";
         }
     }
 

@@ -168,8 +168,7 @@ $result = date_format($date, "Y");
     });
 </script>
 
-
-
+<!-- Cetak Surat Masuk -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded
     $(document).ready(function() {
@@ -327,6 +326,43 @@ $result = date_format($date, "Y");
             $('#test').empty();
             $('#hapusModal').modal('show');
             $('#test').append('<a class="btn btn-danger" href="<?= site_url('agenda/hapus/') ?>' + agId + '">Hapus</a>');
+        });
+    });
+</script>
+
+<!-- Cetak Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableAgenda').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#btnSearch').click(function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var start = $('#start').val();
+            var end = $('#end').val();
+
+
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo base_url('agenda/get_cetak2') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    start: start,
+                    end: end
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    //alert("What follows is blank: " + data);
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#cari').html(data);
+                }
+            });
+            // End AJAX function
         });
     });
 </script>

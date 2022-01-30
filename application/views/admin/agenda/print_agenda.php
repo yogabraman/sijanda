@@ -149,7 +149,7 @@
                         </tbody>
                     </table>
 
-                    <p align="center" style="font-size: 14px;">Surat Masuk dari tanggal <b><?= tgl_indo($start) ?></b> sampai dengan tanggal <b><?= tgl_indo($end) ?></b></p>
+                    <p align="center" style="font-size: 14px;">Agenda dari tanggal <b><?= tgl_indo($start) ?></b> sampai dengan tanggal <b><?= tgl_indo($end) ?></b></p>
 
                     <table id="table" border="1" width="100%" style="text-align:center;">
 <?php 
@@ -160,23 +160,25 @@
         <thead>                                 
             <tr>
                 <th class="text-center">No</th>
-                            <th>Asal Surat</th>
-                            <th>Perihal</th>
-                            <th>Tanggal Surat</th>
-                            <th>Tanggal Paraf</th>
+                            <th>Tanggal</th>
+                            <th>Jam</th>
+                            <th>Dari</th>
+                            <th>Tempat</th>
+                            <th>Acara</th>
                             <th>Dispo</th>
             </tr>
         </thead>
         <tbody>
-            <?php $no=1; foreach ($dispo as $rows) { ?>
+            <?php $no=1; foreach ($agenda as $rows) { ?>
                 
                 <tr style="font-size: 12px">
                     <td><?= $no++ ?></td>
-                    <td><?= $rows->asal_surat ?></td>
+                    <td><?= tgl_indo($rows->tgl_agenda) ?></td>
+                    <td><?= $rows->waktu_agenda ?></td>
+                    <td><?= $rows->asal ?></td>
+                    <td><?= $rows->tempat ?></td>
                     <td><?= $rows->isi ?></td>
-                    <td><?= tgl_indo($rows->tgl_surat) ?></td>
-                    <td><?= tgl_indo($rows->tgl_dispo) ?></td>
-                    <td><?= !empty($rows->tujuan) ? implode("<br>",json_decode($rows->tujuan)): ""; ?></td>
+                    <td><?= !empty($rows->dispo) ? implode("<br>",json_decode($rows->dispo)): ""; ?></td>
                 </tr>
 
             <?php } ?>
