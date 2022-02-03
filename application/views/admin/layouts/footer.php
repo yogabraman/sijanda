@@ -211,9 +211,12 @@ $result = date_format($date, "Y");
         $('#dataTableSM').DataTable();
         $('#dataTableSM').on('click', '.add-dispo', function() {
             var smId = $(this).attr('id');
+            const Idx = smId.split("/-/");
             $('#ids').empty();
+            $('#filex').empty();
             $('#dispoModal').modal('show');
-            $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="' + smId + '">');
+            $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="' + Idx[1] + '">');
+            $('#filex').append('<embed src="<?= base_url() ?>assets/suratmasuk/'+ Idx[0] +'" width="800px" height="1000px" />');
         });
     });
 </script>
