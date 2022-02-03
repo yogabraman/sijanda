@@ -283,6 +283,25 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Tabel Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        var tabel = $('#dataTableAgenda').DataTable({
+            // columnDefs: [{
+            //     targets: [5, 6],
+            //     visible: false
+            // }],
+            order: [
+                [1, 'asc'],
+                [2, 'asc']
+            ]
+        });
+
+    });
+</script>
+
 <!-- Edit Agenda -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded
