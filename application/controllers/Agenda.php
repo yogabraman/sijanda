@@ -38,14 +38,12 @@ class Agenda extends CI_Controller
 
 	public function list2()
 	{
+		$dates = date("Y-m-d");
 
-		$agenda = $this->db->query("SELECT * FROM tbl_agenda ORDER by tgl_agenda ASC ")->result();
+		$agenda = $this->db->query("SELECT * FROM `tbl_agenda` WHERE tgl_agenda >= '$dates' ORDER by tgl_agenda ASC, waktu_agenda ASC ")->result();
 		$data = array(
 			'title' => "List Agenda",
-			'agenda' => $agenda,
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
+			'agenda' => $agenda
 		);
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/agenda/v_list2', $data);
