@@ -142,7 +142,7 @@ class Surat_masuk extends CI_Controller
 
 	public function list()
 	{
-		$masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER BY status_dispo")->result();
+		$masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC")->result();
         // $masuk = $this->m_sm->cek_sm();
 		$data = array(
 			'title' => "List Surat Masuk",
@@ -196,7 +196,7 @@ class Surat_masuk extends CI_Controller
                                         <input class="form-control" type="hidden" name="id_surat" value="'.$rows->id_surat.'">
                                         <input class="form-control" type="hidden" name="tipe_surat" value="'.$tipe_surat.'">
                                         <label class="control-label">Nomor Agenda</label>
-                                        <input class="form-control" type="number" name="no_agenda" value="'.$rows->no_agenda.'">
+                                        <input class="form-control" type="text" name="no_agenda" value="'.$rows->no_agenda.'">
                                     </div>
                                 </div>
 
@@ -301,7 +301,7 @@ class Surat_masuk extends CI_Controller
                                     	<input class="form-control" type="hidden" name="id_surat" value="'.$rows->id_surat.'">
                                         <input class="form-control" type="hidden" name="tipe_surat" value="'.$tipe_surat.'">
                                         <label class="control-label">Nomor Agenda</label>
-                                        <input class="form-control" type="number" name="no_agenda" value="'.$no_agenda.'">
+                                        <input class="form-control" type="text" name="no_agenda" value="'.$no_agenda.'">
                                     </div>
                                 </div>
 

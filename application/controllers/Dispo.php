@@ -267,6 +267,12 @@ class Dispo extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 		$waktu = date('Y-m-d H:i:s');
 
+		//update surat masuk
+		$data_sm = array(
+			'status_print' => 1
+		);
+		$this->m_sm->update_sm($data_sm, $id);
+
 		$data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
 		$data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
 
