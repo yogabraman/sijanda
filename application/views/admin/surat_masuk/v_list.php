@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label class="control-label">Asal Surat</label>
-                    <input class="form-control" type="text" name="asal_surat" id="asal_surat" required>
+                    <input class="form-control" type="text" name="asal_surat" id="asal_surat">
                 </div>
             </div>
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>

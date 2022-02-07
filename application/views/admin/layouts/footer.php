@@ -216,7 +216,7 @@ $result = date_format($date, "Y");
             $('#filex').empty();
             $('#dispoModal').modal('show');
             $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="' + Idx[1] + '">');
-            $('#filex').append('<embed src="<?= base_url() ?>assets/suratmasuk/'+ Idx[0] +'" width="800px" height="1000px" />');
+            $('#filex').append('<embed src="<?= base_url() ?>assets/suratmasuk/' + Idx[0] + '" width="800px" height="1000px" />');
         });
     });
 </script>
@@ -389,15 +389,6 @@ $result = date_format($date, "Y");
     });
 </script>
 
-<!-- Autocomplete -->
-<script type="text/javascript">
-        $(document).ready(function(){
-            $( "#asal_surat" ).autocomplete({
-              source: "<?php echo site_url('auto/auto_asal/?');?>"
-            });
-        });
-    </script>
-
 <!-- Bootstrap core JavaScript-->
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -441,7 +432,14 @@ $result = date_format($date, "Y");
     });
 </script>
 
-
+<!-- Autocomplete -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#asal_surat").autocomplete({
+            source: "<?php echo site_url('auto/auto_asal/?'); ?>"
+        });
+    });
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 

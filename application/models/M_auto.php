@@ -1,16 +1,13 @@
-<?php if(!defined('BASEPATH')) exit ('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class M_Auto extends CI_Model {
-    public function __construct()
+class M_Auto extends CI_Model
+{
+    function getAsal($title)
     {
-        parent::__construct();
-    }
 
-    function search_asal($name){
-        $this->db->like('asal_surat', $name , 'both');
-        $this->db->order_by('asal_surat', 'ASC');
+        $this->db->like('pegawai', $title, 'both');
+        $this->db->order_by('pegawai', 'ASC');
         $this->db->limit(10);
-        return $this->db->get('tbl_surat_masuk')->result();
+        return $this->db->get('tbl_pegawai')->result();
     }
-
 }
