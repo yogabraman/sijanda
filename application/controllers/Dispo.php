@@ -84,19 +84,23 @@ class Dispo extends CI_Controller
 	public function getdisp()
 	{
 		$id = $this->input->post("dispoId");
+		$regex = 
+		$dispoId = explode("/", $id);
+		$suratId = 
 
 		$record = $this->db->query("SELECT * FROM tbl_disposisi WHERE id_disposisi ='$id'")->result();
 		$struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
 		$pr = $this->db->query("SELECT * FROM tbl_perintah")->result();
 		$nama_bidang = $this->db->limit(1)->query("SELECT tujuan FROM tbl_disposisi WHERE id_disposisi ='$id'")->row()->tujuan;
 		$perintah = $this->db->limit(1)->query("SELECT perintah FROM tbl_disposisi WHERE id_disposisi ='$id'")->row()->perintah;
-		$filex = $this->db->limit(1)->query("SELECT file FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE tbl_disposisi.id_surat=tbl_surat_masuk.id_surat")->row()->file;
+		// $filex = $this->db->limit(1)->query("SELECT file FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE tbl_disposisi.id_surat=tbl_surat_masuk.id_surat")->row()->file;
 
+		// $filex = "";
 		$output = "";
 		$abc = "";
 		$def = "";
-		$ghi = "";
-		$ghi .= '<embed src="'. base_url().'assets/suratmasuk/'. $filex .'" width="800px" height="1000px" />';
+		// $ghi = "";
+		// $ghi .= '<embed src="'. base_url().'assets/suratmasuk/'. $filex .'" width="800px" height="1000px" />';
 
 		foreach ($struk as $row) {
 			if (!empty($nama_bidang)) {
@@ -135,6 +139,7 @@ class Dispo extends CI_Controller
 		}
 
 		foreach ($record as $rows) {
+			$filex = $this->db->limit(1)->query("SELECT file FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE $rows->id_surat=tbl_surat_masuk.id_surat")->row()->file;
 			$output .= '
 				<div class="modal-content">
 					<div class="modal-header">
@@ -146,7 +151,7 @@ class Dispo extends CI_Controller
 							<form action="' . base_url("dispo/edit_dispo") . '" method="post" enctype="multipart/form-data">
 								<div class="form-body">
 									<div class="row">
-										'. $ghi .'
+										<embed src="'. base_url().'assets/suratmasuk/'. $filex .'" width="800px" height="1000px" />
 									</div>
 
 									<div class="row">
