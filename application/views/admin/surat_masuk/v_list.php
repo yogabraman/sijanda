@@ -171,13 +171,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         $no_agenda = $this->db->query("SELECT no_agenda FROM tbl_surat_masuk")->result();
                                         foreach ($no_agenda as $rows) {
-                                            $regex = explode("/", $rows->no_agenda);
-                                            $ymd = $regex[0];
-                                            $num = $regex[1] + 1;
                                             $rand = date("Ymd");
+                                            if (strpos($rows->no_agenda,'/') !== false) {
+                                                $regex = explode("/", $rows->no_agenda);
+                                                $ymd = $regex[0];
+                                                $num = $regex[1] + 1;
 
-                                            if ($ymd == $rand) {
-                                                echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/' . $num . '" readonly>';
+                                                if ($ymd == $rand) {
+                                                    echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/' . $num . '" readonly>';
+                                                } else {
+                                                    echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
+                                                }
                                             } else {
                                                 echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
                                             }
