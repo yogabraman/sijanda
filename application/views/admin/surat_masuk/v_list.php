@@ -13,12 +13,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <div class="col-md-6 col-12">
+            <!-- <div class="col-md-6 col-12">
                 <div class="form-group">
                     <label class="control-label">Asal Surat</label>
                     <input class="form-control" type="text" name="asal_surat" id="asal_surat">
                 </div>
-            </div>
+            </div> -->
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                 <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
             <?php } else {
