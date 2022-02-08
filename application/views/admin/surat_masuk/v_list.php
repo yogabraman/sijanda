@@ -167,10 +167,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Nomor Agenda</label>
-                                        <?php
+                                        <input class="form-control" type="text" name="no_agenda">
+                                        <!-- <?php
                                         
                                         $rand = date("Ymd");
                                         $no_agenda = $this->db->query("SELECT no_agenda FROM tbl_surat_masuk")->result();
+                                        // $regex = ""
                                         foreach ($no_agenda as $rows) {    
                                             if (strpos($rows->no_agenda,'/') !== false) {
                                                 $regex = explode("/", $rows->no_agenda);
@@ -186,7 +188,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         }
                                         echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
 
-                                        ?>
+                                        ?> -->
                                     </div>
                                 </div>
 
