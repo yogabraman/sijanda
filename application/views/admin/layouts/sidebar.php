@@ -30,21 +30,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item <?php echo $this->uri->segment(1) == 'surat_masuk' || $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'cetak' ? 'active' : ''; ?>">
+                <li class="nav-item <?php echo $this->uri->segment(1) == 'surat_masuk' || $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'list1' ? 'active' : ''; ?>">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasuk" aria-expanded="true" aria-controls="collapseMasuk">
                         <i class="fas fa-fw fa-inbox"></i>
-                        <span>Surat Masuk</span>
+                        <span>Persuratan</span>
                     </a>
-                    <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'cetak' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'list_nota' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list') ?>">List Surat</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'cetak' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/cetak') ?>">Cetak</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list') ?>">Surat Masuk</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list1' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list1') ?>">Surat Keluar</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a>
                         </div>
                     </div>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item <?php echo $this->uri->segment(1) == 'surat_keluar' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'cetak1' ? 'active' : ''; ?>">
+                <!-- <li class="nav-item <?php echo $this->uri->segment(1) == 'surat_keluar' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'cetak1' ? 'active' : ''; ?>">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKeluar" aria-expanded="true" aria-controls="collapseKeluar">
                         <i class="fas fa-fw fa-inbox"></i>
                         <span>Surat Keluar</span>
@@ -53,6 +54,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list1' ? 'active' : ''; ?>" href="<?= site_url('surat_keluar/list1') ?>">List Surat</a>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'cetak1' ? 'active' : ''; ?>" href="<?= site_url('surat_keluar/cetak1') ?>">Cetak</a>
+                        </div>
+                    </div>
+                </li> -->
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
+                        <i class="fas fa-fw fa-file"></i>
+                        <span>Laporan</span>
+                    </a>
+                    <div id="collapseReport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Bidang I :</h6>
+                            <a class="nav-link collapsed" href="#" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport"><span>Laporan</span></a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Bidang v :</h6>
+                            <a class="collapse-item" >Wajib KTP</a>
+                            <!-- <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Bidang III :</h6>
+                            <a class="collapse-item" >III</a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Bidang IV :</h6>
+                            <a class="collapse-item" >IV</a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Bidang V :</h6>
+                            <a class="collapse-item" >V</a>
+                            <div class="collapse-divider"></div> -->
                         </div>
                     </div>
                 </li>

@@ -433,6 +433,7 @@ $result = date_format($date, "Y");
 </script>
 
 <!-- Autocomplete -->
+<script src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#asal_surat").autocomplete({

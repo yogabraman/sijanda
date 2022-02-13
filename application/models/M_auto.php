@@ -5,9 +5,10 @@ class M_Auto extends CI_Model
     function getAsal($title)
     {
 
-        $this->db->like('pegawai', $title, 'both');
-        $this->db->order_by('pegawai', 'ASC');
+        $this->db->like('asal_surat', $title, 'both');
+        $this->db->order_by('asal_surat', 'ASC');
+        $this->db->group_by('asal_surat');
         $this->db->limit(10);
-        return $this->db->get('tbl_pegawai')->result();
+        return $this->db->get('tbl_surat_masuk')->result();
     }
 }

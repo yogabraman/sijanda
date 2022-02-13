@@ -154,6 +154,31 @@ class Surat_masuk extends CI_Controller
 		$this->load->view('admin/layouts/footer', $data);
 	}
 
+	public function list1()
+	{
+		$keluar = $this->db->query("SELECT * FROM tbl_surat_keluar ORDER by id_surat DESC")->result();
+		$data = array(
+			'title' => "List Surat Keluar",
+			'keluar' => $keluar
+		);
+        $this->db->reconnect();
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/surat_keluar/v_list1', $data);
+		$this->load->view('admin/layouts/footer', $data);
+	}
+
+	public function list_nota()
+	{
+		$nota = $this->db->query("SELECT * FROM tbl_surat_keluar ORDER by id_surat DESC")->result();
+		$data = array(
+			'title' => "List Nota Dinas",
+			'nota' => $nota
+		);
+        $this->db->reconnect();
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/nota_dinas/v_list_nota', $data);
+		$this->load->view('admin/layouts/footer', $data);
+	}
 
 	public function get_sm()
     {

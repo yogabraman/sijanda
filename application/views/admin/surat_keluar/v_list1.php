@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Surat Masuk</h1>
+        <h1 class="h3 mb-0 text-gray-800">Surat keluar</h1>
     </div>
 
     <!-- DataTales Example -->
@@ -20,8 +20,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div> -->
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
-                <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
-                <a href="<?= site_url('surat_masuk/cetak') ?>" class="btn btn-info" ><i class="fa fa-print"></i> Cetak Surat Masuk</a>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat keluar</button>
+                <a href="<?= site_url('surat_masuk/cetak2') ?>" class="btn btn-info" ><i class="fa fa-print"></i> Cetak Surat keluar</a>
             <?php } else {
                 echo "";
             } ?>
@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($masuk as $rows) { ?>
+                        <?php foreach ($keluar as $rows) { ?>
                             <?php
                             $y = substr($rows->tgl_surat, 0, 4);
                             $m = substr($rows->tgl_surat, 5, 2);
@@ -87,7 +87,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
 
-                                        <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
 
                                         <button class="btn btn-danger hapus-sm" id="<?= $rows->id_surat ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
@@ -101,7 +101,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
-                                        <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
 
                                         <?php if ($rows->status_dispo == 0) { ?>
                                             <button class="btn btn-success add-dispo" id="<?= $rows->file ?>/-/<?= $rows->id_surat ?> title=" Disposisi"><i class="fa fa-pen"></i></button>
@@ -141,13 +141,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Surat Masuk</h4>
+                <h4 class="modal-title">Tambah Surat keluar</h4>
                 <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
             </div>
             <div class="modal-body">
                 <div class="card-body">
                     <div class="form-body">
-                        <form action="<?= site_url('surat_masuk/tambah_sm') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= site_url('surat_masuk/tambah_sk') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 
@@ -172,7 +172,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         
                                         $rand = date("Ymd");
-                                        $no_agenda = $this->db->query("SELECT no_agenda FROM tbl_surat_masuk")->result();
+                                        $no_agenda = $this->db->query("SELECT no_agenda FROM tbl_surat_keluar")->result();
                                         $cek = false;
                                         foreach ($no_agenda as $rows) {    
                                             if (strpos($rows->no_agenda,'/') !== false) {
