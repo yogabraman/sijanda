@@ -339,8 +339,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
                                         foreach ($struk as $rows) {
-                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" required>';
-                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang" required>&nbsp' . $rows->nama . '</label>';
+                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
+                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
                                         }
                                         ?>
                                     </div>
@@ -352,8 +352,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
                                         foreach ($struk as $rows) {
-                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]" required>';
-                                            echo '<label for="' . $rows->id_perintah . '" for="perintah" required>&nbsp' . $rows->perintah . '</label>';
+                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]" >';
+                                            echo '<label for="' . $rows->id_perintah . '" for="perintah" >&nbsp' . $rows->perintah . '</label>';
                                         }
                                         ?>
                                     </div>

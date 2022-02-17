@@ -39,13 +39,12 @@ class Dispo extends CI_Controller
 		$waktu = date('Y-m-d H:i:s');
 
 		$id_user = $this->session->userdata('id_user');
-		$bidang = json_encode($this->input->post('bidang'));
-		$perintah = json_encode($this->input->post('perintah'));
+		$bidang = $this->input->post('bidang') == null ? '[""]' : json_encode($this->input->post('bidang'));
+		$perintah = $this->input->post('perintah') == null ? '[""]' : json_encode($this->input->post('perintah'));
 		$id_surat = $this->input->post('id_surat');
 
 		$tipe_surat = $this->db->limit(1)->query("SELECT tipe_surat FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->tipe_surat;
-		// echo $tipe_surat;
-
+		
 		$data_dispo = array(
 			'tujuan' => $bidang,
 			'perintah' => $perintah,
