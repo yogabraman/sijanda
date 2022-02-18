@@ -374,7 +374,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Disposisi</label>
-                                        <input class="form-control" type="text" name="isi_disposisi" required>
+                                        <input class="form-control" type="text" name="isi_disposisi">
                                     </div>
                                 </div>
 
