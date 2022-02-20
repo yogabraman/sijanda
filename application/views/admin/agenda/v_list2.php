@@ -71,8 +71,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td><?= substr($rows->isi, 0, 200) ?></td>
                                 <td><?= $disp ?></td>
                                 <td class="text-center" style="min-width:100px;">
-                                    <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
-                                    <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
+                                    <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
+                                        <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
+                                    <?php } elseif ($this->session->userdata('level') == 2) { ?>
+                                        <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                    <?php } elseif ($this->session->userdata('level') == 3) { ?>
+                                        <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -126,14 +132,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Dari</label>
-                                        <input class="form-control" type="text" name="dari" >
+                                        <input class="form-control" type="text" name="dari">
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Acara</label>
-                                        <input class="form-control" type="text" name="isi" >
+                                        <input class="form-control" type="text" name="isi">
                                     </div>
                                 </div>
 
@@ -187,7 +193,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <!-- Modal Hapus -->
 <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ingin Menghapus Data?</h5>

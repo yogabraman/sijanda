@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Disposisi</h1>
+        <h1 class="h3 mb-0 text-gray-800">Nota Dinas</h1>
     </div>
 
     <!-- DataTales Example -->
@@ -110,7 +110,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="modal-body">
                 <div class="card-body">
                     <div class="form-body">
-                        <form action="<?= site_url('dispo/add_agenda') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= site_url('') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 

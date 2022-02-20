@@ -13,15 +13,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <!-- <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <label class="control-label">Asal Surat</label>
-                    <input class="form-control" type="text" name="asal_surat" id="asal_surat">
-                </div>
-            </div> -->
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                 <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat keluar</button>
-                <a href="<?= site_url('surat_masuk/cetak2') ?>" class="btn btn-info" ><i class="fa fa-print"></i> Cetak Surat keluar</a>
+                <a href="<?= site_url('surat_masuk/cetak1') ?>" class="btn btn-info"><i class="fa fa-print"></i> Cetak Surat keluar</a>
             <?php } else {
                 echo "";
             } ?>
@@ -151,51 +145,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="row">
 
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Pilih tipe Surat</label>
-                                        <select class="form-control tipe_surat" name="tipe_surat" required>
-                                            <option value="0">Surat Biasa</option>
-                                            <option value="1">Undangan</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Nomor Agenda</label>
-                                        <!-- <input class="form-control" type="text" name="no_agenda"> -->
-                                        <?php
-                                        
-                                        $rand = date("Ymd");
-                                        $no_agenda = $this->db->query("SELECT no_agenda FROM tbl_surat_keluar")->result();
-                                        $cek = false;
-                                        foreach ($no_agenda as $rows) {    
-                                            if (strpos($rows->no_agenda,'/') !== false) {
-                                                $regex = explode("/", $rows->no_agenda);
-                                                $ymd = $regex[0];
-                                                $num = $regex[1] + 1;
-
-                                                if ($ymd == $rand) {
-                                                    echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/' . $num . '" readonly>';
-                                                } else {
-                                                    echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
-                                                }
-                                                $cek = true;
-                                            }
-                                        }
-                                        // print_r($cek);
-                                        if ($cek == false){
-                                            echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Asal Surat</label>
@@ -213,14 +162,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Surat</label>
-                                        <input class="form-control" type="date" name="tgl_surat">
+                                        <input class="form-control" type="date" name="tgl_surat" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Tanggal Diteruskan</label>
+                                        <input class="form-control" type="date" name="tgl_terus" >
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
-                                        <input class="form-control" type="text" name="isi">
+                                        <input class="form-control" type="text" name="isi" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Isi Disposisi</label>
+                                        <input class="form-control" type="text" name="dispo">
                                     </div>
                                 </div>
 
@@ -230,35 +193,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <input type="file" name="filex" class="form-control">
                                         <small class="red-text">*Format file yang diperbolehkan *.JPG, *.PNG, *.DOC, *.DOCX, *.PDF dan ukuran maksimal file 10 MB!</small>
                                     </div>
-                                </div>
-
-                            </div>
-
-
-                            <div id="undangan">
-                                <div class="row">
-
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Tanggal Acara</label>
-                                            <input class="form-control" type="date" name="tgl_agenda">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Tempat Acara</label>
-                                            <input class="form-control" type="text" name="tempat" placeholder="tempat">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label class="control-label">Waktu Acara</label>
-                                            <input class="form-control" type="time" name="waktu_agenda">
-                                        </div>
-                                    </div>
-
                                 </div>
 
                             </div>
@@ -311,101 +245,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="modal-footer">
                 <div id="test"></div>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <!-- <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a> -->
+                <!-- <a class="btn btn-danger" href="<?= site_url('') ?>">Hapus</a> -->
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Dispo -->
-<div class="modal fade" id="dispoModal" role="dialog">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Tambah Dispo</h4>
-                <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="card-body">
-                    <div class="form-body">
-                        <form action="<?= site_url('dispo/add_dispo') ?>" method="post" enctype="multipart/form-data">
-                            <div id="filex" class="row"></div>
-                            <div class="row">
-                                <div id="ids"></div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Kepada Yth: </label>
-                                        <?php
-                                        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-                                        foreach ($struk as $rows) {
-                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
-                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Untuk :</label>
-                                        <?php
-                                        $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
-                                        foreach ($struk as $rows) {
-                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]">';
-                                            echo '<label for="' . $rows->id_perintah . '" for="perintah">&nbsp' . $rows->perintah . '</label>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Pilih Sifat Disposisi</label>
-                                        <select class="form-control" id="sifat" type="text" name="sifat" required>
-                                            <option value="Biasa">Biasa</option>
-                                            <option value="Penting">Penting</option>
-                                            <option value="Segera">Segera</option>
-                                            <option value="Rahasia">Rahasia</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Isi Disposisi</label>
-                                        <input class="form-control" type="text" name="isi_disposisi">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Catatan</label>
-                                        <input class="form-control" type="text" name="catatan">
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row" align="right">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-        </div>
-        <div class="modal-footer">
-        </div>
-    </div>
-
-</div>
 <!-- End of Main Content -->
