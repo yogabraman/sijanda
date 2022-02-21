@@ -75,7 +75,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
-                                        <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                        <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
                                         <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
                                     <?php } ?>
