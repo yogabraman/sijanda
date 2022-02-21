@@ -23,16 +23,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTableSM" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTableSK" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No. Agenda</th>
                             <th>No. Surat<br />Tgl Surat</th>
                             <th>Asal Surat</th>
                             <th>Perihal</th>
+                            <th>Tgl Diteruskan</th>
+                            <th>Isi Dispo</th>
                             <th>Action</th>
-                            <th>status</th>
-                            <th>created at</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,53 +69,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             }
                             ?>
                             <tr>
-                                <td><?= $rows->no_agenda ?></td>
                                 <td><?= $rows->no_surat ?> <br>
                                     <hr /> <?= $d . " " . $nm . " " . $y ?>
                                 </td>
                                 <td><?= $rows->asal_surat ?></td>
-                                <td><?= $rows->isi ?></td>
-                                <td class="text-center" style="min-width:180px;">
+                                <td><?= $rows->perihal ?></td>
+                                <td><?= $rows->isi_dispo ?></td>
+                                <td class="text-center" style="min-width:100px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
-
-                                        <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
-
-                                        <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-
-                                        <button class="btn btn-danger hapus-sm" id="<?= $rows->id_surat ?>" title="Hapus"><i class="fa fa-trash"></i></button>
-
-                                        <?php if ($rows->status_dispo == 0) { ?>
-                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
-                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0) { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } else { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
-                                        <?php } ?>
-
+                                        <button class="btn btn-info edit-sk" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <button class="btn btn-danger hapus-sk" id="<?= $rows->id_surat ?>"><i class="fa fa-trash"></i></button>
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
-
-                                        <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-
-                                        <?php if ($rows->status_dispo == 0) { ?>
-                                            <button class="btn btn-success add-dispo" id="<?= $rows->file ?>/-/<?= $rows->id_surat ?> title=" Disposisi"><i class="fa fa-pen"></i></button>
-                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
-                                        <?php } else { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } ?>
-
+                                        <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
-                                        <?php if ($rows->status_dispo == 0) { ?>
-                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
-                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0) { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
-                                        <?php } else { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } ?>
+                                        <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
                                     <?php } ?>
-
                                 </td>
-                                <td><?= $rows->status_dispo ?></td>
-                                <td><?= $rows->tgl_diterima ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -169,21 +137,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Diteruskan</label>
-                                        <input class="form-control" type="date" name="tgl_terus" >
+                                        <input class="form-control" type="date" name="tgl_naik" >
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
-                                        <input class="form-control" type="text" name="isi" required>
+                                        <input class="form-control" type="text" name="perihal" required>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Disposisi</label>
-                                        <input class="form-control" type="text" name="dispo">
+                                        <input class="form-control" type="text" name="isi_dispo">
                                     </div>
                                 </div>
 

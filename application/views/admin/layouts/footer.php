@@ -205,6 +205,90 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Edit Surat Keluar -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableSK').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableSK').on('click', '.edit-sk', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var skId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('surat_masuk/get_sk') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    skId: skId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<!-- Hapus Surat Keluar -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableSK').DataTable();
+        $('#dataTableSK').on('click', '.hapus-sk', function() {
+            var skId = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('surat_masuk/hapus_sk/') ?>' + skId + '">Hapus</a>');
+        });
+    });
+</script>
+
+<!-- Cetak Surat Keluar -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableSK').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#btnSearch').click(function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var start = $('#start').val();
+            var end = $('#end').val();
+
+
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo base_url('surat_masuk/get_cetak') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    start: start,
+                    end: end
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    //alert("What follows is blank: " + data);
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#cari').html(data);
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
 <!-- Tambah Dispo -->
 <script type="text/javascript">
     $(document).ready(function() {

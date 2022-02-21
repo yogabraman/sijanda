@@ -36,6 +36,7 @@ class Surat_masuk extends CI_Controller
         $this->load->view('admin/layouts/footer', $data);
     }
 
+    //tambah surat masuk
     public function tambah_sm()
     {
 
@@ -133,6 +134,7 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //tambah surat keluar
     public function tambah_sk()
     {
 
@@ -142,21 +144,18 @@ class Surat_masuk extends CI_Controller
         $id_user = $this->session->userdata('id_user');
         $new = $_FILES["filex"]["name"];
 
-        $data_surat = array(
-            'no_agenda' => $this->input->post('no_agenda'),
+        $data = array(
             'no_surat' => $this->input->post('no_surat'),
             'asal_surat' => $this->input->post('asal_surat'),
-            'isi' => $this->input->post('isi'),
+            'perihal' => $this->input->post('perihal'),
             'tgl_surat' => $this->input->post('tgl_surat'),
-            'tgl_diterima' => $waktu,
-            'file' => $this->m_sm->_uploadFile($new),
-            'keterangan' => "",
-            'status_dispo' => 0,
-            'tipe_surat' => $this->input->post('tipe_surat'),
+            'tgl_naik' => $this->input->post('tgl_naik'),
+            'file' => $this->m_sm->_uploadFileSK($new),
+            'isi_dispo' => $this->input->post('isi_dispo'),
             'id_user' => $id_user
         );
 
-        $result = $this->m_sm->add_sm($data_surat);
+        $result = $this->m_sk->add_sk($data);
 
         if ($result) {
             $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Disimpan!!.');
@@ -167,6 +166,7 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //list surat masuk
     public function list()
     {
         $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC")->result();
@@ -181,6 +181,7 @@ class Surat_masuk extends CI_Controller
         $this->load->view('admin/layouts/footer', $data);
     }
 
+    //list surat keluar
     public function list1()
     {
         $keluar = $this->db->query("SELECT * FROM tbl_surat_keluar ORDER by id_surat DESC")->result();
@@ -194,6 +195,7 @@ class Surat_masuk extends CI_Controller
         $this->load->view('admin/layouts/footer', $data);
     }
 
+    //list nota dinas
     public function list_nota()
     {
         $nota = $this->db->query("SELECT * FROM tbl_surat_keluar ORDER by id_surat DESC")->result();
@@ -207,6 +209,7 @@ class Surat_masuk extends CI_Controller
         $this->load->view('admin/layouts/footer', $data);
     }
 
+    //form edit surat masuk
     public function get_sm()
     {
         $id = $this->input->post("smId");
@@ -222,6 +225,7 @@ class Surat_masuk extends CI_Controller
             $tgl_surat = $rows->tgl_surat;
             $isi = $rows->isi;
             $file = $rows->file;
+            $penerima = $rows->penerima;
         }
 
         $output = "";
@@ -325,7 +329,7 @@ class Surat_masuk extends CI_Controller
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Pegawai Penerima</label>
-                                        <select class="form-control" id="penerima" type="text" name="penerima" required>
+                                        <select class="form-control" id="penerima" type="text" name="penerima">
                                             <option value="' . $rows->penerima . '" >' . $rows->penerima . '</option>
                                             ' . $abc . '
                                         </select>
@@ -414,8 +418,8 @@ class Surat_masuk extends CI_Controller
                             <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label class="control-label">Pegawai Penerima</label>
-                                    <select class="form-control" id="penerima" type="text" name="penerima" required>
-                                        <option value="' . $rows->penerima . '" >' . $rows->penerima . '</option>
+                                    <select class="form-control" id="penerima" type="text" name="penerima">
+                                        <option value="' . $penerima . '" >' . $penerima . '</option>
                                         ' . $abc . '
                                     </select>
                                 </div>
@@ -439,6 +443,110 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //form edit surat keluar
+    public function get_sk()
+    {
+        $id = $this->input->post("skId");
+
+        $cek = $this->db->query("SELECT * FROM tbl_surat_keluar WHERE id_surat ='$id'")->result();
+
+        foreach ($cek as $rows) {
+            $asal_surat = $rows->asal_surat;
+            $no_surat = $rows->no_surat;
+            $perihal = $rows->perihal;
+            $tgl_surat = $rows->tgl_surat;
+            $tgl_naik = $rows->tgl_naik;
+            $isi_dispo = $rows->dispo;
+            $file = $rows->file;
+        }
+
+        $output = "";
+
+        $output = '
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Surat Keluar</h4>
+                            <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <form action="' . base_url("surat_masuk/edit_sk") . '" method="post" enctype="multipart/form-data">
+                                    <div class="form-body">
+
+                                        <div class="row">
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <input class="form-control" type="hidden" name="id_surat" value="' . $id . '">
+                                        <label class="control-label">Asal Surat</label>
+                                        <input class="form-control" type="text" name="asal_surat" value="' . $asal_surat . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Nomor Surat</label>
+                                        <input class="form-control" type="text" name="no_surat" value="' . $no_surat . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Tanggal Surat</label>
+                                        <input class="form-control" type="date" name="tgl_surat" value="' . $tgl_surat . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Perihal</label>
+                                        <input class="form-control" type="text" name="perihal" value="' . $perihal . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Tanggal Diteruskan</label>
+                                        <input class="form-control" type="date" name="tgl_naik" value="' . $tgl_naik . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Isi Diposisi</label>
+                                        <input class="form-control" type="text" name="isi_dispo" value="' . $isi_dispo . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">File</label>
+                                        <input type="file" name="filex" class="form-control">
+                                        <input type="hidden" name="old_file" class="form-control" value="' . $file . '">
+                                        <small class="red-text">Current File : <b>' . substr($file, 22) . '</b> *Jika tidak ada file/scan gambar surat, biarkan kosong!</small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                                        <div class="row" align="right">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-warning"><i class="fa fa-check"></i> Update</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                ';
+        echo $output;
+    }
+
+    //store edit surat masuk
     function edit_sm()
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -519,6 +627,46 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //store edit surat keluar
+    function edit_sk()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
+
+        $id_surat = $this->input->post("id_surat");
+        $new = $this->input->post("filex");
+        
+        if (!empty($_FILES["filex"]["name"])) {
+
+            $new = $_FILES["filex"]["name"];
+            $files = $this->m_sm->_uploadFile($new);
+        } else {
+            $files = $this->input->post("old_file");
+        }
+
+        $data_surat = array(
+            'no_surat' => $this->input->post('no_surat'),
+            'asal_surat' => $this->input->post('asal_surat'),
+            'perihal' => $this->input->post('perihal'),
+            'tgl_surat' => $this->input->post('tgl_surat'),
+            'tgl_naik' => $this->input->post('tgl_naik'),
+            'file' => $files,
+            'penerima' => $this->input->post('penerima'),
+            'isi_dispo' => $this->input->post('isi_dispo')
+        );
+
+        $result = $this->m_sm->update_sm($data_surat, $id_surat);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Diubah!!.');
+            redirect(site_url('surat_masuk/list1'));
+        } else {
+            $this->session->set_flashdata('error', 'Gagal Ubah Data Surat Biasa!!.');
+            redirect(site_url('surat_masuk/list1'));
+        }
+    }
+
+    //hapus surat masuk
     function hapus($id)
     {
         $result = $this->m_sm->hapus_sm($id);
@@ -532,6 +680,21 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //hapus surat masuk
+    function hapus_sk($id)
+    {
+        $result = $this->m_sk->hapus_sk($id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Berhasil dihapus!!.');
+            redirect(site_url('surat_masuk/list1'));
+        } else {
+            $this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
+            redirect(site_url('surat_masuk/list1'));
+        }
+    }
+
+    //direct cetak surat masuk
     public function cetak()
     {
         $data = array(
@@ -542,6 +705,7 @@ class Surat_masuk extends CI_Controller
         $this->load->view('admin/layouts/footer', $data);
     }
 
+    //get list cetak surat masuk
     public function get_cetak()
     {
 
@@ -607,6 +771,7 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //pdf cetak surat masuk
     public function cetakbydate()
     {
 
