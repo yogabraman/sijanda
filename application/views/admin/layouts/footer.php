@@ -289,6 +289,53 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Edit Nota Dinas -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableNota').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableNota').on('click', '.edit-nota', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var notaId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('surat_masuk/get_nota') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    notaId: notaId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<!-- Hapus Surat Keluar -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableNota').DataTable();
+        $('#dataTableNota').on('click', '.hapus-nota', function() {
+            var notaId = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('surat_masuk/hapus_nota/') ?>' + notaId + '">Hapus</a>');
+        });
+    });
+</script>
+
 <!-- Tambah Dispo -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -522,6 +569,16 @@ $result = date_format($date, "Y");
     $(document).ready(function() {
         $("#asal_surat").autocomplete({
             source: "<?php echo site_url('auto/auto_asal/?'); ?>"
+        });
+    });
+</script>
+
+<!-- Autocomplete -->
+<script src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#nota_surat").autocomplete({
+            source: "<?php echo site_url('auto/auto_surat/?'); ?>"
         });
     });
 </script>

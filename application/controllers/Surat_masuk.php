@@ -8,6 +8,8 @@ class Surat_masuk extends CI_Controller
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->model('m_sm');
+        $this->load->model('m_sk');
+        $this->load->model('m_nota');
         $this->load->library('pdf');
 
         if ($this->session->userdata('status') != "login") {
@@ -166,6 +168,36 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //tambah nota dinas
+    public function tambah_nota()
+    {
+
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
+
+        $id_user = $this->session->userdata('id_user');
+        $new = $_FILES["filex"]["name"];
+
+        $data = array(
+            'id_surat' => $this->input->post('id_surat'),
+            'file_nota' => $this->m_nota->_uploadFileNota($new),
+            'tgl_nota' => $this->input->post('tgl_nota'),
+            'created_at' => $waktu,
+            'updated_at' => $waktu,
+            'id_user' => $id_user
+        );
+
+        $result = $this->m_nota->add_nota($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Disimpan!!.');
+            redirect(site_url('surat_masuk/list1'));
+        } else {
+            $this->session->set_flashdata('error', 'Gagal Simpan Data Surat Biasa!!.');
+            redirect(site_url('surat_masuk/list1'));
+        }
+    }
+
     //list surat masuk
     public function list()
     {
@@ -198,7 +230,7 @@ class Surat_masuk extends CI_Controller
     //list nota dinas
     public function list_nota()
     {
-        $nota = $this->db->query("SELECT * FROM tbl_surat_keluar ORDER by id_surat DESC")->result();
+        $nota = $this->db->query("SELECT * FROM tbl_nota_dinas ORDER by id_nota DESC")->result();
         $data = array(
             'title' => "List Nota Dinas",
             'nota' => $nota
@@ -546,6 +578,87 @@ class Surat_masuk extends CI_Controller
         echo $output;
     }
 
+    //form edit nota dinas
+    public function get_nota()
+    {
+        $id = $this->input->post("notaId");
+
+        $cek = $this->db->query("SELECT * FROM tbl_nota_dinas WHERE id_nota ='$id'")->result();
+
+        foreach ($cek as $rows) {
+            $id_surat = $rows->id_surat;
+            $file_nota = $rows->file_nota;
+            $file_dispo = $rows->file_dispo;
+            $tgl_nota = $rows->tgl_nota;
+        }
+
+        $output = "";
+
+        $output = '
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Nota Dinas</h4>
+                            <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <form action="' . base_url("surat_masuk/edit_nota") . '" method="post" enctype="multipart/form-data">
+                                    <div class="form-body">
+
+                                        <div class="row">
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <input class="form-control" type="hidden" name="id_nota" value="' . $id . '">
+                                        <label class="control-label">Surat</label>
+                                        <input class="form-control" type="text" name="id_surat" value="' . $id_surat . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Tanggal Nota Dinas</label>
+                                        <input class="form-control" type="date" name="tgl_surat" value="' . $tgl_nota . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Nota Dinas</label>
+                                        <input type="file" name="filex" class="form-control">
+                                        <input type="hidden" name="old_file" class="form-control" value="' . $file_nota . '">
+                                        <small class="red-text">Current File : <b>' . substr($file_nota, 22) . '</b> *Jika tidak ada file/scan gambar surat, biarkan kosong!</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Dispo Nota Dinas</label>
+                                        <input type="file" name="filex2" class="form-control">
+                                        <input type="hidden" name="old_file2" class="form-control" value="' . $file_dispo . '">
+                                        <small class="red-text">Current File : <b>' . substr($file_dispo, 22) . '</b> *Jika tidak ada file/scan gambar surat, biarkan kosong!</small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                                        <div class="row" align="right">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-warning"><i class="fa fa-check"></i> Update</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                ';
+        echo $output;
+    }
+
     //store edit surat masuk
     function edit_sm()
     {
@@ -639,7 +752,7 @@ class Surat_masuk extends CI_Controller
         if (!empty($_FILES["filex"]["name"])) {
 
             $new = $_FILES["filex"]["name"];
-            $files = $this->m_sm->_uploadFile($new);
+            $files = $this->m_sk->_uploadFileSK($new);
         } else {
             $files = $this->input->post("old_file");
         }
@@ -666,6 +779,51 @@ class Surat_masuk extends CI_Controller
         }
     }
 
+    //store edit surat keluar
+    function edit_nota()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
+
+        $id = $this->input->post("id_nota");
+        $new = $this->input->post("filex");
+        $new2 = $this->input->post("filex2");
+        
+        if (!empty($_FILES["filex"]["name"])) {
+
+            $new = $_FILES["filex"]["name"];
+            $files = $this->m_nota->_uploadFileNota($new);
+        } else {
+            $files = $this->input->post("old_file");
+        }
+        
+        if (!empty($_FILES["filex2"]["name"])) {
+
+            $new2 = $_FILES["filex2"]["name"];
+            $files2 = $this->m_nota->_uploadFileDispo($new2);
+        } else {
+            $files2 = $this->input->post("old_file2");
+        }
+
+        $data = array(
+            'id_surat' => $this->input->post('no_surat'),
+            'file_nota' => $files,
+            'file_dispo' => $files2,
+            'tgl_nota' => $this->input->post('tgl_nota'),
+            'updated_at' => $waktu
+        );
+
+        $result = $this->m_nota->update_nota($data, $id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Diubah!!.');
+            redirect(site_url('surat_masuk/list_nota'));
+        } else {
+            $this->session->set_flashdata('error', 'Gagal Ubah Data Surat Biasa!!.');
+            redirect(site_url('surat_masuk/list_nota'));
+        }
+    }
+
     //hapus surat masuk
     function hapus($id)
     {
@@ -680,7 +838,7 @@ class Surat_masuk extends CI_Controller
         }
     }
 
-    //hapus surat masuk
+    //hapus surat keluar
     function hapus_sk($id)
     {
         $result = $this->m_sk->hapus_sk($id);
@@ -691,6 +849,20 @@ class Surat_masuk extends CI_Controller
         } else {
             $this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
             redirect(site_url('surat_masuk/list1'));
+        }
+    }
+
+    //hapus nota dinas
+    function hapus_nota($id)
+    {
+        $result = $this->m_nota->hapus_nota($id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Berhasil dihapus!!.');
+            redirect(site_url('surat_masuk/list_nota'));
+        } else {
+            $this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
+            redirect(site_url('surat_masuk/list_nota'));
         }
     }
 
