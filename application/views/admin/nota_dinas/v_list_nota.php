@@ -36,6 +36,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             $d = substr($rows->tgl_nota, 8, 2);
                             $id_surat = $rows->id_surat;
 
+                            $y1 = substr($rows->tgl_surat, 0, 4);
+                            $m1 = substr($rows->tgl_surat, 5, 2);
+                            $d1 = substr($rows->tgl_surat, 8, 2);
+
                             if ($m == "01") {
                                 $nm = "Januari";
                             } elseif ($m == "02") {
@@ -61,11 +65,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             } elseif ($m == "12") {
                                 $nm = "Desember";
                             }
+
+                            if ($m1 == "01") {
+                                $nm1 = "Januari";
+                            } elseif ($m1 == "02") {
+                                $nm1 = "Februari";
+                            } elseif ($m1 == "03") {
+                                $nm1 = "Maret";
+                            } elseif ($m1 == "04") {
+                                $nm1 = "April";
+                            } elseif ($m1 == "05") {
+                                $nm1 = "Mei";
+                            } elseif ($m1 == "06") {
+                                $nm1 = "Juni";
+                            } elseif ($m1 == "07") {
+                                $nm1 = "Juli";
+                            } elseif ($m1 == "08") {
+                                $nm1 = "Agustus";
+                            } elseif ($m1 == "09") {
+                                $nm1 = "September";
+                            } elseif ($m1 == "10") {
+                                $nm1 = "Oktober";
+                            } elseif ($m1 == "11") {
+                                $nm1 = "November";
+                            } elseif ($m1 == "12") {
+                                $nm1 = "Desember";
+                            }
                             ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td></td>
-                                <td></td>
+                                <td><?= $rows->no_surat ?> <br>
+                                    <hr /> <?= $d1 . " " . $nm1 . " " . $y1 ?>
+                                </td>
+                                <td><?= $rows->perihal ?></td>
                                 <td><?= $d . " " . $nm . " " . $y ?>
                                 </td>
                                 <td class="text-center" style="min-width:180px;">
@@ -73,14 +105,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <button class="btn btn-info edit-nota" id="<?= $rows->id_nota ?>" title="Edit"><i class="far fa-edit"></i></button>
 
+                                        <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+
                                         <button class="btn btn-danger hapus-nota" id="<?= $rows->id_nota ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
-                                        
+                                        <?php if ($rows->tgl_disponota == null) { ?>
+                                            <button class="btn btn-success add-disponota" id="<?= $rows->file_nota ?>/-/<?= $rows->id_nota ?> title=" Disposisi"><i class="fa fa-pen"></i></button>
+                                        <?php } else { ?>
+
+                                        <?php } ?>
+
 
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
-                                        
+
                                     <?php } ?>
 
                                 </td>
@@ -115,7 +154,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Pilih Surat</label>
-                                        <input class="form-control" type="text" name="id_surat" id="nota_surat" required>
+                                        <input class="form-control" type="text" id="nota_surat" name="id_surat" required>
+                                        <!-- <input class="form-control" type="text" name="value">  -->
                                     </div>
                                 </div>
 
@@ -189,70 +229,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 <!-- Modal Dispo -->
-<div class="modal fade" id="dispoModal" role="dialog">
+<div class="modal fade" id="disponotaModal" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Dispo</h4>
+                <h4 class="modal-title">Tambah Dispo Nota Dinas</h4>
                 <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
             </div>
             <div class="modal-body">
                 <div class="card-body">
                     <div class="form-body">
-                        <form action="<?= site_url('dispo/add_dispo') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= site_url('dispo/add_disponota') ?>" method="post" enctype="multipart/form-data">
                             <div id="filex" class="row"></div>
                             <div class="row">
                                 <div id="ids"></div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Kepada Yth: </label>
-                                        <?php
-                                        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-                                        foreach ($struk as $rows) {
-                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
-                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Untuk :</label>
-                                        <?php
-                                        $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
-                                        foreach ($struk as $rows) {
-                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]" >';
-                                            echo '<label for="' . $rows->id_perintah . '" for="perintah" >&nbsp' . $rows->perintah . '</label>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Pilih Sifat Disposisi</label>
-                                        <select class="form-control" id="sifat" type="text" name="sifat" required>
-                                            <option value="Biasa">Biasa</option>
-                                            <option value="Penting">Penting</option>
-                                            <option value="Segera">Segera</option>
-                                            <option value="Rahasia">Rahasia</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Isi Disposisi</label>
-                                        <input class="form-control" type="text" name="isi_disposisi">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Catatan</label>
-                                        <input class="form-control" type="text" name="catatan">
+                                        <br>
+                                        <input type="checkbox" class="control-input" id="notaCheck" required>
+                                        <label  class="control-label" for="notaCheck">Nota Dinas yang diteruskan sudah dikoreksi dan benar</label>
                                     </div>
                                 </div>
 

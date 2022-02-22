@@ -9,6 +9,7 @@ class Dispo extends CI_Controller
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('m_dispo');
 		$this->load->model('m_sm');
+		$this->load->model('m_nota');
 		$this->load->library('pdf');
 
 		if ($this->session->userdata('status') != "login") {
@@ -77,6 +78,29 @@ class Dispo extends CI_Controller
 		} else {
 			$this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
 			redirect(site_url('surat_masuk/list'));
+		}
+	}
+
+	public function add_disponota()
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$waktu = date('Y-m-d H:i:s');
+
+		$id_nota = $this->input->post('id_nota');
+
+		$data = array(
+			'tgl_disponota' => $waktu
+		);
+
+		//update dispo nota dinas
+		$result = $this->m_nota->update_nota($data, $id_nota);
+
+		if ($result) {
+			$this->session->set_flashdata('success', 'Data Berhasil Disimpan!!.');
+			redirect(site_url('surat_masuk/list_nota'));
+		} else {
+			$this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
+			redirect(site_url('surat_masuk/list_nota'));
 		}
 	}
 

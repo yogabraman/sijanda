@@ -14,8 +14,9 @@ class M_Auto extends CI_Model
 
     function getSurat($title)
     {
+        // $this->db->like('no_surat', $title, 'both');
         $this->db->like('isi', $title, 'both');
-        $this->db->order_by('isi', 'ASC');
+        // $this->db->order_by('isi', 'ASC');
         return $this->db->get('tbl_surat_masuk')->result();
     }
 }

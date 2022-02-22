@@ -191,10 +191,10 @@ class Surat_masuk extends CI_Controller
 
         if ($result) {
             $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Disimpan!!.');
-            redirect(site_url('surat_masuk/list1'));
+            redirect(site_url('surat_masuk/list_nota'));
         } else {
             $this->session->set_flashdata('error', 'Gagal Simpan Data Surat Biasa!!.');
-            redirect(site_url('surat_masuk/list1'));
+            redirect(site_url('surat_masuk/list_nota'));
         }
     }
 
@@ -230,7 +230,11 @@ class Surat_masuk extends CI_Controller
     //list nota dinas
     public function list_nota()
     {
-        $nota = $this->db->query("SELECT * FROM tbl_nota_dinas ORDER by id_nota DESC")->result();
+        $nota = $this->db->query("SELECT tbl_nota_dinas.*, 
+            tbl_surat_masuk.no_surat as no_surat, 
+            tbl_surat_masuk.tgl_surat as tgl_surat, 
+            tbl_surat_masuk.isi as perihal
+            FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) ORDER by id_nota DESC")->result();
         $data = array(
             'title' => "List Nota Dinas",
             'nota' => $nota

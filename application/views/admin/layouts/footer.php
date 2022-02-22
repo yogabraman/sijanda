@@ -339,15 +339,15 @@ $result = date_format($date, "Y");
 <!-- Tambah Dispo -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#dataTableSM').DataTable();
-        $('#dataTableSM').on('click', '.add-dispo', function() {
+        $('#dataTableNota').DataTable();
+        $('#dataTableNota').on('click', '.add-disponota', function() {
             var smId = $(this).attr('id');
             const Idx = smId.split("/-/");
             $('#ids').empty();
             $('#filex').empty();
-            $('#dispoModal').modal('show');
-            $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="' + Idx[1] + '">');
-            $('#filex').append('<embed src="<?= base_url() ?>assets/suratmasuk/' + Idx[0] + '" width="800px" height="1000px" />');
+            $('#disponotaModal').modal('show');
+            $('#ids').append('<input class="form-control" type="hidden" name="id_nota" value="' + Idx[1] + '">');
+            $('#filex').append('<embed src="<?= base_url() ?>assets/notadinas/' + Idx[0] + '" width="800px" height="1000px" />');
         });
     });
 </script>
@@ -578,7 +578,12 @@ $result = date_format($date, "Y");
 <script type="text/javascript">
     $(document).ready(function() {
         $("#nota_surat").autocomplete({
-            source: "<?php echo site_url('auto/auto_surat/?'); ?>"
+            source: "<?php echo site_url('auto/auto_surat/?'); ?>",
+            
+            select: function(event, ui) {
+                $('[name="id_surat"]').val(ui.item.label);
+                $('[name="value"]').val(ui.item.value);
+            }
         });
     });
 </script>
