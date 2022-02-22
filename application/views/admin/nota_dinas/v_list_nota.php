@@ -109,12 +109,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <button class="btn btn-danger hapus-nota" id="<?= $rows->id_nota ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
+                                        <?php if ($rows->tgl_disponota != null) { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_disponota/') ?><?= $rows->id_nota ?>" class="btn btn-primary" id="<?= $rows->id_nota ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                        <?php } ?>
+
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
                                         <?php if ($rows->tgl_disponota == null) { ?>
                                             <button class="btn btn-success add-disponota" id="<?= $rows->file_nota ?>/-/<?= $rows->id_nota ?> title=" Disposisi"><i class="fa fa-pen"></i></button>
-                                        <?php } else { ?>
-
+                                        <?php } elseif ($rows->file_nota != null && $rows->file_dispo == null) { ?>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <?php } elseif ($rows->file_nota != null && $rows->file_dispo != null) { ?>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>    
                                         <?php } ?>
 
 
@@ -248,7 +254,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="form-group">
                                         <br>
                                         <input type="checkbox" class="control-input" id="notaCheck" required>
-                                        <label  class="control-label" for="notaCheck">Nota Dinas yang diteruskan sudah dikoreksi dan benar</label>
+                                        <label class="control-label" for="notaCheck">Nota Dinas yang diteruskan sudah dikoreksi dan benar</label>
                                     </div>
                                 </div>
 

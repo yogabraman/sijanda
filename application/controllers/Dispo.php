@@ -310,4 +310,27 @@ class Dispo extends CI_Controller
 		$this->pdf->load_view('admin/dispo/print_dispo', $data);
 		$this->pdf->render();
 	}
+
+	public function print_disponota($id)
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$waktu = date('Y-m-d H:i:s');
+
+		// $data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
+		// $data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
+
+		$data['nota'] = $this->db->query("SELECT tbl_nota_dinas.*, 
+		tbl_surat_masuk.no_surat as no_surat, 
+		tbl_surat_masuk.tgl_surat as tgl_surat, 
+		tbl_surat_masuk.asal_surat as asal_surat, 
+		tbl_surat_masuk.isi as perihal, 
+		tbl_surat_masuk.no_agenda as no_agenda
+		FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_nota_dinas.id_nota='$id'")->result();
+
+		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+		$this->pdf->filename = "print-disposisi-" . $waktu . ".pdf";
+		$this->pdf->set_option('isRemoteEnabled', true);
+		$this->pdf->load_view('admin/nota_dinas/print_disponota', $data);
+		$this->pdf->render();
+	}
 }

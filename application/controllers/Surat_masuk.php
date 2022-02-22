@@ -615,7 +615,7 @@ class Surat_masuk extends CI_Controller
                                     <div class="form-group">
                                         <input class="form-control" type="hidden" name="id_nota" value="' . $id . '">
                                         <label class="control-label">Surat</label>
-                                        <input class="form-control" type="text" name="id_surat" value="' . $id_surat . '">
+                                        <input class="form-control" type="text" id="nota_surat" name="id_surat" value="' . $id_surat . '" readonly>
                                     </div>
                                 </div>
 

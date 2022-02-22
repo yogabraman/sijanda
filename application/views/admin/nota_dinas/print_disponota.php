@@ -149,7 +149,7 @@
     }
 
     ?>
-    <?php foreach ($surat as $rows) { ?>
+    <?php foreach ($nota as $rows) { ?>
 
         <div class="lbr-dispo" style="text-align:right"> Lembar Disposisi</div>
 
@@ -172,6 +172,10 @@
                 </tr>
 
                 <tr>
+                    <td class="tgh" id="lbr" colspan="5"><strong>Disposisi Nota Dinas</strong></td>
+                </tr>
+
+                <tr>
                     <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Surat Masuk</strong></td>
                     <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_surat ?></td>
                 </tr>
@@ -185,50 +189,17 @@
                 </tr>
                 <tr>
                     <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
-                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->isi ?></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->perihal ?></td>
                 </tr>
                 <tr>
                     <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Pencatat Kendali</strong></td>
                     <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
                 </tr>
-                <?php foreach ($dispo as $row) { ?>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Disediakan kepada Yth</strong></td>
-                        <td id="left" style="font-size: 13px; padding-left: 10px">: <?= !empty($row->tujuan) ? implode("<br>&nbsp;&nbsp;",json_decode($row->tujuan)): "" ?></td>
-                        <td rowspan="3" colspan="3" style="font-size: 13px; padding-left: 10px"><strong>Tanggal : <?= tgl_indo($row->tgl_dispo) ?></strong>
-                            <div id="lead">
-                                <p style="font-size: 13px; padding-left: 10px">
-                                    <center>Sekretaris Dinas</center>
-                                </p>
-                                <div style="height: 50px;" style="font-size: 13px; padding-left: 10px">
-                                    <center>TTD.</center>
-                                </div>
-                                <p style="font-size: 13px; padding-left: 10px;">
-                                    <center><b>Nur Kholis, SE, M.Si</b></center>
-                                </p>
-                                <p style="font-size: 13px; padding-left: 10px">
-                                    <center>NIP. 197601211996031005</center>
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Untuk</strong></td>
-                        <td id="left" style="font-size: 13px; padding-left: 10px">: <?= !empty($row->perintah) ? implode("<br>&nbsp;&nbsp;",json_decode($row->perintah)): "" ?></td>
-                    </tr>
-                    <tr class="isi">
-                        <td colspan="2" style="font-size: 13px; padding-left: 10px">
-                            <strong>Isi Disposisi :</strong><br /> <?= $row->isi_disposisi ?>
-                            <div style="height: 50px;"></div>
-                            <p style="padding-bottom: 10px"><strong>Catatan</strong> :<br /> <?= $row->catatan ?></p>
-                        </td>
-                    </tr>
-                <?php } ?>
             </tbody>
         </table>
 
-        <div style="margin-top:10px" class="separator"></div>
-        <div class="jarak2"> Catatan Tambahan :</div>
+        <div style="margin-top:50px" class="separator"></div>
+        <div class="jarak2"> Arahan Kepala Dinas :</div>
 
     <?php } ?>
 </body>
