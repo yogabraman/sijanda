@@ -120,7 +120,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } elseif ($rows->file_nota != null && $rows->file_dispo == null) { ?>
                                             <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
                                         <?php } elseif ($rows->file_nota != null && $rows->file_dispo != null) { ?>
-                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>    
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
                                         <?php } ?>
 
 
@@ -157,11 +157,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="row">
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Pilih Surat</label>
-                                        <input class="form-control" type="text" id="nota_surat" name="id_surat" required>
-                                        <!-- <input class="form-control" type="text" name="value">  -->
+                                        <select class="form-control" id="nota_surat" name="id_surat" style="width:100%" required>
+                                        <option></option>
+                                        <?php
+                                        $surat = $this->db->query("SELECT * FROM tbl_surat_masuk")->result();
+                                        foreach ($surat as $rows) {
+                                            echo '<option value=' . $rows->id_surat . '>' . $rows->isi . '</option>';
+                                        }
+                                        ?>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -172,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 col-12">
+                                <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">File</label>
                                         <input type="file" name="filex" class="form-control">

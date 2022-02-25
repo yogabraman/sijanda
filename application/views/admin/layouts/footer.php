@@ -535,8 +535,9 @@ $result = date_format($date, "Y");
 <!-- Page level custom scripts -->
 <script src="<?php echo base_url(); ?>assets/js/demo/chart-pie-demo.js"></script>
 
-
 <script src="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script src="<?php echo base_url(); ?>assets/vendor/select2/dist/js/select2.full.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -577,7 +578,7 @@ $result = date_format($date, "Y");
 <script src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#nota_surat").autocomplete({
+        $("#nota_surat_old").autocomplete({
             source: "<?php echo site_url('auto/auto_surat/?'); ?>",
             
             select: function(event, ui) {
@@ -585,6 +586,13 @@ $result = date_format($date, "Y");
                 $('[name="value"]').val(ui.item.value);
             }
         });
+    });
+</script>
+
+<!-- Autocomplete -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#nota_surat").select2();
     });
 </script>
 

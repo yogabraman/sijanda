@@ -587,10 +587,14 @@ class Surat_masuk extends CI_Controller
     {
         $id = $this->input->post("notaId");
 
-        $cek = $this->db->query("SELECT * FROM tbl_nota_dinas WHERE id_nota ='$id'")->result();
+        $cek = $this->db->query("SELECT tbl_nota_dinas.*, tbl_surat_masuk.isi as perihal 
+        FROM tbl_nota_dinas
+        JOIN tbl_surat_masuk USING(id_surat)
+        WHERE id_nota ='$id'")->result();
 
         foreach ($cek as $rows) {
             $id_surat = $rows->id_surat;
+            $perihal = $rows->perihal;
             $file_nota = $rows->file_nota;
             $file_dispo = $rows->file_dispo;
             $tgl_nota = $rows->tgl_nota;
@@ -614,8 +618,9 @@ class Surat_masuk extends CI_Controller
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <input class="form-control" type="hidden" name="id_nota" value="' . $id . '">
+                                        <input class="form-control" type="hidden" name="id_surat" value="' . $id_surat . '">
                                         <label class="control-label">Surat</label>
-                                        <input class="form-control" type="text" id="nota_surat" name="id_surat" value="' . $id_surat . '" readonly>
+                                        <input class="form-control" id="nota_surat" name="perihal" value="' . $perihal . '" readonly>
                                     </div>
                                 </div>
 
