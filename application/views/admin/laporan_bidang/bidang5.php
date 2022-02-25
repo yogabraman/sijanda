@@ -95,7 +95,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="modal-body">
                 <div class="card-body">
                     <div class="form-body">
-                        <form action="<?= site_url('') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= base_url('laporan_bidang/importexcel'); ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 
@@ -103,7 +103,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="form-group">
                                         <label class="control-label">Pilih Tahun</label>
                                         <select class="form-control" id="tahun" type="text" name="tahun" required>
-                                            <option value="2022">2022</option>
+                                            <option value="<?= date("Y") ?>"><?= date("Y") ?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -111,19 +111,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Pilih Bulan</label>
-                                        <select class="form-control" id="bulan" type="text" name="bulan" required>
-                                            <option value="1">Januari</option>
-                                            <option value="2">Februari</option>
-                                            <option value="3">Maret</option>
-                                            <option value="4">April</option>
-                                            <option value="5">Mei</option>
-                                            <option value="6">Juni</option>
-                                            <option value="7">Juli</option>
-                                            <option value="8">Agustus</option>
-                                            <option value="9">September</option>
-                                            <option value="10">Oktober</option>
-                                            <option value="11">November</option>
-                                            <option value="12">Desember</option>
+                                        <select class="form-control" id="bulan" name="bulan" required>
+                                            <option value="january">Januari</option>
+                                            <option value="february">Februari</option>
+                                            <option value="march">Maret</option>
+                                            <option value="april">April</option>
+                                            <option value="may">Mei</option>
+                                            <option value="june">Juni</option>
+                                            <option value="july">Juli</option>
+                                            <option value="august">Agustus</option>
+                                            <option value="september">September</option>
+                                            <option value="october">Oktober</option>
+                                            <option value="november">November</option>
+                                            <option value="december">Desember</option>
                                         </select>
                                     </div>
                                 </div>

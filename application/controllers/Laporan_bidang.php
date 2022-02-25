@@ -16,14 +16,18 @@ class Laporan_bidang extends CI_Controller
 	public function bidang5()
 	{
 		// $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC")->result();
-        // $masuk = $this->m_sm->cek_sm();
+		// $masuk = $this->m_sm->cek_sm();
 		$data = array(
 			'title' => "Laporan Bidang 5",
 			// 'masuk' => $masuk
 		);
-        $this->db->reconnect();
+		$this->db->reconnect();
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/laporan_bidang/bidang5', $data);
 		$this->load->view('admin/layouts/footer', $data);
+	}
+
+	public function importexcel()
+	{
 	}
 }
