@@ -169,7 +169,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $surat = $this->db->query("SELECT * FROM tbl_surat_masuk")->result();
                                         foreach ($surat as $rows) {
-                                            echo '<option value=' . $rows->id_surat . '>' . $rows->isi . '</option>';
+                                            echo '<option value=' . $rows->id_surat . '>' . $rows->isi . ' - ' . $rows->no_surat . '</option>';
                                         }
                                         ?>
                                         </select>
