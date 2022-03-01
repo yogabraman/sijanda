@@ -172,26 +172,38 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         
                                         $rand = date("Ymd");
-                                        $no_agenda = $this->db->query("SELECT no_agenda FROM tbl_surat_masuk")->result();
-                                        $cek = false;
-                                        foreach ($no_agenda as $rows) {    
-                                            if (strpos($rows->no_agenda,'/') !== false) {
-                                                $regex = explode("/", $rows->no_agenda);
-                                                $ymd = $regex[0];
-                                                $num = $regex[1] + 1;
-
-                                                if ($ymd == $rand) {
-                                                    echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/' . $num . '" readonly>';
-                                                } else {
-                                                    echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
-                                                }
-                                                $cek = true;
-                                            }
-                                        }
-                                        // print_r($cek);
-                                        if ($cek == false){
+                                        //new logic
+                                        $no_agenda = $this->db->limit(1)->query("SELECT no_agenda FROM tbl_surat_masuk ORDER BY id_surat DESC")->row()->no_agenda;
+                                        $regex = explode("/", $no_agenda);
+                                        $ymd = $regex[0];
+                                        $num = $regex[1] + 1;
+                                        if ($ymd == $rand) {
+                                            echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/' . $num . '" readonly>';
+                                        } else {
                                             echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
                                         }
+
+                                        //old logic
+                                        // $no_agenda = $this->db->query("SELECT no_agenda FROM tbl_surat_masuk")->result();
+                                        // $cek = false;
+                                        // foreach ($no_agenda as $rows) {    
+                                        //     if (strpos($rows->no_agenda,'/') !== false) {
+                                        //         $regex = explode("/", $rows->no_agenda);
+                                        //         $ymd = $regex[0];
+                                        //         $num = $regex[1] + 1;
+
+                                        //         if ($ymd == $rand) {
+                                        //             echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/' . $num . '" readonly>';
+                                        //         } else {
+                                        //             echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
+                                        //         }
+                                        //         $cek = true;
+                                        //     }
+                                        // }
+                                        // // print_r($cek);
+                                        // if ($cek == false){
+                                        //     echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/1" readonly>';
+                                        // }
                                         ?>
                                     </div>
                                 </div>
