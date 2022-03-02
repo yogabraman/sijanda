@@ -74,6 +74,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </td>
                                 <td><?= $rows->asal_surat ?></td>
                                 <td><?= $rows->perihal ?></td>
+                                <td><?= $rows->tgl_naik ?></td>
                                 <td><?= $rows->isi_dispo ?></td>
                                 <td class="text-center" style="min-width:100px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
