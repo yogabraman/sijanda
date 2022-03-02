@@ -144,7 +144,7 @@ class Surat_masuk extends CI_Controller
             'perihal' => $this->input->post('perihal'),
             'tgl_surat' => $this->input->post('tgl_surat'),
             'tgl_naik' => $this->input->post('tgl_naik'),
-            'file' => $this->m_sm->_uploadFileSK($new),
+            'file' => $this->m_sk->_uploadFileSK($new),
             'isi_dispo' => $this->input->post('isi_dispo'),
             'id_user' => $id_user
         );
