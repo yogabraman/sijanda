@@ -62,17 +62,76 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </div>
             </form>
+            <style>
+                .dataTables_wrapper {
+                    font-family: tahoma;
+                    font-size: 8px;
+                    position: relative;
+                    clear: both;
+                    *zoom: 1;
+                    zoom: 1;
+                }
+            </style>
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTableDispo" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTableLaporKinerja" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Laporan</th>
-                            <th>Action</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">NO</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">KAB./ KOTA</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">WAJIB KTP-EL</th>
+                            <th scope="col" colspan="2" style="vertical-align: middle; text-align: center;">PEREKAMAN</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">SISA SUKET</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">KOLOM HILANG???</th> <!-- BUG DATATABLES-->
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">SISA PRR</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">SISA BLANGKO KTP-EL</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">JUMLAH ANAK 0-17</th>
+                            <th scope="col" colspan="2" style="vertical-align: middle; text-align: center;">CETAK KIA</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">JUMLAH ANAK 0-18</th>
+                            <th scope="col" colspan="2" style="vertical-align: middle; text-align: center;">AKTA KELAHIRAN 0-18</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">PENGGUNAAN KERTAS PUTIH JLH. DOK</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">PENGGUNAAN TTE JLH. DOK</th>
+                            <th scope="col" colspan="2" style="vertical-align: middle; text-align: center;">LAYANAN ONLINE</th>
+                            <th scope="col" colspan="2" style="vertical-align: middle; text-align: center;">LAYANAN TERINTEGRITAS</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">PKS</th>
+                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">AKSES DATA</th>
+                        </tr>
+                        <tr>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">JUMLAH</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">%</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">JUMLAH</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">%</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">JUMLAH</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">%</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">SUDAH</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">BELUM</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">SUDAH</th>
+                            <th scope="col" style="vertical-align: middle; text-align: center;">BELUM</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        <td style="vertical-align: middle; text-align: center;">3301</td>
+                        <td>KAB. CILACAP</td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(213123, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(44455534, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(104.23, 2, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(0, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;">HAI AKU BUG</td> <!-- BUG DATATABLES-->
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(12500, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(30000, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(1000000, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(500000, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(54.80, 2, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(30000, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(2000000, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: right;"><?= number_format(48.30, 2, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: center;"><?= number_format(35, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: center;"><?= number_format(40, 0, ',', '.'); ?></td>
+                        <td style="vertical-align: middle; text-align: center;">SUDAH</td>
+                        <td style="vertical-align: middle; text-align: center;">tes 123</td>
+                        <td style="vertical-align: middle; text-align: center;">SUDAH</td>
+                        <td style="vertical-align: middle; text-align: center;">tes 123</td>
+                        <td style="vertical-align: middle; text-align: center;">SUDAH</td>
+                        <td style="vertical-align: middle; text-align: center;">Belum Dapat Hak Akses</td>
                     </tbody>
                 </table>
             </div>

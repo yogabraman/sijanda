@@ -370,6 +370,24 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Tabel viewer laporan kinerja -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        var tabel = $('#dataTableLaporKinerja').DataTable({
+            columnDefs: [{
+                targets: [6],
+                visible: false
+            }],
+            order: [
+                [6, 'desc']
+            ]
+        });
+
+    });
+</script>
+
 <!-- Edit Dispo -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded
@@ -580,7 +598,7 @@ $result = date_format($date, "Y");
     $(document).ready(function() {
         $("#nota_surat_old").autocomplete({
             source: "<?php echo site_url('auto/auto_surat/?'); ?>",
-            
+
             select: function(event, ui) {
                 $('[name="id_surat"]').val(ui.item.label);
                 $('[name="value"]').val(ui.item.value);
