@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Laporan</button>
-            <button class="btn btn-info"><i class="fa fa-download"></i> Template Laporan</button>
+            <a href="<?= base_url('laporan_bidang/template_bid_5'); ?>" class="btn btn-info"><i class="fa fa-download"></i>Template Laporan</a>
         </div>
         <div class="card-body">
             <form action="<?= base_url('laporan_bidang/bidang5'); ?>" method="post" enctype="multipart/form-data">
