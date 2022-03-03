@@ -22,16 +22,8 @@ class Surat_masuk extends CI_Controller
 
         $id_user = $this->session->userdata('id_user');
 
-        // foreach ($forname as $rows) {
-        // 	$nama = "Riwayat Beban ". $rows->nama;
-        // }
-
         $data = array(
-            'title' => "Surat Masuk",
-            // 'sensor' => $sensor,
-            //'count_usulan' => $count_usulan,
-            //'count_instansi' => $count_instansi,
-            //'iklan' => $iklan
+            'title' => "Surat Masuk"
         );
         $this->load->view('admin/layouts/header', $data);
         $this->load->view('admin/surat_masuk/v_list', $data);
@@ -152,7 +144,7 @@ class Surat_masuk extends CI_Controller
             'perihal' => $this->input->post('perihal'),
             'tgl_surat' => $this->input->post('tgl_surat'),
             'tgl_naik' => $this->input->post('tgl_naik'),
-            'file' => $this->m_sm->_uploadFileSK($new),
+            'file' => $this->m_sk->_uploadFileSK($new),
             'isi_dispo' => $this->input->post('isi_dispo'),
             'id_user' => $id_user
         );
@@ -598,9 +590,22 @@ class Surat_masuk extends CI_Controller
             $file_nota = $rows->file_nota;
             $file_dispo = $rows->file_dispo;
             $tgl_nota = $rows->tgl_nota;
+            $disponota = $rows->tgl_disponota;
         }
 
         $output = "";
+        $filedisp = "";
+
+        if ($disponota !== null) {
+            $filedisp = '<div class="col-md-12 col-12">
+            <div class="form-group">
+                <label class="control-label">Dispo Nota Dinas</label>
+                <input type="file" name="filex2" class="form-control">
+                <input type="hidden" name="old_file2" class="form-control" value="' . $file_dispo . '">
+                <small class="red-text">Current File : <b>' . substr($file_dispo, 22) . '</b> *Jika tidak ada file/scan gambar surat, biarkan kosong!</small>
+            </div>
+        </div>';
+        }
 
         $output = '
                     <div class="modal-content">
@@ -627,7 +632,7 @@ class Surat_masuk extends CI_Controller
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Nota Dinas</label>
-                                        <input class="form-control" type="date" name="tgl_surat" value="' . $tgl_nota . '">
+                                        <input class="form-control" type="date" name="tgl_nota" value="' . $tgl_nota . '">
                                     </div>
                                 </div>
 
@@ -640,14 +645,7 @@ class Surat_masuk extends CI_Controller
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Dispo Nota Dinas</label>
-                                        <input type="file" name="filex2" class="form-control">
-                                        <input type="hidden" name="old_file2" class="form-control" value="' . $file_dispo . '">
-                                        <small class="red-text">Current File : <b>' . substr($file_dispo, 22) . '</b> *Jika tidak ada file/scan gambar surat, biarkan kosong!</small>
-                                    </div>
-                                </div>
+                                ' . $filedisp . '
 
                             </div>
 
@@ -757,7 +755,7 @@ class Surat_masuk extends CI_Controller
 
         $id_surat = $this->input->post("id_surat");
         $new = $this->input->post("filex");
-        
+
         if (!empty($_FILES["filex"]["name"])) {
 
             $new = $_FILES["filex"]["name"];
@@ -797,7 +795,7 @@ class Surat_masuk extends CI_Controller
         $id = $this->input->post("id_nota");
         $new = $this->input->post("filex");
         $new2 = $this->input->post("filex2");
-        
+
         if (!empty($_FILES["filex"]["name"])) {
 
             $new = $_FILES["filex"]["name"];
@@ -805,7 +803,7 @@ class Surat_masuk extends CI_Controller
         } else {
             $files = $this->input->post("old_file");
         }
-        
+
         if (!empty($_FILES["filex2"]["name"])) {
 
             $new2 = $_FILES["filex2"]["name"];
@@ -815,7 +813,7 @@ class Surat_masuk extends CI_Controller
         }
 
         $data = array(
-            'id_surat' => $this->input->post('no_surat'),
+            'id_surat' => $this->input->post('id_surat'),
             'file_nota' => $files,
             'file_dispo' => $files2,
             'tgl_nota' => $this->input->post('tgl_nota'),
@@ -873,6 +871,12 @@ class Surat_masuk extends CI_Controller
             $this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
             redirect(site_url('surat_masuk/list_nota'));
         }
+    }
+
+    //Merge Nota Dinas
+    public function mergepdf($filez)
+    {
+        echo "Belum Selesai";
     }
 
     //direct cetak surat masuk

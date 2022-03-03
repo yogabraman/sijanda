@@ -104,8 +104,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
 
                                         <button class="btn btn-info edit-nota" id="<?= $rows->id_nota ?>" title="Edit"><i class="far fa-edit"></i></button>
-
-                                        <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        
+                                        <?php if ($rows->file_nota != null && $rows->file_dispo == null) { ?>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <?php } elseif ($rows->file_nota != null && $rows->file_dispo != null) { ?>
+                                            <!-- <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a> -->
+                                            <a target="_blank" href="<?= site_url('surat_masuk/mergepdf/') ?><?= $rows->file_nota ?>/-/<?= $rows->file_dispo ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <?php } ?>
 
                                         <button class="btn btn-danger hapus-nota" id="<?= $rows->id_nota ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
@@ -116,8 +121,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
                                         <?php if ($rows->tgl_disponota == null) { ?>
-                                            <button class="btn btn-success add-disponota" id="<?= $rows->file_nota ?>/-/<?= $rows->id_nota ?> title=" Disposisi"><i class="fa fa-pen"></i></button>
-                                        <?php } elseif ($rows->file_nota != null && $rows->file_dispo == null) { ?>
+                                            <button class="btn btn-success add-disponota" id="<?= $rows->file_nota ?>/-/<?= $rows->id_nota ?>" title="Disposisi"><i class="fa fa-pen"></i></button>
+                                        <?php } else { ?>
+                                            
+                                        <?php } ?> 
+                                        
+                                        <?php if ($rows->file_nota != null && $rows->file_dispo == null) { ?>
                                             <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
                                         <?php } elseif ($rows->file_nota != null && $rows->file_dispo != null) { ?>
                                             <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nota ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
@@ -165,7 +174,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $surat = $this->db->query("SELECT * FROM tbl_surat_masuk")->result();
                                         foreach ($surat as $rows) {
-                                            echo '<option value=' . $rows->id_surat . '>' . $rows->isi . '</option>';
+                                            echo '<option value=' . $rows->id_surat . '>' . $rows->isi . ' - ' . $rows->no_surat . '</option>';
                                         }
                                         ?>
                                         </select>
