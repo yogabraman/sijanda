@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <button class="btn btn-info"><i class="fa fa-download"></i> Template Laporan</button>
         </div>
         <div class="card-body">
-            <form action="<?= site_url('') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url('laporan_bidang/bidang5'); ?>" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                     <div class="col-mb-2 mb-sm-0 col-6">
                         <div class="form-group">
@@ -56,9 +56,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                     <div class="col-sm-4 col-12" style="padding: 30px">
-                        <a id="btnSearch" class="btn btn-primary btn-user">
-                            <i class="fa fa-eye"></i> TAMPILKAN
-                        </a>
+                        <button name="tampilkan" type="submit" class="btn btn-primary"><i class="fa fa-eye"></i> TAMPILKAN</button>
                     </div>
                 </div>
             </form>
@@ -81,7 +79,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">WAJIB KTP-EL</th>
                             <th scope="col" colspan="2" style="vertical-align: middle; text-align: center;">PEREKAMAN</th>
                             <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">SISA SUKET</th>
-                            <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">KOLOM HILANG?!</th> <!-- BUG DATATABLES-->
                             <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">SISA PRR</th>
                             <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">SISA BLANGKO KTP-EL</th>
                             <th scope="col" rowspan="2" style="vertical-align: middle; text-align: center;">JUMLAH ANAK 0-17</th>
@@ -108,31 +105,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th scope="col" style="vertical-align: middle; text-align: center;">BELUM</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <td style="vertical-align: middle; text-align: center;">3301</td>
-                        <td>KAB. CILACAP</td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(213123, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(44455534, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(104.23, 2, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(0, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;">HAI AKU BUG</td> <!-- BUG DATATABLES-->
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(12500, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(30000, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(1000000, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(500000, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(54.80, 2, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(30000, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(2000000, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: right;"><?= number_format(48.30, 2, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: center;"><?= number_format(35, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: center;"><?= number_format(40, 0, ',', '.'); ?></td>
-                        <td style="vertical-align: middle; text-align: center;">SUDAH</td>
-                        <td style="vertical-align: middle; text-align: center;">tes 123</td>
-                        <td style="vertical-align: middle; text-align: center;">SUDAH</td>
-                        <td style="vertical-align: middle; text-align: center;">tes 123</td>
-                        <td style="vertical-align: middle; text-align: center;">SUDAH</td>
-                        <td style="vertical-align: middle; text-align: center;">Belum Dapat Hak Akses</td>
-                    </tbody>
+                    <?php if (isset($view)) : ?>
+                        <tbody>
+                            <?php foreach ($view as $v) : ?>
+                                <tr>
+                                    <td style="vertical-align: middle; text-align: center;"><?= $v['kd_wilayah']; ?></td>
+                                    <td style="vertical-align: middle;"><?= $v['kab_kota']; ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['wajib_ktp_el'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['jml_perekaman'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['persentase_jml_perekaman'], 2, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['sisa_suket'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['sisa_prr'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['sisa_blangko_ktp_el'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['jml_anak_0_17'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['jml_cetak_kia'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['persentase_jml_cetak_kia'], 2, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['jml_anak_0_18'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['jml_akta_lahir_0_18'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: right;"><?= number_format($v['persentase_jml_akta_lahir_0_18'], 2, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= number_format($v['penggunaan_kertas_putih_jlh_dok'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= number_format($v['penggunaan_tte_jlh_dok'], 0, ',', '.'); ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= $v['layanan_ol_sudah']; ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= $v['layanan_ol_belum']; ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= $v['layanan_integritas_sudah']; ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= $v['layanan_integritas_belum']; ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= $v['pks']; ?></td>
+                                    <td style="vertical-align: middle; text-align: center;"><?= $v['akses_data']; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    <?php endif; ?>
                 </table>
             </div>
         </div>

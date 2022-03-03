@@ -391,16 +391,7 @@ $result = date_format($date, "Y");
     // Start jQuery function after page is loaded
     $(document).ready(function() {
         // Initiate DataTable function comes with plugin
-        var tabel = $('#dataTableLaporKinerja').DataTable({
-            columnDefs: [{
-                targets: [6],
-                visible: false
-            }],
-            order: [
-                [6, 'desc']
-            ]
-        });
-
+        var tabel = $('#dataTableLaporKinerja').DataTable({});
     });
 </script>
 

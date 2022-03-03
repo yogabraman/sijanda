@@ -3,15 +3,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_import_kinerja extends CI_Model
 {
-    public function getdata_bid_5()
+    public function getdata_bid_5($periode, $bulan, $tahun)
     {
         $this->db->select('*');
         $this->db->from('tbl_laporan_kinerja_bid_5');
-        $this->db->where('periode', 1);
-        $this->db->where('bulan', strtolower(date('F')));
-        $this->db->where('tahun', date('Y'));
+        $this->db->where('periode', $periode);
+        $this->db->where('bulan', $bulan);
+        $this->db->where('tahun', $tahun);
+        $this->db->order_by('kd_wilayah', 'asc');
         $query = $this->db->get();
-        return $query->result();
+        return $query->result_array();
     }
 
     public function import_bid_5($dataimport)

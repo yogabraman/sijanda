@@ -15,10 +15,24 @@ class Laporan_bidang extends CI_Controller
 
 	public function bidang5()
 	{
+		$view = null;
+		if (isset($_POST['tampilkan'])) {
+			$periode = $this->input->post('periode', true);
+			$bulan = $this->input->post('bulan', true);
+			$tahun = $this->input->post('tahun', true);
+			$this->load->model('M_import_kinerja');
+			$view = $this->M_import_kinerja->getdata_bid_5($periode, $bulan, $tahun);
+			unset($_SESSION['warning']);
+			if (!$view) {
+				$this->session->set_flashdata('warning', 'Data Tidak Ditemukan!!');
+			}
+		}
+
 		$data = array(
 			'title' => "Laporan Bidang 5",
+			'view' => $view,
 		);
-		$this->db->reconnect();
+
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/laporan_bidang/bidang5', $data);
 		$this->load->view('admin/layouts/footer', $data);
@@ -83,7 +97,7 @@ class Laporan_bidang extends CI_Controller
 				$this->load->model('M_import_kinerja');
 				$this->M_import_kinerja->import_atr_bid_5($datainsert, time());
 			}
-			$this->session->set_flashdata('message', 'Data <b>berhasil</b> diimport ke database');
+			$this->session->set_flashdata('success', 'Data Berhasil Disimpan!!');
 			redirect('laporan_bidang/bidang5');
 		}
 	}
