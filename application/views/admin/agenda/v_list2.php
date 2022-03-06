@@ -99,7 +99,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Surat Masuk</h4>
+                <h4 class="modal-title">Tambah Agenda</h4>
                 <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
             </div>
             <div class="modal-body">
@@ -108,7 +108,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <form action="<?= site_url('agenda/add_agenda') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
-
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Acara</label>
@@ -140,7 +139,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Acara</label>
-                                        <input class="form-control" type="text" name="isi">
+                                        <textarea class="form-control" type="text" name="isi"></textarea>
                                     </div>
                                 </div>
 

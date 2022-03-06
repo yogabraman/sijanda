@@ -91,12 +91,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <button class="btn btn-danger hapus-sm" id="<?= $rows->id_surat ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
-                                        <?php if ($rows->status_dispo == 0) { ?>
+                                        <?php if ($rows->status_dispo == 0 && $rows->status_print == 0 && $rows->penerima == null) { ?>
                                             <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
-                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0) { ?>
+                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0 && $rows->penerima == null) { ?>
                                             <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } else { ?>
+                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 1 && $rows->penerima == null) { ?>
                                             <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                        <?php } else { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
@@ -108,6 +110,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
                                         <?php } else { ?>
                                             <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                            <a href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
@@ -229,10 +232,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
-                                        <input class="form-control" type="text" name="isi">
+                                        <textarea class="form-control" type="textarea" name="isi"></textarea>
                                     </div>
                                 </div>
 

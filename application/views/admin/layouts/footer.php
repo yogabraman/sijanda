@@ -205,6 +205,21 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Tabel Surat Masuk -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        var tabel = $('#dataTableSK').DataTable({
+            columnDefs: [{
+                targets: [3],
+                visible: false
+            }]
+        });
+
+    });
+</script>
+
 <!-- Edit Surat Keluar -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded
@@ -289,7 +304,7 @@ $result = date_format($date, "Y");
     });
 </script>
 
-<!-- Tambah Dispo -->
+<!-- Tambah Dispo Nota Dinas -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dataTableNota').DataTable();
@@ -301,6 +316,22 @@ $result = date_format($date, "Y");
             $('#disponotaModal').modal('show');
             $('#ids').append('<input class="form-control" type="hidden" name="id_nota" value="' + Idx[1] + '">');
             $('#filex').append('<embed src="<?= base_url() ?>assets/notadinas/' + Idx[0] + '" width="800px" height="1000px" />');
+        });
+    });
+</script>
+
+<!-- Preview Nota Dinas -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableNota').DataTable();
+        $('#dataTableNota').on('click', '.view-nota', function() {
+            var notaId = $(this).attr('id');
+            const Idx = notaId.split("/-/");
+            $('#file_nota').empty();
+            $('#file_nota1').empty();
+            $('#viewModal').modal('show');
+            $('#file_nota').append('<a target="_blank" href="<?= base_url() ?>assets/notadinas/' + Idx[0] + '" class="btn btn-info"><i class="fa fa-download"></i>  Klik untuk melihat Nota Dinas</a>');
+            $('#file_nota1').append('<a target="_blank" href="<?= base_url() ?>assets/notadinas/' + Idx[1] + '" class="btn btn-primary"><i class="fa fa-download"></i>  Klik untuk melihat Disposisi Nota Dinas</a>');
         });
     });
 </script>
@@ -564,6 +595,7 @@ $result = date_format($date, "Y");
 
 <script src="<?php echo base_url(); ?>assets/vendor/select2/dist/js/select2.full.min.js"></script>
 
+<!-- Tipe Surat Masuk -->
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -581,6 +613,36 @@ $result = date_format($date, "Y");
             }
             if (id == '1') {
                 undangan.style.display = "block";
+
+            }
+
+        });
+
+    });
+</script>
+
+<!-- Tipe Nota Dinas -->
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var perihal = document.getElementById("biasa");
+        var undangan = document.getElementById("undangan");
+
+        perihal.style.display = "none";
+        undangan.style.display = "block";
+
+        $('.tipe_nota').on('change', function(e) {
+            var id = $(this).val();
+
+
+            if (id == '0') {
+                perihal.style.display = "none";
+                undangan.style.display = "block";
+
+            }
+            if (id == '1') {
+                perihal.style.display = "block";
+                undangan.style.display = "none";
 
             }
 

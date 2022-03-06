@@ -168,10 +168,18 @@ class Surat_masuk extends CI_Controller
         $waktu = date('Y-m-d H:i:s');
 
         $id_user = $this->session->userdata('id_user');
+        $id_surat = $this->input->post('id_surat');
         $new = $_FILES["filex"]["name"];
+        $perihal = "";
+        if (!empty($id_surat)) {
+            $perihal = $this->db->limit(1)->query("SELECT isi FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->isi;
+        } else {
+            $perihal = $this->input->post('perihal');
+        }
 
         $data = array(
             'id_surat' => $this->input->post('id_surat'),
+            'perihal' => $perihal,
             'file_nota' => $this->m_nota->_uploadFileNota($new),
             'tgl_nota' => $this->input->post('tgl_nota'),
             'created_at' => $waktu,
@@ -222,11 +230,12 @@ class Surat_masuk extends CI_Controller
     //list nota dinas
     public function list_nota()
     {
-        $nota = $this->db->query("SELECT tbl_nota_dinas.*, 
-            tbl_surat_masuk.no_surat as no_surat, 
-            tbl_surat_masuk.tgl_surat as tgl_surat, 
-            tbl_surat_masuk.isi as perihal
-            FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) ORDER by id_nota DESC")->result();
+        // $nota = $this->db->query("SELECT tbl_nota_dinas.*, 
+        //     tbl_surat_masuk.no_surat as no_surat, 
+        //     tbl_surat_masuk.tgl_surat as tgl_surat, 
+        //     tbl_surat_masuk.isi as perihal
+        //     FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) ORDER by id_nota DESC")->result();
+        $nota = $this->db->query("SELECT * FROM tbl_nota_dinas ORDER BY id_nota DESC")->result();
         $data = array(
             'title' => "List Nota Dinas",
             'nota' => $nota
@@ -484,7 +493,7 @@ class Surat_masuk extends CI_Controller
             $perihal = $rows->perihal;
             $tgl_surat = $rows->tgl_surat;
             $tgl_naik = $rows->tgl_naik;
-            $isi_dispo = $rows->dispo;
+            $isi_dispo = $rows->isi_dispo;
             $file = $rows->file;
         }
 
@@ -525,17 +534,17 @@ class Surat_masuk extends CI_Controller
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Perihal</label>
-                                        <input class="form-control" type="text" name="perihal" value="' . $perihal . '">
-                                    </div>
-                                </div>
-
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Diteruskan</label>
                                         <input class="form-control" type="date" name="tgl_naik" value="' . $tgl_naik . '">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Perihal</label>
+                                        <input class="form-control" type="text" name="perihal" value="' . $perihal . '">
                                     </div>
                                 </div>
 
@@ -579,10 +588,12 @@ class Surat_masuk extends CI_Controller
     {
         $id = $this->input->post("notaId");
 
-        $cek = $this->db->query("SELECT tbl_nota_dinas.*, tbl_surat_masuk.isi as perihal 
-        FROM tbl_nota_dinas
-        JOIN tbl_surat_masuk USING(id_surat)
-        WHERE id_nota ='$id'")->result();
+        // $cek = $this->db->query("SELECT tbl_nota_dinas.*, tbl_surat_masuk.isi as hal 
+        // FROM tbl_nota_dinas
+        // JOIN tbl_surat_masuk USING(id_surat)
+        // WHERE id_nota ='$id'")->result();
+
+        $cek = $this->db->query("SELECT * FROM tbl_nota_dinas WHERE id_nota ='$id'")->result();
 
         foreach ($cek as $rows) {
             $id_surat = $rows->id_surat;
@@ -625,7 +636,7 @@ class Surat_masuk extends CI_Controller
                                         <input class="form-control" type="hidden" name="id_nota" value="' . $id . '">
                                         <input class="form-control" type="hidden" name="id_surat" value="' . $id_surat . '">
                                         <label class="control-label">Surat</label>
-                                        <input class="form-control" id="nota_surat" name="perihal" value="' . $perihal . '" readonly>
+                                        <input class="form-control" id="nota_surat" name="perihal" value="' . $perihal . '">
                                     </div>
                                 </div>
 
@@ -814,6 +825,7 @@ class Surat_masuk extends CI_Controller
 
         $data = array(
             'id_surat' => $this->input->post('id_surat'),
+            'perihal' => $this->input->post('perihal'),
             'file_nota' => $files,
             'file_dispo' => $files2,
             'tgl_nota' => $this->input->post('tgl_nota'),

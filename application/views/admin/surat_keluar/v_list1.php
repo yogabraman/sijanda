@@ -80,10 +80,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                                         <button class="btn btn-info edit-sk" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-sk" id="<?= $rows->id_surat ?>"><i class="fa fa-trash"></i></button>
+                                        <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
                                         <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                        <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
                                         <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                        <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -116,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Asal Surat</label>
+                                        <label class="control-label">Tujuan Surat</label>
                                         <input class="form-control" type="text" name="asal_surat" id="asal_surat" required>
                                     </div>
                                 </div>
@@ -138,21 +141,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Diteruskan</label>
-                                        <input class="form-control" type="date" name="tgl_naik" >
+                                        <input class="form-control" type="date" name="tgl_naik">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
                                         <input class="form-control" type="text" name="perihal" required>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Isi Disposisi</label>
-                                        <input class="form-control" type="text" name="isi_dispo">
+                                        <label class="control-label">Catatan Ringkas</label>
+                                        <textarea class="form-control" type="text" name="isi_dispo"></textarea>
                                     </div>
                                 </div>
 
