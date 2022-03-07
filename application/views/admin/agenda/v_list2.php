@@ -70,10 +70,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td><?= $rows->tempat ?></td>
                                 <td><?= substr($rows->isi, 0, 200) ?></td>
                                 <td><?= $disp ?></td>
-                                <td class="text-center" style="min-width:100px;">
+                                <td class="text-center" style="min-width:80px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
-                                        <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
-                                        <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="fa fa-edit"></i></button>
+                                        <button style="margin-top :3px" class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
+                                        <button style="margin-top :3px" class="btn btn-warning upload-dukung" id="<?= $rows->id_agenda ?>" title="Upload"><i class="fa fa-file"></i></button>
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
                                         <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
@@ -209,6 +210,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Upload File -->
+<div class="modal fade" id="uploadModal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" id="upload_result">
+        <!-- Modal content-->
+    </div>
+
 </div>
 
 </div>

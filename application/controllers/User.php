@@ -18,14 +18,9 @@ class User extends CI_Controller
     {
 
         $users = $this->db->query("SELECT * FROM tbl_user")->result();
-        // print_r($count_kamar);
-        // exit();
         $data = array(
             'title' => "Data User",
             'users' => $users
-            //'count_usulan' => $count_usulan,
-            //'count_instansi' => $count_instansi,
-            //'iklan' => $iklan
         );
         $this->load->view('admin/layouts/header', $data);
         $this->load->view('admin/users/v_users', $data);

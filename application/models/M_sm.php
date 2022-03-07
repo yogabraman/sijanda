@@ -54,6 +54,102 @@ class M_sm extends CI_Model
         return $rand . "-noimage.png";
     }
 
+    public function _uploadPPT($file)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $rand = date("YmdHis");
+
+        // echo $file;
+
+        $config['upload_path']          = './assets/agenda/';
+        $config['allowed_types']        = 'ppt|pptx';
+        $config['file_name']            = $rand."-ppt_".$file;
+        $config['overwrite']            = true;
+        $config['max_size']             = 102400; // 100MB
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        // $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('fileAg1')) {
+            return $this->upload->data("file_name");
+        }
+        return $rand . "-nofile.ppt";
+    }
+
+    public function _uploadUnd($file)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $rand = date("YmdHis");
+
+        // echo $file;
+
+        $config['upload_path']          = './assets/agenda/';
+        $config['allowed_types']        = 'pdf';
+        $config['file_name']            = $rand."-und_".$file;
+        $config['overwrite']            = true;
+        $config['max_size']             = 10240; // 10MB
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        // $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('fileAg2')) {
+            return $this->upload->data("file_name");
+        }
+        return $rand . "-nofile.pdf";
+    }
+
+    public function _uploadFoto($file)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $rand = date("YmdHis");
+
+        // echo $file;
+
+        $config['upload_path']          = './assets/agenda/';
+        $config['allowed_types']        = 'jpg|jpeg|png';
+        $config['file_name']            = $rand."-foto_".$file;
+        $config['overwrite']            = true;
+        $config['max_size']             = 102400; // 100MB
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        // $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('fileAg3')) {
+            return $this->upload->data("file_name");
+        }
+        return $rand . "-nofile.jpg";
+    }
+
+    public function _uploadVideo($file)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $rand = date("YmdHis");
+
+        // echo $file;
+
+        $config['upload_path']          = './assets/agenda/';
+        $config['allowed_types']        = 'mp4';
+        $config['file_name']            = $rand."-video_".$file;
+        $config['overwrite']            = true;
+        $config['max_size']             = 102400; // 100MB
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        // $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('fileAg4')) {
+            return $this->upload->data("file_name");
+        }
+        return $rand . "-nofile.mp4";
+    }
+
     public function update_sm($data, $id_surat)
     {
         $this->db->update('tbl_surat_masuk', $data, array('id_surat' => $id_surat));

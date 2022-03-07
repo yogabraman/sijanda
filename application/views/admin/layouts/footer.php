@@ -576,6 +576,56 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Upload Dokumen Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableAgenda').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableAgenda').on('click', '.upload-dukung', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var agId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('agenda/get_dokumen') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    agId: agId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#upload_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#uploadModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<!-- Upload Dokumen Agenda -->
+<!-- <script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableAgenda').DataTable();
+        $('#dataTableAgenda').on('click', '.upload-dukung', function() {
+            var notaId = $(this).attr('id');
+            const Idx = notaId.split("/-/");
+            $('#ids').empty();
+            $('#file_ppt').empty();
+            $('#uploadModal').modal('show');
+            $('#ids').append('<input class="form-control" type="hidden" name="id_nota" value="' + Idx[1] + '">');
+            $('#file_ppt').append('<a target="_blank" href="<?= base_url() ?>assets/agenda/" class="btn btn-info"><i class="fa fa-download"></i>  Klik untuk melihat Dokumen</a>');
+        });
+    });
+</script> -->
+
 <!-- Bootstrap core JavaScript-->
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

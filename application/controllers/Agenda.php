@@ -20,16 +20,8 @@ class Agenda extends CI_Controller
 
 		$id_user = $this->session->userdata('id_user');
 
-		// foreach ($forname as $rows) {
-		// 	$nama = "Riwayat Beban ". $rows->nama;
-		// }
-
 		$data = array(
-			'title' => "Agenda",
-			// 'sensor' => $sensor,
-			//'count_usulan' => $count_usulan,
-			//'count_instansi' => $count_instansi,
-			//'iklan' => $iklan
+			'title' => "Agenda"
 		);
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/riwayat/v_riwayat', $data);
@@ -80,7 +72,6 @@ class Agenda extends CI_Controller
 		}
 	}
 
-
 	public function get_agenda()
 	{
 		$id = $this->input->post("agId");
@@ -115,7 +106,7 @@ class Agenda extends CI_Controller
 			$output .= '
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Surat Masuk</h4>
+                            <h4 class="modal-title">Edit Agenda</h4>
                             <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
                         </div>
                         <div class="modal-body">
@@ -215,6 +206,145 @@ class Agenda extends CI_Controller
 			$this->session->set_flashdata('error', 'Gagal Ubah Data Undangan!!.');
 			redirect(site_url('agenda/list2'));
 		}
+	}
+
+
+	public function get_dokumen()
+	{
+		$id = $this->input->post("agId");
+
+		$record = $this->db->query("SELECT * FROM tbl_agenda WHERE id_agenda ='$id'")->result();
+
+		$output = "";
+
+		foreach ($record as $rows) {
+			$ppt = (!empty($rows->file_ppt)) ? '<a target="_blank" href="' . base_url("assets/agenda/$rows->file_ppt") . '" class="btn btn-info"><i class="fa fa-download"></i>  Klik untuk melihat Dokumen</a>' : '';
+			$und = (!empty($rows->file_und)) ? '<a target="_blank" href="' . base_url("assets/agenda/$rows->file_und") . '" class="btn btn-info"><i class="fa fa-download"></i>  Klik untuk melihat Dokumen</a>' : '';
+			$foto = (!empty($rows->file_foto)) ? '<a target="_blank" href="' . base_url("assets/agenda/$rows->file_foto") . '" class="btn btn-info"><i class="fa fa-download"></i>  Klik untuk melihat Dokumen</a>' : '';
+			$video = (!empty($rows->file_video)) ? '<a target="_blank" href="' . base_url("assets/agenda/$rows->file_video") . '" class="btn btn-info"><i class="fa fa-download"></i>  Klik untuk melihat Dokumen</a>' : '';
+			$output .= '
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Upload Dokumen Pendukung</h4>
+                            <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <form action="' . base_url("agenda/upload_dokumen") . '" method="post" enctype="multipart/form-data">
+                                    <div class="form-body">
+									
+									<div class="row">
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label class="control-label">Upload PPT Materi</label>
+											<input class="form-control" type="hidden" name="id_agenda" value="' . $id . '">
+											<input type="hidden" name="old_file1" class="form-control" value="' . $rows->file_ppt . '">
+											<input style="margin-bottom :7px" type="file" name="fileAg1" class="form-control" >
+											'. $ppt .'
+										</div>
+									</div>
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label class="control-label">Upload Undangan</label>
+											<input style="margin-bottom :7px" type="file" name="fileAg2" class="form-control" >
+											<input type="hidden" name="old_file2" class="form-control" value="' . $rows->file_und . '">
+											'. $und .'
+										</div>
+									</div>
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label class="control-label">Upload Foto Kegiatan</label>
+											<input style="margin-bottom :7px" type="file" name="fileAg3" class="form-control" >
+											<input type="hidden" name="old_file3" class="form-control" value="' . $rows->file_foto . '">
+											'. $foto .'
+										</div>
+									</div>
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label class="control-label">Upload Video Kegiatan</label>
+											<input style="margin-bottom :7px" type="file" name="fileAg4" class="form-control" >
+											<input type="hidden" name="old_file4" class="form-control" value="' . $rows->file_video . '">
+											'. $video .'
+										</div>
+									</div>
+								</div>
+
+                                        <div class="row" align="right">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+									</div>
+								</form>
+							</div>
+						</div>
+					<div class="modal-footer">
+                    </div></div>
+                ';
+		}
+		echo $output;
+	}
+	
+	function upload_dokumen()
+	{
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
+
+        $id = $this->input->post("id_agenda");
+        $new1 = $this->input->post("fileAg1");
+        $new2 = $this->input->post("fileAg2");
+        $new3 = $this->input->post("fileAg3");
+        $new4 = $this->input->post("fileAg4");
+
+        if (!empty($_FILES["fileAg1"]["name"])) {
+
+            $new1 = $_FILES["fileAg1"]["name"];
+            $files1 = $this->m_sm->_uploadPPT($new1);
+        } else {
+            $files1 = $this->input->post("old_file1");
+        }
+
+        if (!empty($_FILES["fileAg2"]["name"])) {
+
+            $new2 = $_FILES["fileAg2"]["name"];
+            $files2 = $this->m_sm->_uploadUnd($new2);
+        } else {
+            $files2 = $this->input->post("old_file2");
+        }
+
+        if (!empty($_FILES["fileAg3"]["name"])) {
+
+            $new3 = $_FILES["fileAg3"]["name"];
+            $files3 = $this->m_sm->_uploadFoto($new3);
+        } else {
+            $files3 = $this->input->post("old_file3");
+        }
+
+        if (!empty($_FILES["fileAg4"]["name"])) {
+
+            $new4 = $_FILES["fileAg4"]["name"];
+            $files4 = $this->m_sm->_uploadVideo($new4);
+        } else {
+            $files4 = $this->input->post("old_file4");
+        }
+
+        $data = array(
+            'file_ppt' => $files1,
+            'file_und' => $files2,
+            'file_foto' => $files3,
+            'file_video' => $files4
+        );
+
+        $result = $this->m_sm->update_agenda($data, $id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Upload Berhasil!!.');
+            redirect(site_url('agenda/list2'));
+        } else {
+            $this->session->set_flashdata('error', 'Gagal Upload!!.');
+            redirect(site_url('agenda/list2'));
+        }
 	}
 
     function hapus($id)
