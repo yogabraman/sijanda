@@ -63,7 +63,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <style>
                 .dataTables_wrapper {
                     font-family: tahoma;
-                    font-size: 8px;
+                    font-size: 12px;
                     position: relative;
                     clear: both;
                     *zoom: 1;
