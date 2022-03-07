@@ -65,7 +65,8 @@ class Login extends CI_Controller {
                     'id_user' => $login[0]['id_user'],
                     'nama' => $username,
                     'status' => "login",
-                    'level' => $login[0]['admin']
+                    'level' => $login[0]['admin'],
+                    'bidang' => $login[0]['nip']
                 );
 
                 // print_r($data_login);

@@ -78,8 +78,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
                                         <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
-                                    <?php } elseif ($this->session->userdata('level') == 3) { ?>
-                                        <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                        <?php } elseif ($this->session->userdata('level') == 3) {
+                                        if (strpos($rows->dispo, $this->session->userdata('bidang')) !== false) { ?>
+                                            <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="fa fa-edit"></i></button>
+                                        <?php } else { ?>
+                                            <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                        <?php } ?>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -144,18 +148,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Bidang :</label>
-                                        <?php
-                                        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-                                        foreach ($struk as $rows) {
-                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
-                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
-                                        }
-                                        ?>
+                                <?php if ($this->session->userdata('level') == 3) { ?>
+                                    <input class="form-control" type="hidden" name="bidang[]" value="<?= $this->session->userdata('bidang') ?>">
+                                <?php } else { ?>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Bidang :</label>
+                                            <?php
+                                            $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
+                                            foreach ($struk as $rows) {
+                                                echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
+                                                echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
 
                             </div>
 
