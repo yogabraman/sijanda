@@ -78,9 +78,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
                                         <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
-                                        <?php } elseif ($this->session->userdata('level') == 3) {
+                                    <?php } elseif ($this->session->userdata('level') == 3) {
                                         if (strpos($rows->dispo, $this->session->userdata('bidang')) !== false) { ?>
                                             <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="fa fa-edit"></i></button>
+                                        <button style="margin-top :3px" class="btn btn-warning upload-dukung" id="<?= $rows->id_agenda ?>" title="Upload"><i class="fa fa-file"></i></button>
                                         <?php } else { ?>
                                             <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
                                         <?php } ?>
