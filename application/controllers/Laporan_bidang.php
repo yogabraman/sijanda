@@ -83,7 +83,7 @@ class Laporan_bidang extends CI_Controller
 					'layanan_integritas_belum' => $row[19],
 					'pks' => $row[20],
 					'akses_data' => $row[21],
-					'created' => time()
+					'created' => date('Y-m-d H')
 				];
 				$this->load->model('M_import_kinerja');
 				$this->M_import_kinerja->import_bid_5($dataimport);
@@ -99,7 +99,7 @@ class Laporan_bidang extends CI_Controller
 					'tahun' => $tahun
 				];
 				$this->load->model('M_import_kinerja');
-				$this->M_import_kinerja->import_atr_bid_5($datainsert, time());
+				$this->M_import_kinerja->import_atr_bid_5($datainsert, date('Y-m-d H'));
 			}
 			$this->session->set_flashdata('success', 'Data Berhasil Disimpan!!');
 			redirect('laporan_bidang/bidang5');
