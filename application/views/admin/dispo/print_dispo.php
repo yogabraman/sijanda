@@ -228,7 +228,7 @@
         </table>
 
         <div style="margin-top:10px" class="separator"></div>
-        <div class="jarak2"> Catatan Tambahan :</div>
+        <div class="jarak2"> Disposisi Tambahan :</div>
 
     <?php } ?>
 </body>
