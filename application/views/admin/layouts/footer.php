@@ -626,6 +626,100 @@ $result = date_format($date, "Y");
     });
 </script> -->
 
+<!-- Edit Pegawai -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTablePegawai').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTablePegawai').on('click', '.edit-pegawai', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var id = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('spt/get_pegawai') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    id: id
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<!-- Hapus SPT -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTablePegawai').DataTable();
+        $('#dataTablePegawai').on('click', '.hapus-pegawai', function() {
+            var id = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('spt/hapus_pegawai/') ?>' + id + '">Hapus</a>');
+        });
+    });
+</script>
+
+<!-- Edit SPT -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableSPT').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableSPT').on('click', '.edit-spt', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var sptId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('spt/get_spt') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    sptId: sptId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<!-- Hapus Pegawai -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableSPT').DataTable();
+        $('#dataTableSPT').on('click', '.hapus-spt', function() {
+            var id = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('spt/hapus_spt/') ?>' + id + '">Hapus</a>');
+        });
+    });
+</script>
+
 <!-- Bootstrap core JavaScript-->
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -730,6 +824,13 @@ $result = date_format($date, "Y");
 <script type="text/javascript">
     $(document).ready(function() {
         $("#nota_surat").select2();
+    });
+</script>
+
+<!-- Autocomplete -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#pilih_pegawai").select2();
     });
 </script>
 

@@ -98,7 +98,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header"></h6>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'pgw' ? 'active' : ''; ?>" href="<?= site_url('spt/pegawai') ?>">Daftar Pegawai</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'spt' ? 'active' : ''; ?>" href="<?= site_url('spt/add') ?>">SPT</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'spt' ? 'active' : ''; ?>" href="<?= site_url('spt') ?>">SPT</a>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>" href="<?= site_url('spt/sppd') ?>">Laporan SPPD</a>
                         </div>
                     </div>
