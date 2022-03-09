@@ -156,6 +156,7 @@
 
     ?>
 
+
     <table width="100%" style="margin-top: -35px">
         <tbody>
 
@@ -225,45 +226,20 @@
                     <tr>
                         <td align="justify" colspan="4">Pejabat/Staf Dinas Pemberdayaan Masyarakat, Desa, Kependudukan dan Pencatatan Sipil Provinsi Jawa Tengah</td>
                     </tr>
-
-                    <tr>
-                        <td width="5%" align="left">1.</td>
-                        <td width="15%">Nama / NIP</td>
-                        <td width="3%" align="center">:</td>
-                        <td width="77%" align="justify">Drs.BUDIHARJO,MM / 19640412 199303 1 007</td>
-                    </tr>
-                    <tr>
-                        <td width="5%" align="left">&nbsp;</td>
-                        <td width="15%">Jabatan</td>
-                        <td width="3%" align="center">:</td>
-                        <td width="77%" align="justify">Kabid Fasilitasi Pelayanan Administrasi Kependudukan</td>
-                    </tr>
-
-                    <tr>
-                        <td width="5%" align="left">2.</td>
-                        <td width="15%">Nama / NIP</td>
-                        <td width="3%" align="center">:</td>
-                        <td width="77%" align="justify">DWI AGUNG KURNIAWAN,S.Kom / 19771216 200604 1 005</td>
-                    </tr>
-                    <tr>
-                        <td width="5%" align="left">&nbsp;</td>
-                        <td width="15%">Jabatan</td>
-                        <td width="3%" align="center">:</td>
-                        <td width="77%" align="justify">Kasi Bina Aparatur Pendaftaran Penduduk</td>
-                    </tr>
-
-                    <tr>
-                        <td width="5%" align="left">3.</td>
-                        <td width="15%">Nama / NIP</td>
-                        <td width="3%" align="center">:</td>
-                        <td width="77%" align="justify">PUTRI LINTANG, SE / </td>
-                    </tr>
-                    <tr>
-                        <td width="5%" align="left">&nbsp;</td>
-                        <td width="15%">Jabatan</td>
-                        <td width="3%" align="center">:</td>
-                        <td width="77%" align="justify"></td>
-                    </tr>
+                    <?php foreach ($spt['pegawai'] as $rows) { ?>
+                        <tr>
+                            <td width="5%" align="left">1.</td>
+                            <td width="15%">Nama/ NIP</td>
+                            <td width="3%" align="center">:</td>
+                            <td width="77%" align="justify"><?= $rows ?> / (nip)</td>
+                        </tr>
+                        <tr>
+                            <td width="5%" align="left">&nbsp;</td>
+                            <td width="15%">Jabatan</td>
+                            <td width="3%" align="center">:</td>
+                            <td width="77%" align="justify">(jabatan) </td>
+                        </tr>
+                    <?php } ?>
 
                 </table>
             </td>
@@ -340,7 +316,7 @@
         </tr>
         <tr>
             <td width="55%">&nbsp;</td>
-            <td colspan="3" align="center"><b><u>Ir. SUGENG RIYANTO, MSc</u></b></td>
+            <td colspan="3" align="center"><b><u></u></b></td>
         </tr>
         <tr>
             <td width="55%">&nbsp;</td>

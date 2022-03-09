@@ -8,6 +8,7 @@ class Spt extends CI_Controller
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->model('m_pegawai');
+		$this->load->library('pdf');
 
         if ($this->session->userdata('status') != "login") {
             redirect('login');
@@ -31,29 +32,44 @@ class Spt extends CI_Controller
 
         date_default_timezone_set('Asia/Jakarta');
         $waktu = date('Y-m-d H:i:s');
-        
-        $pegawai = $this->input->post('pegawai');
-        $tgl_berangkat = "";
-        $tgl_pulang = "";
-        $cek_berangkat = $this->db->query("SELECT * FROM tbl_pegawai WHERE pegawai LIKE '%$pegawai%' 
-        AND ( (tgl_berangkat='$tgl_berangkat') OR (tgl_pulang='$tgl_berangkat') )")->num_rows();
 
-        $cek_pulang = $this->db->query("SELECT * FROM tbl_pegawai WHERE pegawai LIKE '%$pegawai%' 
-        AND ( (tgl_berangkat='$tgl_pulang') OR (tgl_pulang='$tgl_pulang') )")->num_rows();
-
-        $data = array(
+        $id = $_POST['id'];
+        $data['spt'] = array(
+            'tgl_berangkat' => $this->input->post('tgl_berangkat'),
+            'tgl_pulang' => $this->input->post('tgl_pulang'),
+            'tujuan' => $this->input->post('tujuan'),
+            'dasar' => $this->input->post('dasar'),
+            'untuk' => $this->input->post('untuk'),
             'pegawai' => $this->input->post('pegawai')
         );
 
-        $result = $this->m_pegawai->add_pegawai($data);
-
-        if ($result) {
-            $this->session->set_flashdata('success', 'Berhasil Disimpan!!.');
-            redirect(site_url('spt/pegawai'));
+        if ($id == "save") {
+            print_r($data);
         } else {
-            $this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
-            redirect(site_url('spt/pegawai'));
+            $this->pdf->filename = "print-spt-" . $waktu . ".pdf";
+            $this->pdf->set_option('isRemoteEnabled', true);
+            $this->pdf->load_view('admin/spt/print_spt', $data);
+            $this->pdf->render();
         }
+
+        // $pegawai = $this->input->post('pegawai');
+        // $tgl_berangkat = "";
+        // $tgl_pulang = "";
+        // $cek_berangkat = $this->db->query("SELECT * FROM tbl_pegawai WHERE pegawai LIKE '%$pegawai%' 
+        // AND ( (tgl_berangkat='$tgl_berangkat') OR (tgl_pulang='$tgl_berangkat') )")->num_rows();
+
+        // $cek_pulang = $this->db->query("SELECT * FROM tbl_pegawai WHERE pegawai LIKE '%$pegawai%' 
+        // AND ( (tgl_berangkat='$tgl_pulang') OR (tgl_pulang='$tgl_pulang') )")->num_rows();
+
+        // $result = $this->m_pegawai->add_pegawai($data);
+
+        // if ($result) {
+        //     $this->session->set_flashdata('success', 'Berhasil Disimpan!!.');
+        //     redirect(site_url('spt/pegawai'));
+        // } else {
+        //     $this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
+        //     redirect(site_url('spt/pegawai'));
+        // }
     }
 
     public function pegawai()

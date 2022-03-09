@@ -167,19 +167,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tujuan</label>
-                                        <textarea class="form-control" name="tujuan"></textarea>
+                                        <input class="form-control" type="text" name="tujuan">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Dasar SPT :</label>
+                                        <textarea class="form-control" name="dasar"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Untuk :</label>
+                                        <textarea class="form-control" name="untuk"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Pilih Pegawai</label>
-                                        <select class="form-control" id="pilih_pegawai" name="pegawai" multiple="multiple" style="width:100%">
+                                        <select class="form-control" id="pilih_pegawai" name="pegawai[]" multiple="multiple" style="width:100%">
                                             <option></option>
                                             <?php
                                             $pgw = $this->db->query("SELECT * FROM tbl_pegawai")->result();
                                             foreach ($pgw as $rows) {
-                                                echo '<option value=' . $rows->id_pegawai . '>' . $rows->pegawai . '</option>';
+                                                echo '<option value="' . $rows->pegawai . '">' . $rows->pegawai . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -190,7 +204,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="row" align="right">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <button type="submit" formtarget="_blank" name="id" value="view" class="btn btn-primary"><i class="fa fa-print"></i> Preview</button>
+                                    <button type="submit" formtarget="_blank" name="id" value="save" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                 </div>
                             </div>
