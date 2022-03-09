@@ -175,26 +175,35 @@
                     <td class="tgh" id="lbr" colspan="5"><strong>Disposisi Nota Dinas</strong></td>
                 </tr>
 
-                <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Surat Masuk</strong></td>
-                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_surat ?></td>
-                </tr>
-                <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Tanggal Surat</strong></td>
-                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= tgl_indo($rows->tgl_surat) ?></td>
-                </tr>
-                <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Dari</strong></td>
-                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->asal_surat ?></td>
-                </tr>
-                <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
-                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->perihal ?></td>
-                </tr>
-                <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Pencatat Kendali</strong></td>
-                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
-                </tr>
+                <?php if ($tipe == 0) { ?>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Surat Masuk</strong></td>
+                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_surat ?></td>
+                    </tr>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Tanggal Surat</strong></td>
+                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= tgl_indo($rows->tgl_surat) ?></td>
+                    </tr>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Pencatat Kendali</strong></td>
+                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
+                    </tr>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Dari</strong></td>
+                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->asal_surat ?></td>
+                    </tr>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
+                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->perihal ?></td>
+                    </tr>
+
+                <?php } else { ?>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
+                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->perihal ?></td>
+                    </tr>
+
+                <?php } ?>
             </tbody>
         </table>
 

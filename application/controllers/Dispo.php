@@ -316,16 +316,25 @@ class Dispo extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 		$waktu = date('Y-m-d H:i:s');
 
-		// $data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
-		// $data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
+		$notaId = explode("--", $id);
+		$ids = $notaId[0];
+		$data['tipe'] = $notaId[1];
 
-		$data['nota'] = $this->db->query("SELECT tbl_nota_dinas.*, 
-		tbl_surat_masuk.no_surat as no_surat, 
-		tbl_surat_masuk.tgl_surat as tgl_surat, 
-		tbl_surat_masuk.asal_surat as asal_surat, 
-		tbl_surat_masuk.isi as perihal, 
-		tbl_surat_masuk.no_agenda as no_agenda
-		FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_nota_dinas.id_nota='$id'")->result();
+		if ($notaId[1] == 0){
+
+			$data['nota'] = $this->db->query("SELECT tbl_nota_dinas.*, 
+			tbl_surat_masuk.no_surat as no_surat, 
+			tbl_surat_masuk.tgl_surat as tgl_surat, 
+			tbl_surat_masuk.asal_surat as asal_surat, 
+			tbl_surat_masuk.isi as perihal, 
+			tbl_surat_masuk.no_agenda as no_agenda
+			FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_nota_dinas.id_nota='$ids'")->result();
+
+		} else {
+
+			$data['nota'] = $this->db->query("SELECT * FROM tbl_nota_dinas  WHERE id_nota='$ids'")->result();
+
+		}
 
 		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
 		$this->pdf->filename = "print-disposisi-" . $waktu . ".pdf";

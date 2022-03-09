@@ -171,10 +171,13 @@ class Surat_masuk extends CI_Controller
         $id_surat = $this->input->post('id_surat');
         $new = $_FILES["filex"]["name"];
         $perihal = "";
+        $tipe_nota = "";
         if (!empty($id_surat)) {
             $perihal = $this->db->limit(1)->query("SELECT isi FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->isi;
+            $tipe_nota = 0;
         } else {
             $perihal = $this->input->post('perihal');
+            $tipe_nota = 1;
         }
 
         $data = array(
@@ -184,7 +187,8 @@ class Surat_masuk extends CI_Controller
             'tgl_nota' => $this->input->post('tgl_nota'),
             'created_at' => $waktu,
             'updated_at' => $waktu,
-            'id_user' => $id_user
+            'id_user' => $id_user,
+            'tipe_nota' => $tipe_nota
         );
 
         $result = $this->m_nota->add_nota($data);
