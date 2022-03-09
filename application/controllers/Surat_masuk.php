@@ -140,12 +140,11 @@ class Surat_masuk extends CI_Controller
 
         $data = array(
             'no_surat' => $this->input->post('no_surat'),
-            'asal_surat' => $this->input->post('asal_surat'),
+            'dari' => $this->input->post('dari'),
+            'tujuan' => $this->input->post('tujuan'),
             'perihal' => $this->input->post('perihal'),
             'tgl_surat' => $this->input->post('tgl_surat'),
-            'tgl_naik' => $this->input->post('tgl_naik'),
             'file' => $this->m_sk->_uploadFileSK($new),
-            'isi_dispo' => $this->input->post('isi_dispo'),
             'id_user' => $id_user
         );
 
@@ -490,18 +489,23 @@ class Surat_masuk extends CI_Controller
         $id = $this->input->post("skId");
 
         $cek = $this->db->query("SELECT * FROM tbl_surat_keluar WHERE id_surat ='$id'")->result();
+        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
 
         foreach ($cek as $rows) {
-            $asal_surat = $rows->asal_surat;
+            $dari = $rows->dari;
+            $tujuan = $rows->tujuan;
             $no_surat = $rows->no_surat;
             $perihal = $rows->perihal;
             $tgl_surat = $rows->tgl_surat;
-            $tgl_naik = $rows->tgl_naik;
-            $isi_dispo = $rows->isi_dispo;
             $file = $rows->file;
         }
 
         $output = "";
+        $abc = "";
+
+        foreach ($struk as $row) {
+            $abc .= '<option value="' . $row->nama . '">' . $row->nama . '</option>';
+        }
 
         $output = '
                     <div class="modal-content">
@@ -516,11 +520,21 @@ class Surat_masuk extends CI_Controller
 
                                         <div class="row">
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <input class="form-control" type="hidden" name="id_surat" value="' . $id . '">
-                                        <label class="control-label">Asal Surat</label>
-                                        <input class="form-control" type="text" name="asal_surat" value="' . $asal_surat . '">
+                                        <label class="control-label">Konseptor Surat</label>
+                                        <select class="form-control" type="text" name="dari" required>
+                                            <option value="' . $dari . '" >' . $dari . '</option>
+                                            '.$abc.'
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Tujuan Surat</label>
+                                        <input class="form-control" name="tujuan" value="' . $tujuan . '">
                                     </div>
                                 </div>
 
@@ -538,24 +552,10 @@ class Surat_masuk extends CI_Controller
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Tanggal Diteruskan</label>
-                                        <input class="form-control" type="date" name="tgl_naik" value="' . $tgl_naik . '">
-                                    </div>
-                                </div>
-
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
                                         <input class="form-control" type="text" name="perihal" value="' . $perihal . '">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Isi Diposisi</label>
-                                        <input class="form-control" type="text" name="isi_dispo" value="' . $isi_dispo . '">
                                     </div>
                                 </div>
 
@@ -780,14 +780,12 @@ class Surat_masuk extends CI_Controller
         }
 
         $data_surat = array(
-            'no_surat' => $this->input->post('no_surat'),
-            'asal_surat' => $this->input->post('asal_surat'),
+            'dari' => $this->input->post('dari'),
+            'tujuan' => $this->input->post('tujuan'),
             'perihal' => $this->input->post('perihal'),
+            'no_surat' => $this->input->post('no_surat'),
             'tgl_surat' => $this->input->post('tgl_surat'),
-            'tgl_naik' => $this->input->post('tgl_naik'),
-            'file' => $files,
-            'penerima' => $this->input->post('penerima'),
-            'isi_dispo' => $this->input->post('isi_dispo')
+            'file' => $files
         );
 
         $result = $this->m_sm->update_sm($data_surat, $id_surat);

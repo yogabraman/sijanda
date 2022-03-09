@@ -205,8 +205,8 @@ $result = date_format($date, "Y");
     });
 </script>
 
-<!-- Tabel Surat Masuk -->
-<script type="text/javascript">
+<!-- Tabel Surat Keluar -->
+<!-- <script type="text/javascript">
     // Start jQuery function after page is loaded
     $(document).ready(function() {
         // Initiate DataTable function comes with plugin
@@ -218,7 +218,7 @@ $result = date_format($date, "Y");
         });
 
     });
-</script>
+</script> -->
 
 <!-- Edit Surat Keluar -->
 <script type="text/javascript">

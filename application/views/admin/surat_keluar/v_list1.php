@@ -26,11 +26,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <table class="table table-bordered" id="dataTableSK" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>No. Surat<br />Tgl Surat</th>
-                            <th>Asal Surat</th>
                             <th>Perihal</th>
-                            <th>Tgl Diteruskan</th>
-                            <th>Isi Dispo</th>
+                            <th>Konseptor</th>
+                            <th>Tujuan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -69,18 +69,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             }
                             ?>
                             <tr>
+                                <td><?= $rows->id_surat ?></td>
                                 <td><?= $rows->no_surat ?> <br>
                                     <hr /> <?= $d . " " . $nm . " " . $y ?>
                                 </td>
-                                <td><?= $rows->asal_surat ?></td>
                                 <td><?= $rows->perihal ?></td>
-                                <td><?= $rows->tgl_naik ?></td>
-                                <td><?= $rows->isi_dispo ?></td>
+                                <td><?= $rows->dari ?></td>
+                                <td><?= $rows->tujuan ?></td>
                                 <td class="text-center" style="min-width:100px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                                         <button class="btn btn-info edit-sk" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-sk" id="<?= $rows->id_surat ?>"><i class="fa fa-trash"></i></button>
                                         <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <a target="_blank" class="btn btn-dark" title="Share Link"><i class="fa fa-share-alt"></i></a>
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
                                         <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
                                         <a target="_blank" href="<?= base_url() ?>assets/suratkeluar/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
@@ -117,10 +118,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="row">
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Konseptor Surat</label>
+                                        <select class="form-control" type="text" name="dari" required>
+                                            <option></option>
+                                            <?php
+                                            $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
+                                            foreach ($struk as $rows) {
+                                                echo '<option value="' . $rows->nama . '">' . $rows->nama . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tujuan Surat</label>
-                                        <input class="form-control" type="text" name="asal_surat" id="asal_surat" required>
+                                        <textarea class="form-control" type="text" name="tujuan" required></textarea>
                                     </div>
                                 </div>
 
@@ -138,24 +154,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Tanggal Diteruskan</label>
-                                        <input class="form-control" type="date" name="tgl_naik">
-                                    </div>
-                                </div>
-
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
                                         <input class="form-control" type="text" name="perihal" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Catatan Ringkas</label>
-                                        <textarea class="form-control" type="text" name="isi_dispo"></textarea>
                                     </div>
                                 </div>
 
