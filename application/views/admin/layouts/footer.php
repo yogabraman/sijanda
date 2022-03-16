@@ -206,19 +206,18 @@ $result = date_format($date, "Y");
 </script>
 
 <!-- Tabel Surat Keluar -->
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     // Start jQuery function after page is loaded
     $(document).ready(function() {
         // Initiate DataTable function comes with plugin
         var tabel = $('#dataTableSK').DataTable({
-            columnDefs: [{
-                targets: [3],
-                visible: false
-            }]
+            order: [
+                [0, 'desc']
+            ]
         });
 
     });
-</script> -->
+</script>
 
 <!-- Edit Surat Keluar -->
 <script type="text/javascript">
