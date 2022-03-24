@@ -89,16 +89,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </li>
 
                 <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item <?php echo $this->uri->segment(1) == 'spt' || $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == '' || $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>">
+                <li class="nav-item <?php echo $this->uri->segment(1) == 'spt' || $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == 'list_spt' || $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpt" aria-expanded="true" aria-controls="collapseSpt">
                         <i class="fas fa-fw fa-plane"></i>
                         <span>SPT</span>
                     </a>
-                    <div id="collapseSpt" class="collapse <?php echo $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == '' || $this->uri->segment(2) == 'sppd' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div id="collapseSpt" class="collapse <?php echo $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == 'list_spt' || $this->uri->segment(2) == 'sppd' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header"></h6>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'pegawai' ? 'active' : ''; ?>" href="<?= site_url('spt/pegawai') ?>">Daftar Pegawai</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == '' ? 'active' : ''; ?>" href="<?= site_url('spt') ?>">SPT</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_spt' ? 'active' : ''; ?>" href="<?= site_url('spt/list_spt') ?>">SPT</a>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>" href="<?= site_url('spt/sppd') ?>">Laporan SPPD</a>
                         </div>
                     </div>

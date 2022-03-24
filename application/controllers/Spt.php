@@ -16,7 +16,7 @@ class Spt extends CI_Controller
         }
     }
 
-    public function index()
+    public function list_spt()
     {
         // $spt = $this->db->query("SELECT tbl_spt.*, tbl_spt_pegawai.pegawai as pegawai FROM tbl_spt 
         // JOIN tbl_spt_pegawai USING(id_spt) GROUP BY id_spt ORDER by id_spt DESC")->result();
