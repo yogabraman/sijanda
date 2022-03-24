@@ -24,7 +24,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Tgl Berangkat<br />Tgl Pulang</th>
                             <th>Tujuan</th>
                             <th>Pegawai</th>
-                            <th>Keterangan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -98,21 +97,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <hr /> <?= $d1 . " " . $nm1 . " " . $y1 ?>
                                 </td>
                                 <td><?= $rows->tujuan ?></td>
-                                <td><?= $rows->$pegawai ?>
-                                <td><?= $rows->$keterangan ?>
-                                </td>
+                                <td><?= $rows->pegawai ?></td>
                                 <td class="text-center" style="min-width:180px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
 
-                                        <button class="btn btn-info edit-nota" id="<?= $rows->id_nota ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <button class="btn btn-info edit-spt" id="<?= $rows->id_spt ?>" title="Edit"><i class="far fa-edit"></i></button>
 
-                                        <button class="btn btn-danger hapus-nota" id="<?= $rows->id_nota ?>" title="Hapus"><i class="fa fa-trash"></i></button>
+                                        <a target="_blank" href="<?= base_url() ?>assets/spt/<?= $rows->file_spt ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
 
-                                        <?php if ($rows->status == 0) { ?>
-                                            <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
-                                        <?php } else { ?>
-                                            <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
-                                        <?php } ?>
+                                        <button class="btn btn-danger hapus-spt" id="<?= $rows->id_spt ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
@@ -171,7 +164,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 col-12">
+                                <!-- <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Dasar SPT :</label>
                                         <textarea class="form-control" name="dasar"></textarea>
@@ -183,7 +176,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <label class="control-label">Untuk :</label>
                                         <textarea class="form-control" name="untuk"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
@@ -200,12 +193,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">File</label>
+                                        <input type="file" name="filex" class="form-control">
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="row" align="right">
                                 <div class="col-md-12">
-                                    <button type="submit" formtarget="_blank" name="id" value="view" class="btn btn-primary"><i class="fa fa-print"></i> Preview</button>
-                                    <button type="submit" formtarget="_blank" name="id" value="save" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <!-- <button type="submit" formtarget="_blank" name="id" value="view" class="btn btn-primary"><i class="fa fa-print"></i> Preview</button> -->
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                 </div>
                             </div>
@@ -253,54 +253,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
-</div>
-
-<!-- Modal Dispo -->
-<div class="modal fade" id="disponotaModal" role="dialog">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Tambah Dispo Nota Dinas</h4>
-                <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="card-body">
-                    <div class="form-body">
-                        <form action="<?= site_url('dispo/add_disponota') ?>" method="post" enctype="multipart/form-data">
-                            <div id="filex" class="row"></div>
-                            <div class="row">
-                                <div id="ids"></div>
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <br>
-                                        <input type="checkbox" class="control-input" id="notaCheck" required>
-                                        <label class="control-label" for="notaCheck">Nota Dinas yang diteruskan sudah dikoreksi dan benar</label>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row" align="right">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-        </div>
-        <div class="modal-footer">
-        </div>
-    </div>
-
 </div>
 
 <!-- Modal Preview File -->

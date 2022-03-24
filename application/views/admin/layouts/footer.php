@@ -659,7 +659,7 @@ $result = date_format($date, "Y");
     });
 </script>
 
-<!-- Hapus SPT -->
+<!-- Hapus Pegawai -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dataTablePegawai').DataTable();
@@ -706,7 +706,7 @@ $result = date_format($date, "Y");
     });
 </script>
 
-<!-- Hapus Pegawai -->
+<!-- Hapus SPT -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dataTableSPT').DataTable();
