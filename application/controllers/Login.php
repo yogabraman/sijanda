@@ -48,12 +48,17 @@ class Login extends CI_Controller {
             $username = $this->input->post('username');
             $password = md5($this->input->post('password'));
 
+            $where = array(
+                'username' => $username,
+                'password' => $password
+            );
+
             $data_update = array(
                 'islogin' => 1,
                 'lastlogin' => $waktu
             );
 
-            $login = $this->db->query("SELECT * FROM tbl_user WHERE username ='$username' AND password ='$password' AND status = 1")->result_array();
+            $login = $this->m_login->cek_user("users", $where)->result_array();
 
             
             if(!empty($login)) {
