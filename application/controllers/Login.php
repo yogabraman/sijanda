@@ -58,7 +58,7 @@ class Login extends CI_Controller {
                 'lastlogin' => $waktu
             );
 
-            $login = $this->m_login->cek_user("users", $where)->result_array();
+            $login = $this->m_login->cek_user("tbl_user", $where)->result_array();
 
             
             if(!empty($login)) {
