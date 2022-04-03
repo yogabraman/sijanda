@@ -320,6 +320,12 @@ class Dispo extends CI_Controller
 		$ids = $notaId[0];
 		$data['tipe'] = $notaId[1];
 
+		//update surat masuk
+		$data_nota = array(
+			'status_print' => 1
+		);
+		$this->m_nota->update_nota($data_nota, $ids);
+
 		if ($notaId[1] == 0){
 
 			$data['nota'] = $this->db->query("SELECT tbl_nota_dinas.*, 

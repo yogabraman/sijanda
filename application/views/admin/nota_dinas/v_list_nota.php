@@ -115,8 +115,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <button class="btn btn-danger hapus-nota" id="<?= $rows->id_nota ?>" title="Hapus"><i class="fa fa-trash"></i></button>
 
-                                        <?php if ($rows->tgl_disponota != null) { ?>
+                                        <?php if ($rows->tgl_disponota != null && $rows->status_print == 0) { ?>
                                             <a target="_blank" href="<?= site_url('dispo/print_disponota/') ?><?= $rows->id_nota ?>--<?= $rows->tipe_nota ?>" class="btn btn-primary" id="<?= $rows->id_nota ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                        <?php } else { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_disponota/') ?><?= $rows->id_nota ?>--<?= $rows->tipe_nota ?>" class="btn btn-success" id="<?= $rows->id_nota ?>" title="Disposisi"><i class="fa fa-print"></i></a>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>

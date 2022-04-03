@@ -412,7 +412,7 @@ class Agenda extends CI_Controller
         // $selesai = date_format($b,"Y-m-d");
 
         if (isset($start) and !empty($end)) {
-            $record = $this->db->query("SELECT * FROM tbl_agenda WHERE tgl_agenda BETWEEN '$start' AND '$end'")->result();
+            $record = $this->db->query("SELECT * FROM tbl_agenda WHERE tgl_agenda BETWEEN '$start' AND '$end' ORDER by tgl_agenda ASC, waktu_agenda ASC ")->result();
 
             $output = "";
             $no = 1;
