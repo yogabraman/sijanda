@@ -117,8 +117,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <?php if ($rows->tgl_disponota != null && $rows->status_print == 0) { ?>
                                             <a target="_blank" href="<?= site_url('dispo/print_disponota/') ?><?= $rows->id_nota ?>--<?= $rows->tipe_nota ?>" class="btn btn-primary" id="<?= $rows->id_nota ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } else { ?>
+                                        <?php } elseif ($rows->tgl_disponota != null && $rows->status_print == 1) { ?>
                                             <a target="_blank" href="<?= site_url('dispo/print_disponota/') ?><?= $rows->id_nota ?>--<?= $rows->tipe_nota ?>" class="btn btn-success" id="<?= $rows->id_nota ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                        <?php } else { ?>
+                                            
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
