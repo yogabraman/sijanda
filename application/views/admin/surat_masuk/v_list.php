@@ -374,7 +374,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Pilih Sifat Disposisi</label>
                                         <select class="form-control" id="sifat" type="text" name="sifat" required>
@@ -386,17 +386,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Disposisi</label>
-                                        <input class="form-control" type="text" name="isi_disposisi">
+                                        <textarea class="form-control" type="text" name="isi_disposisi"></textarea>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Catatan</label>
-                                        <input class="form-control" type="text" name="catatan">
+                                        <textarea class="form-control" type="text" name="catatan"></textarea>
                                     </div>
                                 </div>
 

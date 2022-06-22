@@ -196,7 +196,7 @@ class Dispo extends CI_Controller
 								</div>
 							</div>
 
-							<div class="col-md-6 col-12">
+							<div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Pilih Sifat Disposisi</label>
                                         <select class="form-control" id="sifat" type="text" name="sifat" value="' . $rows->sifat . '">
@@ -208,17 +208,17 @@ class Dispo extends CI_Controller
                                     </div>
                              </div>
 
-							<div class="col-md-6 col-12">
+							<div class="col-md-12 col-12">
 								<div class="form-group">
 									<label class="control-label">Isi Disposisi</label>
-									<input class="form-control" type="text" name="isi_disposisi" value="' . $rows->isi_disposisi . '">
+									<textarea class="form-control" type="text" name="isi_disposisi" value="' . $rows->isi_disposisi . '"></textarea>
 								</div>
 							</div>
 
-							<div class="col-md-6 col-12">
+							<div class="col-md-12 col-12">
 								<div class="form-group">
 									<label class="control-label">Catatan</label>
-									<input class="form-control" type="text" name="catatan" value="' . $rows->catatan . '">
+									<textarea class="form-control" type="text" name="catatan" value="' . $rows->catatan . '"></textarea>
 								</div>
 							</div>
 
