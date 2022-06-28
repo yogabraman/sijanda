@@ -764,6 +764,18 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('input[type=radio][name=nodin]').change(function() {
+            if (this.value == 0) {
+                $('[name="isi_disposisi"]').val("");
+            } else if (this.value == 1) {
+                $('[name="isi_disposisi"]').val("Buat Nota Dinas Hasilnya Makasih");
+            }
+        });
+    });
+</script>
+
 <!-- Tipe Nota Dinas -->
 <script type="text/javascript">
     $(document).ready(function() {

@@ -21,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div> -->
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                 <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
-                <a href="<?= site_url('surat_masuk/cetak') ?>" class="btn btn-info" ><i class="fa fa-print"></i> Cetak Surat Masuk</a>
+                <a href="<?= site_url('surat_masuk/cetak') ?>" class="btn btn-info"><i class="fa fa-print"></i> Cetak Surat Masuk</a>
             <?php } else {
                 echo "";
             } ?>
@@ -101,6 +101,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
                                         <?php } ?>
 
+                                        <!-- <?php if ($rows->nodin == 0) { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                        <?php } else { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
+                                        <?php } ?> -->
+
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
                                         <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
@@ -173,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <label class="control-label">Nomor Agenda</label>
                                         <!-- <input class="form-control" type="text" name="no_agenda"> -->
                                         <?php
-                                        
+
                                         $rand = date("Ymd");
                                         //new logic
                                         $no_agenda = $this->db->limit(1)->query("SELECT no_agenda FROM tbl_surat_masuk ORDER BY id_surat DESC")->row()->no_agenda;
@@ -371,6 +377,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             echo '<label for="' . $rows->id_perintah . '" for="perintah" >&nbsp' . $rows->perintah . '</label>';
                                         }
                                         ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Buatkan Nota Dinas?</label><br>
+                                        <div class="col-3">
+                                            <input type="radio" name="nodin" value="0" checked>
+                                            <label for="nodin">Tidak</label>
+                                        </div>
+                                        <div class="col-3">
+                                            <input type="radio" name="nodin" value="1">
+                                            <label for="nodin">Ya</label>
+                                        </div>
                                     </div>
                                 </div>
 

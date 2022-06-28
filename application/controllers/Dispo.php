@@ -54,11 +54,13 @@ class Dispo extends CI_Controller
 			'tgl_dispo' => $waktu,
 			'catatan' => $this->input->post('catatan'),
 			'id_surat' => $id_surat,
-			'id_user' => $id_user
+			'id_user' => $id_user,
+			'nodin' => $this->input->post('nodin')
 		);
 
 		$data_sm = array(
-			'status_dispo' => 1
+			'status_dispo' => 1,
+			'nodin' => 1
 		);
 
 		$data_ag = array(
