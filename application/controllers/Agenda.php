@@ -450,7 +450,7 @@ class Agenda extends CI_Controller
         $end = $this->input->post("end");
 
         // $data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
-        $data['agenda'] = $this->db->query("SELECT * FROM tbl_agenda WHERE tbl_agenda.tgl_agenda BETWEEN '$start' AND '$end'")->result();
+        $data['agenda'] = $this->db->query("SELECT * FROM tbl_agenda WHERE tbl_agenda.tgl_agenda BETWEEN '$start' AND '$end' ORDER by tgl_agenda ASC, waktu_agenda ASC ")->result();
 
         $data['start'] = $start;
         $data['end'] = $end;
