@@ -319,6 +319,19 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<!-- Upload Nota Dinas -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableSM').DataTable();
+        $('#dataTableSM').on('click', '.upload-nodin', function() {
+            var smId = $(this).attr('id');
+            $('#idnodin').empty();
+            $('#uploadNodin').modal('show');
+            $('#idnodin').append('<input class="form-control" type="hidden" name="id_surat" value="'+smId+'">');
+        });
+    });
+</script>
+
 <!-- Preview Nota Dinas -->
 <script type="text/javascript">
     $(document).ready(function() {

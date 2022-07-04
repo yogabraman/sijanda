@@ -101,11 +101,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
                                         <?php } ?>
 
-                                        <!-- <?php if ($rows->nodin == 0) { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
-                                        <?php } else { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
-                                        <?php } ?> -->
+                                        <?php if ($rows->nodin == 1) { ?>
+                                            <button class="btn btn-success upload-nodin" id="<?= $rows->id_surat ?>" title="Upload"><i class="fa fa-upload"></i></button>
+                                        <?php } elseif ($rows->nodin == 2) { ?>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
@@ -443,4 +443,51 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 
 </div>
+
+<!-- Modal Upload File -->
+<div class="modal fade" id="uploadNodin" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Upload Nota Dinas</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-body">
+                        <form action="<?= site_url('surat_masuk/upload_nodin') ?>" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div id="idnodin"></div>
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Upload Nota Dinas</label>
+                                        <input style="margin-bottom :7px" type="file" name="filex" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row" align="right">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+
+</div>
+
 <!-- End of Main Content -->
