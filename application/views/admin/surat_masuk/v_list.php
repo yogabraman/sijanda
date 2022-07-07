@@ -102,9 +102,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
-                                            <button class="btn btn-success upload-nodin" id="<?= $rows->id_surat ?>" title="Upload"><i class="fa fa-upload"></i></button>
+                                            <button style="margin-top:3px" class="btn btn-success upload-nodin" id="<?= $rows->id_surat ?>" title="Upload"><i class="fa fa-upload"></i></button>
                                         <?php } elseif ($rows->nodin == 2) { ?>
-                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
@@ -117,6 +117,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } else { ?>
                                             <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
                                             <a href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                        <?php } ?>
+
+                                        <?php if ($rows->nodin == 1) { ?>
+                                            <button style="margin-top:3px" class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                        <?php } elseif ($rows->nodin == 2) { ?>
+                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
@@ -489,5 +495,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 
 </div>
+
+<script>
+function belum() {
+  alert("Nota Dinas Belum Diupload!");
+}
+</script>
 
 <!-- End of Main Content -->
