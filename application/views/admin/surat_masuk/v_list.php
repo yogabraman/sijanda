@@ -133,6 +133,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } else { ?>
                                             <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
                                         <?php } ?>
+
+                                        <?php if ($rows->nodin == 1) { ?>
+                                            <button style="margin-top:3px" class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                        <?php } elseif ($rows->nodin == 2) { ?>
+                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <?php } ?>
                                     <?php } ?>
 
                                 </td>
