@@ -104,7 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php if ($rows->nodin == 1) { ?>
                                             <button class="btn btn-success upload-nodin" id="<?= $rows->id_surat ?>" title="Upload"><i class="fa fa-upload"></i></button>
                                         <?php } elseif ($rows->nodin == 2) { ?>
-                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>

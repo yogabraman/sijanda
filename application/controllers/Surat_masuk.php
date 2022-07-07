@@ -213,23 +213,24 @@ class Surat_masuk extends CI_Controller
         $perihal = $this->db->limit(1)->query("SELECT isi FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->isi;
         $new = $_FILES["filex"]["name"];
 
-        $data = array(
-            'id_surat' => $this->input->post('id_surat'),
-            'perihal' => $perihal,
-            'file_nota' => $this->m_nota->_uploadFileNota($new),
-            'tgl_nota' => $waktu,
-            'created_at' => $waktu,
-            'updated_at' => $waktu,
-            'id_user' => $id_user,
-            'tipe_nota' => 1
-        );
+        // $data = array(
+        //     'id_surat' => $this->input->post('id_surat'),
+        //     'perihal' => $perihal,
+        //     'file_nota' => $this->m_nota->_uploadFileNota($new),
+        //     'tgl_nota' => $waktu,
+        //     'created_at' => $waktu,
+        //     'updated_at' => $waktu,
+        //     'id_user' => $id_user,
+        //     'tipe_nota' => 0
+        // );
 
         $data_sm = array(
-			'nodin' => 2
+			'nodin' => 2,
+            'file_nodin' => $this->m_nota->_uploadFileNota($new)
 		);
 
-        $result = $this->m_nota->add_nota($data);
-        $this->m_sm->update_sm($data_sm, $id_surat);
+        // $result = $this->m_nota->add_nota($data);
+        $result = $this->m_sm->update_sm($data_sm, $id_surat);
 
         if ($result) {
             $this->session->set_flashdata('success', 'Nota Dinas Berhasil Diupload!!.');
