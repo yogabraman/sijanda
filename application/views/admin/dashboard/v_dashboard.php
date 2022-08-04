@@ -36,7 +36,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Jumlah Surat Masuk</div>
+                                Jumlah Surat Keluar</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $count2 ?></div>
                         </div>
                         <div class="col-auto">
