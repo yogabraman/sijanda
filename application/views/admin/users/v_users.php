@@ -36,7 +36,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php } elseif ($rows->admin == 4) { ?>
                                         Tata Usaha
                                     <?php } elseif ($rows->admin == 2) { ?>
-                                        Stuktural
+                                        Sekdin
+                                    <?php } elseif ($rows->admin == 5) { ?>
+                                        Plh Kadis
+                                    <?php } elseif ($rows->admin == 6) { ?>
+                                        Kabid
                                     <?php } else { ?>
                                         Pegawai
                                     <?php } ?>
@@ -114,7 +118,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="form-group">
                                         <label class="control-label">Pilih Tipe User</label>
                                         <select class="form-control" id="admin" type="text" name="admin" required>
-                                            <option value="2">Pimpinan</option>
+                                            <option value="5">Plh Kadis</option>
+                                            <option value="2">Sekdin</option>
+                                            <option value="6">Kabid</option>
                                             <option value="3">Pegawai</option>
                                             <option value="4">Tata Usaha</option>
                                         </select>

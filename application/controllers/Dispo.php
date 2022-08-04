@@ -45,7 +45,7 @@ class Dispo extends CI_Controller
 		$id_surat = $this->input->post('id_surat');
 
 		$tipe_surat = $this->db->limit(1)->query("SELECT tipe_surat FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->tipe_surat;
-		
+
 		$data_dispo = array(
 			'tujuan' => $bidang,
 			'perintah' => $perintah,
@@ -108,11 +108,15 @@ class Dispo extends CI_Controller
 	public function getdisp()
 	{
 		$id = $this->input->post("dispoId");
-		$regex = 
-		$dispoId = explode("/", $id);
-		$suratId = 
+		$level = $this->session->userdata('level');
+		if ($level == 5) {
+			$id = $this->db->limit(1)->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat=$id")->row()->id_disposisi;
+		}
+		$regex =
+			$dispoId = explode("/", $id);
+		$suratId =
 
-		$record = $this->db->query("SELECT * FROM tbl_disposisi WHERE id_disposisi ='$id'")->result();
+			$record = $this->db->query("SELECT * FROM tbl_disposisi WHERE id_disposisi ='$id'")->result();
 		$struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
 		$pr = $this->db->query("SELECT * FROM tbl_perintah")->result();
 		$nama_bidang = $this->db->limit(1)->query("SELECT tujuan FROM tbl_disposisi WHERE id_disposisi ='$id'")->row()->tujuan;
@@ -127,38 +131,52 @@ class Dispo extends CI_Controller
 		// $ghi .= '<embed src="'. base_url().'assets/suratmasuk/'. $filex .'" width="800px" height="1000px" />';
 
 		foreach ($struk as $row) {
-			if (!empty($nama_bidang)) {
-				if (in_array($row->nama, json_decode($nama_bidang))) {
-					$abc .= '
-				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]" checked>
-				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+			if ($level == 5) {
+				if ($row->id_struk == 1) continue;
+				$abc .= '
+					<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
+					<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+			} else {
+				if (!empty($nama_bidang)) {
+					if (in_array($row->nama, json_decode($nama_bidang))) {
+						$abc .= '
+					<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]" checked>
+					<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+					} else {
+						$abc .= '
+					<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
+					<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+					}
 				} else {
 					$abc .= '
-				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
-				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
+					<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
+					<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
 				}
-			} else {
-				$abc .= '
-				<br><input id="struk_' . $row->id_struk . '" class="form-control-input" value="' . $row->nama . '" type="checkbox" name="bidang[]">
-				<label for="struk_' . $row->id_struk . '" for="bidang">&nbsp' . $row->nama . '</label>';
 			}
 		}
 
 		foreach ($pr as $row) {
-			if (!empty($perintah)) {
-				if (in_array($row->perintah, json_decode($perintah))) {
-					$def .= '
-				<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]" checked>
-				<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
-				} else {
-					$def .= '
-				<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]">
-				<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
-				}
-			} else {
+			if ($level == 5) {
+				if ($row->id_perintah == 8) continue;
 				$def .= '
 				<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]">
 				<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
+			} else {
+				if (!empty($perintah)) {
+					if (in_array($row->perintah, json_decode($perintah))) {
+						$def .= '
+					<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]" checked>
+					<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
+					} else {
+						$def .= '
+					<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]">
+					<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
+					}
+				} else {
+					$def .= '
+					<br><input id="' . $row->id_perintah . '" class="form-control-input" value="' . $row->perintah . '" type="checkbox" name="perintah[]">
+					<label for="' . $row->id_perintah . '" for="bidang">&nbsp' . $row->perintah . '</label>';
+				}
 			}
 		}
 
@@ -175,7 +193,7 @@ class Dispo extends CI_Controller
 							<form action="' . base_url("dispo/edit_dispo") . '" method="post" enctype="multipart/form-data">
 								<div class="form-body">
 									<div class="row">
-										<embed src="'. base_url().'assets/suratmasuk/'. $filex .'" width="800px" height="1000px" />
+										<embed src="' . base_url() . 'assets/suratmasuk/' . $filex . '" width="800px" height="1000px" />
 									</div>
 
 									<div class="row">
@@ -261,13 +279,21 @@ class Dispo extends CI_Controller
 		);
 
 		$result = $this->m_dispo->update_dispo($data, $id_disposisi);
+		$level = $this->session->userdata('level');
+		if ($level == 5) {
+			$data_sm = array(
+				'status_dispo' => 2
+			);
+			//update surat masuk
+			$this->m_sm->update_sm($data_sm, $id_surat);
+		}
 
 		if ($result) {
 			$this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');
-			redirect(site_url('dispo/get_dispo/'.$id_surat));
+			redirect(site_url('dispo/get_dispo/' . $id_surat));
 		} else {
 			$this->session->set_flashdata('error', 'Gagal Ubah Data!!.');
-			redirect(site_url('dispo/get_dispo/'.$id_surat));
+			redirect(site_url('dispo/get_dispo/' . $id_surat));
 		}
 	}
 
@@ -327,7 +353,7 @@ class Dispo extends CI_Controller
 		);
 		$this->m_nota->update_nota($data_nota, $ids);
 
-		if ($notaId[1] == 0){
+		if ($notaId[1] == 0) {
 
 			$data['nota'] = $this->db->query("SELECT tbl_nota_dinas.*, 
 			tbl_surat_masuk.no_surat as no_surat, 
@@ -336,11 +362,9 @@ class Dispo extends CI_Controller
 			tbl_surat_masuk.isi as perihal, 
 			tbl_surat_masuk.no_agenda as no_agenda
 			FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_nota_dinas.id_nota='$ids'")->result();
-
 		} else {
 
 			$data['nota'] = $this->db->query("SELECT * FROM tbl_nota_dinas  WHERE id_nota='$ids'")->result();
-
 		}
 
 		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait

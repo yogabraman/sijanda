@@ -139,6 +139,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } elseif ($rows->nodin == 2) { ?>
                                             <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
                                         <?php } ?>
+                                    <?php } elseif ($this->session->userdata('level') == 6) { ?>
+                                        <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+
+                                        <?php if ($rows->status_dispo == 0) { ?>
+                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
+                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0) { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                        <?php } else { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                        <?php } ?>
+
+                                        <?php if ($rows->nodin == 1) { ?>
+                                            <button class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                        <?php } elseif ($rows->nodin == 2) { ?>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <?php } ?>
+                                    <?php } elseif ($this->session->userdata('level') == 5) { ?>
+                                        <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
+
+                                        <?php if ($rows->status_dispo == 2) { ?>
+                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                        <?php } else { ?>
+                                            <button class="btn btn-info edit-dispo" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <?php } ?>
+
+                                        <?php if ($rows->nodin == 1) { ?>
+                                            <button class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                        <?php } elseif ($rows->nodin == 2) { ?>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                        <?php } ?>
                                     <?php } ?>
 
                                 </td>
@@ -372,8 +402,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
                                         foreach ($struk as $rows) {
-                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
-                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            if ($this->session->userdata('level') == 5){
+                                                if ($rows->id_struk == 1) continue;
+                                                echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
+                                                echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            }else {
+                                                echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
+                                                echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            }
                                         }
                                         ?>
                                     </div>
@@ -385,14 +421,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
                                         foreach ($struk as $rows) {
-                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]" >';
-                                            echo '<label for="' . $rows->id_perintah . '" for="perintah" >&nbsp' . $rows->perintah . '</label>';
+                                            if ($this->session->userdata('level') == 5){
+                                                if ($rows->id_perintah == 8) continue;
+                                                echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]" >';
+                                                echo '<label for="' . $rows->id_perintah . '" for="perintah" >&nbsp' . $rows->perintah . '</label>';
+                                            } else {
+                                                echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]" >';
+                                                echo '<label for="' . $rows->id_perintah . '" for="perintah" >&nbsp' . $rows->perintah . '</label>';
+                                            }
                                         }
                                         ?>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
+                                <?php if ($this->session->userdata('level') != 5){?>
+                                    <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Buatkan Nota Dinas?</label><br>
                                         <div class="col-3">
@@ -405,6 +448,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
+                                <?php } ?>
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">

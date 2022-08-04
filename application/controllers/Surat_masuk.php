@@ -244,7 +244,13 @@ class Surat_masuk extends CI_Controller
     //list surat masuk
     public function list()
     {
-        $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC")->result();
+        $level = $this->session->userdata('level');
+        $bidang = $this->session->userdata('bidang');
+        if ($level == 5 || $level == 6){
+            $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE tbl_disposisi.tujuan LIKE '%$bidang%' ORDER by id_surat DESC")->result();
+        } else {
+            $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC")->result();
+        }
         // $masuk = $this->m_sm->cek_sm();
         $data = array(
             'title' => "List Surat Masuk",
