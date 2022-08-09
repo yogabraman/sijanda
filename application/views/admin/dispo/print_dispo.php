@@ -196,20 +196,25 @@
                         <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Disediakan kepada Yth</strong></td>
                         <td id="left" style="font-size: 13px; padding-left: 10px">: <?= !empty($row->tujuan) ? implode("<br>&nbsp;&nbsp;",json_decode($row->tujuan)): "" ?></td>
                         <td rowspan="3" colspan="3" style="font-size: 13px; padding-left: 10px"><strong>Tanggal : <?= tgl_indo($row->tgl_dispo) ?></strong>
+                            <?php foreach ($sekdin as $rowx) { ?>
                             <div id="lead">
                                 <p style="font-size: 13px; padding-left: 10px">
-                                    <center>Sekretaris Dinas</center>
+                                    <!--<center>Sekretaris Dinas</center>-->
+                                    <center><?= $rowx->bagian ?></center>
                                 </p>
                                 <div style="height: 50px;" style="font-size: 13px; padding-left: 10px">
                                     <center>TTD.</center>
                                 </div>
                                 <p style="font-size: 13px; padding-left: 10px;">
-                                    <center><b>Nur Kholis, SE, M.Si</b></center>
+                                    <!--<center><b>Nur Kholis, SE, M.Si</b></center>-->
+                                    <center><b><?= $rowx->pegawai ?></b></center>
                                 </p>
                                 <p style="font-size: 13px; padding-left: 10px">
-                                    <center>NIP. 197601211996031005</center>
+                                    <!--<center>NIP. 197601211996031005</center>-->
+                                    <center><?= $rowx->nip ?></center>
                                 </p>
                             </div>
+                            <?php } ?>
                         </td>
                     </tr>
                     <tr>

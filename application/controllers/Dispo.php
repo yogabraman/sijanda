@@ -330,6 +330,15 @@ class Dispo extends CI_Controller
 
 		$data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
 		$data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
+		
+		$id_users = $this->db->limit(1)->query("SELECT tbl_disposisi.id_user FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->row()->id_user;
+        
+		if ($id_users == 5){
+		    $id_sekdin = 2;
+		} elseif ($id_users == 36) {
+		    $id_sekdin = 17;
+		}
+		$data['sekdin'] = $this->db->query("SELECT * FROM tbl_pegawai WHERE id_pegawai ='$id_sekdin'")->result();
 
 		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
 		$this->pdf->filename = "print-disposisi-" . $waktu . ".pdf";
