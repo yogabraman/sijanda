@@ -38,8 +38,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'list_nota' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list') ?>">Surat Masuk</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Surat dgn Nota Dinas</a>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list1' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list1') ?>">Surat Keluar</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a>
+                            <!-- <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a> -->
                         </div>
                     </div>
                 </li>
@@ -122,8 +123,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'list_nota' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list') ?>">Surat Masuk</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Surat Masuk dgn Nota Dinas</a>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list1' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list1') ?>">Surat Keluar</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a>
+                            <!-- <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a> -->
                         </div>
                     </div>
                 </li>

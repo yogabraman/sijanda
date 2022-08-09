@@ -253,7 +253,7 @@ class Surat_masuk extends CI_Controller
         }
         // $masuk = $this->m_sm->cek_sm();
         $data = array(
-            'title' => "List Surat Masuk",
+            'title' => "Surat Masuk",
             'masuk' => $masuk
         );
         $this->db->reconnect();
@@ -267,7 +267,7 @@ class Surat_masuk extends CI_Controller
     {
         $keluar = $this->db->query("SELECT * FROM tbl_surat_keluar ORDER by id_surat DESC")->result();
         $data = array(
-            'title' => "List Surat Keluar",
+            'title' => "Surat Keluar",
             'keluar' => $keluar
         );
         $this->db->reconnect();
@@ -279,21 +279,36 @@ class Surat_masuk extends CI_Controller
     //list nota dinas
     public function list_nota()
     {
-        // $nota = $this->db->query("SELECT tbl_nota_dinas.*, 
-        //     tbl_surat_masuk.no_surat as no_surat, 
-        //     tbl_surat_masuk.tgl_surat as tgl_surat, 
-        //     tbl_surat_masuk.isi as perihal
-        //     FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) ORDER by id_nota DESC")->result();
-        $nota = $this->db->query("SELECT * FROM tbl_nota_dinas ORDER BY id_nota DESC")->result();
+        $level = $this->session->userdata('level');
+        $bidang = $this->session->userdata('bidang');
+        $nota = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE nodin = 1 ORDER by id_surat DESC")->result();
         $data = array(
-            'title' => "List Nota Dinas",
-            'nota' => $nota
+            'title' => "Nota Dinas",
+            'masuk' => $nota
         );
         $this->db->reconnect();
         $this->load->view('admin/layouts/header', $data);
-        $this->load->view('admin/nota_dinas/v_list_nota', $data);
+        $this->load->view('admin/surat_masuk/v_list', $data);
         $this->load->view('admin/layouts/footer', $data);
     }
+
+    // public function list_nota()
+    // {
+    //     // $nota = $this->db->query("SELECT tbl_nota_dinas.*, 
+    //     //     tbl_surat_masuk.no_surat as no_surat, 
+    //     //     tbl_surat_masuk.tgl_surat as tgl_surat, 
+    //     //     tbl_surat_masuk.isi as perihal
+    //     //     FROM tbl_nota_dinas JOIN tbl_surat_masuk USING(id_surat) ORDER by id_nota DESC")->result();
+    //     $nota = $this->db->query("SELECT * FROM tbl_nota_dinas ORDER BY id_nota DESC")->result();
+    //     $data = array(
+    //         'title' => "List Nota Dinas",
+    //         'nota' => $nota
+    //     );
+    //     $this->db->reconnect();
+    //     $this->load->view('admin/layouts/header', $data);
+    //     $this->load->view('admin/nota_dinas/v_list_nota', $data);
+    //     $this->load->view('admin/layouts/footer', $data);
+    // }
 
     //form edit surat masuk
     public function get_sm()

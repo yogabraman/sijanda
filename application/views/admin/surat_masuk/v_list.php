@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Surat Masuk</h1>
+        <h1 class="h3 mb-0 text-gray-800"><?= $title ?></h1>
     </div>
 
     <!-- DataTales Example -->
@@ -85,12 +85,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td class="text-center" style="min-width:180px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
 
-                                        <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
+                                            <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <?php } ?>
 
                                         <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
 
-                                        <button class="btn btn-danger hapus-sm" id="<?= $rows->id_surat ?>" title="Hapus"><i class="fa fa-trash"></i></button>
+                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
+                                            <button class="btn btn-danger hapus-sm" id="<?= $rows->id_surat ?>" title="Hapus"><i class="fa fa-trash"></i></button>
+                                        <?php } ?>
 
+                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
                                         <?php if ($rows->status_dispo == 0 && $rows->status_print == 0 && $rows->penerima == null) { ?>
                                             <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
                                         <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0 && $rows->penerima == null) { ?>
@@ -99,6 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
                                         <?php } else { ?>
                                             <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
+                                        <?php } ?>
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
