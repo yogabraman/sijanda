@@ -149,7 +149,7 @@
     }
 
     ?>
-    <?php foreach ($nota as $rows) { ?>
+    <?php foreach ($surat as $rows) { ?>
 
         <div class="lbr-dispo" style="text-align:right"> Lembar Disposisi</div>
 
@@ -174,41 +174,43 @@
                 <tr>
                     <td class="tgh" id="lbr" colspan="5"><strong>Disposisi Nota Dinas</strong></td>
                 </tr>
-
-                <?php if ($tipe == 0) { ?>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Surat Masuk</strong></td>
-                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_surat ?></td>
-                    </tr>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Tanggal Surat</strong></td>
-                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= tgl_indo($rows->tgl_surat) ?></td>
-                    </tr>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Pencatat Kendali</strong></td>
-                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
-                    </tr>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Dari</strong></td>
-                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->asal_surat ?></td>
-                    </tr>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
-                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->perihal ?></td>
-                    </tr>
-
-                <?php } else { ?>
-                    <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
-                        <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->perihal ?></td>
-                    </tr>
-
-                <?php } ?>
+                <tr>
+                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Tanggal Nota Dinas</strong></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= tgl_indo($rows->tgl_nodin) ?></td>
+                </tr>
+                <tr>
+                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->isi ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size: 13px; padding-left: 10px"><strong>Isi Disposisi :</strong><br /> <?= $rows->dispo_nodin ?></td>
+                    <td colspan="3" style="font-size: 13px; padding-left: 10px">
+                        <?php foreach ($sekdin as $rowx) { ?>
+                            <div id="lead">
+                                <p style="font-size: 13px; padding-left: 10px">
+                                    <!--<center>Sekretaris Dinas</center>-->
+                                    <center><?= $rowx->bagian ?></center>
+                                </p>
+                                <div style="height: 50px;" style="font-size: 13px; padding-left: 10px">
+                                    <center>TTD.</center>
+                                </div>
+                                <p style="font-size: 13px; padding-left: 10px;">
+                                    <!--<center><b>Nur Kholis, SE, M.Si</b></center>-->
+                                    <center><b><?= $rowx->pegawai ?></b></center>
+                                </p>
+                                <p style="font-size: 13px; padding-left: 10px">
+                                    <!--<center>NIP. 197601211996031005</center>-->
+                                    <center><?= $rowx->nip ?></center>
+                                </p>
+                            </div>
+                        <?php } ?>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
         <div style="margin-top:50px" class="separator"></div>
-        <div class="jarak2"> Arahan Kepala Dinas :</div>
+        <!-- <div class="jarak2"> Arahan Kepala Dinas :</div> -->
 
     <?php } ?>
 </body>

@@ -226,6 +226,7 @@ class Surat_masuk extends CI_Controller
 
         $data_sm = array(
 			'nodin' => 2,
+            'tgl_nodin' => $waktu,
             'file_nodin' => $this->m_nota->_uploadFileNota($new)
 		);
 
@@ -234,10 +235,10 @@ class Surat_masuk extends CI_Controller
 
         if ($result) {
             $this->session->set_flashdata('success', 'Nota Dinas Berhasil Diupload!!.');
-            redirect(site_url('surat_masuk/list'));
+            redirect(site_url('surat_masuk/list_nota'));
         } else {
             $this->session->set_flashdata('error', 'Gagal Upload Nota Dinas!!.');
-            redirect(site_url('surat_masuk/list'));
+            redirect(site_url('surat_masuk/list_nota'));
         }
     }
 
@@ -281,7 +282,7 @@ class Surat_masuk extends CI_Controller
     {
         $level = $this->session->userdata('level');
         $bidang = $this->session->userdata('bidang');
-        $nota = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE nodin = 1 ORDER by id_surat DESC")->result();
+        $nota = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE nodin != 0 ORDER by id_surat DESC")->result();
         $data = array(
             'title' => "Nota Dinas",
             'masuk' => $nota

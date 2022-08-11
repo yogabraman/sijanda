@@ -87,14 +87,22 @@ class Dispo extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 		$waktu = date('Y-m-d H:i:s');
 
-		$id_nota = $this->input->post('id_nota');
+		$id_surat = $this->input->post('id_surat');
+		$id_users = $this->session->userdata('id_user');
+		if ($id_users == 5){
+		    $id_sekdin = 2;
+		} elseif ($id_users == 36) {
+		    $id_sekdin = 17;
+		}
 
 		$data = array(
-			'tgl_disponota' => $waktu
+			'nodin' => 3,
+			'dispo_nodin' => $this->input->post('isi_disposisi'),
+			'id_sekdin' => $id_sekdin
 		);
 
 		//update dispo nota dinas
-		$result = $this->m_nota->update_nota($data, $id_nota);
+		$result = $this->m_sm->update_sm($data, $id_surat);
 
 		if ($result) {
 			$this->session->set_flashdata('success', 'Data Berhasil Disimpan!!.');
@@ -344,6 +352,24 @@ class Dispo extends CI_Controller
 		$this->pdf->filename = "print-disposisi-" . $waktu . ".pdf";
 		$this->pdf->set_option('isRemoteEnabled', true);
 		$this->pdf->load_view('admin/dispo/print_dispo', $data);
+		$this->pdf->render();
+	}
+
+	public function print_dispo_nodin($id)
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$waktu = date('Y-m-d H:i:s');
+		
+		$data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
+		
+		$id_sekdin = $this->db->limit(1)->query("SELECT id_sekdin FROM tbl_surat_masuk WHERE id_surat='$id'")->row()->id_sekdin;
+        
+		$data['sekdin'] = $this->db->query("SELECT * FROM tbl_pegawai WHERE id_pegawai ='$id_sekdin'")->result();
+
+		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+		$this->pdf->filename = "print-disposisi-" . $waktu . ".pdf";
+		$this->pdf->set_option('isRemoteEnabled', true);
+		$this->pdf->load_view('admin/nota_dinas/print_disponota', $data);
 		$this->pdf->render();
 	}
 

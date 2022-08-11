@@ -20,8 +20,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div> -->
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
+                <?php if(strpos($title, 'Surat Masuk') !== false){?>
                 <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
                 <a href="<?= site_url('surat_masuk/cetak') ?>" class="btn btn-info"><i class="fa fa-print"></i> Cetak Surat Masuk</a>
+                <?php } ?>
             <?php } else {
                 echo "";
             } ?>
@@ -108,27 +110,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
-                                            <button style="margin-top:3px" class="btn btn-success upload-nodin" id="<?= $rows->id_surat ?>" title="Upload"><i class="fa fa-upload"></i></button>
+                                            <button style="margin-top:3px" class="btn btn-danger upload-nodin" id="<?= $rows->id_surat ?>" title="Upload"><i class="fa fa-upload"></i></button>
                                         <?php } elseif ($rows->nodin == 2) { ?>
-                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-download"></i></a>
+                                        <?php } elseif ($rows->nodin == 3) { ?>
+                                            <button style="margin-top:3px" class="btn btn-success view-nota" id="<?= $rows->file_nodin ?>/-/<?= $rows->id_surat ?>" title="Preview"><i class="fa fa-file"></i></button>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
                                         <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-
+                                        
+                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
                                         <?php if ($rows->status_dispo == 0) { ?>
                                             <button class="btn btn-success add-dispo" id="<?= $rows->file ?>/-/<?= $rows->id_surat ?>" title=" Disposisi"><i class="fa fa-pen"></i></button>
                                             <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
                                         <?php } else { ?>
                                             <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                            <a href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                        <?php } ?>
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
-                                            <button style="margin-top:3px" class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                            <button style="margin-top:3px" class="btn btn-danger" onclick="belum()"><i class="fa fa-upload"></i></button>
                                         <?php } elseif ($rows->nodin == 2) { ?>
-                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                            <button class="btn btn-warning add-disponota" id="<?= $rows->file_nodin ?>/-/<?= $rows->id_surat ?>" title=" Disposisi"><i class="fa fa-pen"></i></button>
+                                        <?php } elseif ($rows->nodin == 3) { ?>
+                                            <button style="margin-top:3px" class="btn btn-success view-nota" id="<?= $rows->file_nodin ?>/-/<?= $rows->id_surat ?>" title="Preview"><i class="fa fa-file"></i></button>
                                         <?php } ?>
 
                                     <?php } elseif ($this->session->userdata('level') == 3) { ?>
@@ -141,9 +149,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
-                                            <button style="margin-top:3px" class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                            <button style="margin-top:3px" class="btn btn-danger" onclick="belum()"><i class="fa fa-file"></i></button>
                                         <?php } elseif ($rows->nodin == 2) { ?>
-                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                            <a style="margin-top:3px" target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-download"></i></a>
+                                        <?php } elseif ($rows->nodin == 3) { ?>
+                                            <button style="margin-top:3px" class="btn btn-success view-nota" id="<?= $rows->file_nodin ?>/-/<?= $rows->id_surat ?>" title="Preview"><i class="fa fa-file"></i></button>
                                         <?php } ?>
                                     <?php } elseif ($this->session->userdata('level') == 6) { ?>
                                         <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
@@ -157,9 +167,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
-                                            <button class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                            <button class="btn btn-danger" onclick="belum()"><i class="fa fa-file"></i></button>
                                         <?php } elseif ($rows->nodin == 2) { ?>
-                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-download"></i></a>
+                                        <?php } elseif ($rows->nodin == 3) { ?>
+                                            <button style="margin-top:3px" class="btn btn-success view-nota" id="<?= $rows->file_nodin ?>/-/<?= $rows->id_surat ?>" title="Preview"><i class="fa fa-file"></i></button>
                                         <?php } ?>
                                     <?php } elseif ($this->session->userdata('level') == 5) { ?>
                                         <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
@@ -171,9 +183,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
-                                            <button class="btn btn-success" onclick="belum()"><i class="fa fa-file"></i></button>
+                                            <button class="btn btn-danger" onclick="belum()"><i class="fa fa-file"></i></button>
                                         <?php } elseif ($rows->nodin == 2) { ?>
-                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-success" title="Lihat File"><i class="fa fa-file"></i></a>
+                                            <a target="_blank" href="<?= base_url() ?>assets/notadinas/<?= $rows->file_nodin ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-download"></i></a>
+                                        <?php } elseif ($rows->nodin == 3) { ?>
+                                            <button style="margin-top:3px" class="btn btn-success view-nota" id="<?= $rows->file_nodin ?>/-/<?= $rows->id_surat ?>" title="Preview"><i class="fa fa-file"></i></button>
                                         <?php } ?>
                                     <?php } ?>
 
@@ -538,6 +552,94 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
 
                         </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Dispo Nodin -->
+<div class="modal fade" id="dispoNodin" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Dispo Nodin</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-body">
+                        <form action="<?= site_url('dispo/add_disponota') ?>" method="post" enctype="multipart/form-data">
+                            <div id="fileNodin" class="row"></div>
+                            <div class="row">
+                                <div id="idNodin"></div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Isi Disposisi</label>
+                                        <textarea class="form-control" type="text" name="isi_disposisi" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row" align="right">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Preview File -->
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Preview Nota Dinas</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                            <div id="printNodin" class="row"></div>
+                                <div class="form-group">
+                                    <br>
+                                    <div id="file_nodin" class="row"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" align="right">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

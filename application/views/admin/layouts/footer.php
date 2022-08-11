@@ -335,15 +335,15 @@ $result = date_format($date, "Y");
 <!-- Preview Nota Dinas -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#dataTableNota').DataTable();
-        $('#dataTableNota').on('click', '.view-nota', function() {
+        $('#dataTableSM').DataTable();
+        $('#dataTableSM').on('click', '.view-nota', function() {
             var notaId = $(this).attr('id');
-            const Idx = notaId.split("/-/");
-            $('#file_nota').empty();
-            $('#file_nota1').empty();
+            const IdN = notaId.split("/-/");
+            $('#printNodin').empty();
+            $('#file_nodin').empty();
             $('#viewModal').modal('show');
-            $('#file_nota').append('<a target="_blank" href="<?= base_url() ?>assets/notadinas/' + Idx[0] + '" class="btn btn-info"><i class="fa fa-download"></i>  Klik untuk melihat Nota Dinas</a>');
-            $('#file_nota1').append('<a target="_blank" href="<?= base_url() ?>assets/notadinas/' + Idx[1] + '" class="btn btn-primary"><i class="fa fa-download"></i>  Klik untuk melihat Disposisi Nota Dinas</a>');
+            $('#printNodin').append('<a target="_blank" href="<?= site_url('dispo/print_dispo_nodin/') ?>' + IdN[1] + '" class="btn btn-success" id="'+IdN[1]+'" title="Disposisi"><i class="fa fa-print"></i> Print Dispo Nodin</a>');
+            $('#file_nodin').append('<embed src="<?= base_url() ?>assets/notadinas/' + IdN[0] + '" width="800px" height="1000px" />');
         });
     });
 </script>
@@ -407,6 +407,22 @@ $result = date_format($date, "Y");
             $('#dispoModal').modal('show');
             $('#ids').append('<input class="form-control" type="hidden" name="id_surat" value="' + Idx[1] + '">');
             $('#filex').append('<embed src="<?= base_url() ?>assets/suratmasuk/' + Idx[0] + '" width="800px" height="1000px" />');
+        });
+    });
+</script>
+
+<!-- Tambah Dispo -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableSM').DataTable();
+        $('#dataTableSM').on('click', '.add-disponota', function() {
+            var smId = $(this).attr('id');
+            const Idx = smId.split("/-/");
+            $('#idNodin').empty();
+            $('#fileNodin').empty();
+            $('#dispoNodin').modal('show');
+            $('#idNodin').append('<input class="form-control" type="hidden" name="id_surat" value="' + Idx[1] + '">');
+            $('#fileNodin').append('<embed src="<?= base_url() ?>assets/notadinas/' + Idx[0] + '" width="800px" height="1000px" />');
         });
     });
 </script>
