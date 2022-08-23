@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-pen"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3"><sup>Si</sup>Janda</div>
+                <div class="sidebar-brand-text mx-3"><sup></sup>SIE</div>
             </a>
 
             <!-- Divider -->
@@ -35,12 +35,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <i class="fas fa-fw fa-inbox"></i>
                         <span>Persuratan</span>
                     </a>
-                    <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'list_nota' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'rekap_sm' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'list_nota' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list') ?>">Surat Masuk</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Surat dgn Nota Dinas</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'rekap_sm' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/rekap_sm') ?>">Rekap Surat Masuk</a>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list1' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list1') ?>">Surat Keluar</a>
-                            <!-- <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a> -->
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a>
                         </div>
                     </div>
                 </li>
@@ -75,35 +75,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
-                        <i class="fas fa-fw fa-file"></i>
-                        <span>Laporan</span>
-                    </a>
-                    <div id="collapseReport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Bidang v :</h6>
-                            <a class="collapse-item" href="<?= site_url('laporan_bidang/bidang5') ?>">Laporan Layanan</a>
-                            <div class="collapse-divider"></div>
-                        </div>
-                    </div>
-                </li>
+                <!--<li class="nav-item">-->
+                <!--    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">-->
+                <!--        <i class="fas fa-fw fa-file"></i>-->
+                <!--        <span>Laporan</span>-->
+                <!--    </a>-->
+                <!--    <div id="collapseReport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">-->
+                <!--        <div class="bg-white py-2 collapse-inner rounded">-->
+                <!--            <h6 class="collapse-header">Bidang v :</h6>-->
+                <!--            <a class="collapse-item" href="<?= site_url('laporan_bidang/bidang5') ?>">Laporan Layanan</a>-->
+                <!--            <div class="collapse-divider"></div>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</li>-->
 
                 <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item <?php echo $this->uri->segment(1) == 'spt' || $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == 'list_spt' || $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpt" aria-expanded="true" aria-controls="collapseSpt">
-                        <i class="fas fa-fw fa-plane"></i>
-                        <span>SPT</span>
-                    </a>
-                    <div id="collapseSpt" class="collapse <?php echo $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == 'list_spt' || $this->uri->segment(2) == 'sppd' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header"></h6>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'pegawai' ? 'active' : ''; ?>" href="<?= site_url('spt/pegawai') ?>">Daftar Pegawai</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_spt' ? 'active' : ''; ?>" href="<?= site_url('spt/list_spt') ?>">SPT</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>" href="<?= site_url('spt/sppd') ?>">Laporan SPPD</a>
-                        </div>
-                    </div>
-                </li>
+                <!--<li class="nav-item <?php echo $this->uri->segment(1) == 'spt' || $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == 'list_spt' || $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>">-->
+                <!--    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpt" aria-expanded="true" aria-controls="collapseSpt">-->
+                <!--        <i class="fas fa-fw fa-plane"></i>-->
+                <!--        <span>SPT</span>-->
+                <!--    </a>-->
+                <!--    <div id="collapseSpt" class="collapse <?php echo $this->uri->segment(2) == 'pegawai' || $this->uri->segment(2) == 'list_spt' || $this->uri->segment(2) == 'sppd' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">-->
+                <!--        <div class="bg-white py-2 collapse-inner rounded">-->
+                <!--            <h6 class="collapse-header"></h6>-->
+                <!--            <a class="collapse-item <?php echo $this->uri->segment(2) == 'pegawai' ? 'active' : ''; ?>" href="<?= site_url('spt/pegawai') ?>">Daftar Pegawai</a>-->
+                <!--            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_spt' ? 'active' : ''; ?>" href="<?= site_url('spt/list_spt') ?>">SPT</a>-->
+                <!--            <a class="collapse-item <?php echo $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>" href="<?= site_url('spt/sppd') ?>">Laporan SPPD</a>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</li>-->
 
                 <!-- Nav Item - pulsa -->
                 <li class="nav-item <?php echo $this->uri->segment(1) == 'user' ? 'active' : ''; ?>">
@@ -120,12 +120,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <i class="fas fa-fw fa-inbox"></i>
                         <span>Persuratan</span>
                     </a>
-                    <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'list_nota' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseMasuk" class="collapse <?php echo $this->uri->segment(2) == 'list' || $this->uri->segment(2) == 'rekap_sm' || $this->uri->segment(2) == 'list1' || $this->uri->segment(2) == 'list_nota' ? 'show' : ''; ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list') ?>">Surat Masuk</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Surat dgn Nota Dinas</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'rekap_sm' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/rekap_sm') ?>">Rekap Surat Masuk</a>
                             <a class="collapse-item <?php echo $this->uri->segment(2) == 'list1' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list1') ?>">Surat Keluar</a>
-                            <!-- <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a> -->
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list_nota' ? 'active' : ''; ?>" href="<?= site_url('surat_masuk/list_nota') ?>">Nota Dinas</a>
                         </div>
                     </div>
                 </li>
@@ -146,35 +146,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
-                        <i class="fas fa-fw fa-file"></i>
-                        <span>Laporan</span>
-                    </a>
-                    <div id="collapseReport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Bidang v :</h6>
-                            <a class="collapse-item" href="<?= site_url('laporan_bidang/bidang5') ?>">Laporan Layanan</a>
-                            <div class="collapse-divider"></div>
-                        </div>
-                    </div>
-                </li>
+                <!--<li class="nav-item">-->
+                <!--    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">-->
+                <!--        <i class="fas fa-fw fa-file"></i>-->
+                <!--        <span>Laporan</span>-->
+                <!--    </a>-->
+                <!--    <div id="collapseReport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">-->
+                <!--        <div class="bg-white py-2 collapse-inner rounded">-->
+                <!--            <h6 class="collapse-header">Bidang v :</h6>-->
+                <!--            <a class="collapse-item" href="<?= site_url('laporan_bidang/bidang5') ?>">Laporan Layanan</a>-->
+                <!--            <div class="collapse-divider"></div>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</li>-->
 
                 <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item <?php echo $this->uri->segment(1) == 'spt' || $this->uri->segment(2) == 'pgw' || $this->uri->segment(2) == 'spt' || $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpt" aria-expanded="true" aria-controls="collapseSpt">
-                        <i class="fas fa-fw fa-plane"></i>
-                        <span>SPT</span>
-                    </a>
-                    <div id="collapseSpt" class="collapse <?php echo $this->uri->segment(2) == 'pgw' || $this->uri->segment(2) == 'spt' || $this->uri->segment(2) == 'sppd' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header"></h6>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'pgw' ? 'active' : ''; ?>" href="<?= site_url('spt/pegawai') ?>">Daftar Pegawai</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'spt' ? 'active' : ''; ?>" href="<?= site_url('spt/add') ?>">SPT</a>
-                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>" href="<?= site_url('spt/sppd') ?>">Laporan SPPD</a>
-                        </div>
-                    </div>
-                </li>
+                <!--<li class="nav-item <?php echo $this->uri->segment(1) == 'spt' || $this->uri->segment(2) == 'pgw' || $this->uri->segment(2) == 'spt' || $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>">-->
+                <!--    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSpt" aria-expanded="true" aria-controls="collapseSpt">-->
+                <!--        <i class="fas fa-fw fa-plane"></i>-->
+                <!--        <span>SPT</span>-->
+                <!--    </a>-->
+                <!--    <div id="collapseSpt" class="collapse <?php echo $this->uri->segment(2) == 'pgw' || $this->uri->segment(2) == 'spt' || $this->uri->segment(2) == 'sppd' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">-->
+                <!--        <div class="bg-white py-2 collapse-inner rounded">-->
+                <!--            <h6 class="collapse-header"></h6>-->
+                <!--            <a class="collapse-item <?php echo $this->uri->segment(2) == 'pgw' ? 'active' : ''; ?>" href="<?= site_url('spt/pegawai') ?>">Daftar Pegawai</a>-->
+                <!--            <a class="collapse-item <?php echo $this->uri->segment(2) == 'spt' ? 'active' : ''; ?>" href="<?= site_url('spt/add') ?>">SPT</a>-->
+                <!--            <a class="collapse-item <?php echo $this->uri->segment(2) == 'sppd' ? 'active' : ''; ?>" href="<?= site_url('spt/sppd') ?>">Laporan SPPD</a>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</li>-->
 
             <?php } ?>
 

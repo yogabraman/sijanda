@@ -263,6 +263,46 @@ class Surat_masuk extends CI_Controller
         $this->load->view('admin/layouts/footer', $data);
     }
 
+    //rekap surat masuk
+    public function rekap_sm()
+    {
+        $id_user = $this->session->userdata('id_user');
+		$level = $this->session->userdata('admin');
+
+		//menghitung jumlah surat masuk
+		$count1 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-01-01' AND '2022-01-31'")->num_rows();
+		$count2 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-02-01' AND '2022-02-31'")->num_rows();
+		$count3 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-03-01' AND '2022-03-31'")->num_rows();
+		$count4 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-04-01' AND '2022-04-31'")->num_rows();
+		$count5 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-05-01' AND '2022-05-31'")->num_rows();
+		$count6 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-06-01' AND '2022-06-31'")->num_rows();
+		$count7 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-07-01' AND '2022-07-31'")->num_rows();
+		$count8 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-08-01' AND '2022-08-31'")->num_rows();
+		$count9 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-09-01' AND '2022-09-31'")->num_rows();
+		$count10 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-10-01' AND '2022-10-31'")->num_rows();
+		$count11 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-11-01' AND '2022-11-31'")->num_rows();
+		$count12 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-12-01' AND '2022-12-31'")->num_rows();
+		
+		$data = array(
+			'title' => "Dashboard",
+			'count1' => $count1,
+			'count2' => $count2,
+			'count3' => $count3,
+			'count4' => $count4,
+			'count5' => $count5,
+			'count6' => $count6,
+			'count7' => $count7,
+			'count8' => $count8,
+			'count9' => $count9,
+			'count10' => $count10,
+			'count11' => $count11,
+			'count12' => $count12,
+		);
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/surat_masuk/v_rekap', $data);
+		$this->load->view('admin/layouts/footer', $data);
+    }
+
     //list surat keluar
     public function list1()
     {
