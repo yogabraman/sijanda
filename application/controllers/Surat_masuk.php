@@ -247,8 +247,9 @@ class Surat_masuk extends CI_Controller
     {
         $level = $this->session->userdata('level');
         $bidang = $this->session->userdata('bidang');
+        $kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$bidang'")->row()->id_struk;
         if ($level == 5 || $level == 6){
-            $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE tbl_disposisi.tujuan LIKE '%$bidang%' ORDER by id_surat DESC")->result();
+            $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE tbl_disposisi.dispo LIKE '%$kbid%' ORDER by id_surat DESC")->result();
         } else {
             $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC")->result();
         }

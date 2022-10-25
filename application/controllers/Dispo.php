@@ -44,11 +44,24 @@ class Dispo extends CI_Controller
 		$perintah = $this->input->post('perintah') == null ? '[""]' : json_encode($this->input->post('perintah'));
 		$id_surat = $this->input->post('id_surat');
 
+		$kodebid = null;
+		if ($this->input->post('bidang') != null) {
+			foreach ($this->input->post('bidang') as $x => $val) {
+				$kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$val'")->row()->id_struk;
+				if ($kodebid == '') {
+					$kodebid .= $kbid;
+				} else {
+					$kodebid .= ',' . $kbid;
+				}
+			}
+		}
+
 		$tipe_surat = $this->db->limit(1)->query("SELECT tipe_surat FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->tipe_surat;
 
 		$data_dispo = array(
 			'tujuan' => $bidang,
 			'perintah' => $perintah,
+			'dispo' => $kodebid,
 			'isi_disposisi' => $this->input->post('isi_disposisi'),
 			'sifat' => $this->input->post('sifat'),
 			'tgl_dispo' => $waktu,
@@ -59,7 +72,7 @@ class Dispo extends CI_Controller
 
 		$data_sm = array(
 			'status_dispo' => 1,
-			'nodin' => 1
+			'nodin' => $this->input->post('nodin')
 		);
 
 		$data_ag = array(
@@ -89,10 +102,10 @@ class Dispo extends CI_Controller
 
 		$id_surat = $this->input->post('id_surat');
 		$id_users = $this->session->userdata('id_user');
-		if ($id_users == 5){
-		    $id_sekdin = 2;
+		if ($id_users == 5) {
+			$id_sekdin = 2;
 		} elseif ($id_users == 36) {
-		    $id_sekdin = 17;
+			$id_sekdin = 17;
 		}
 
 		$data = array(
@@ -337,14 +350,15 @@ class Dispo extends CI_Controller
 		$this->m_sm->update_sm($data_sm, $id);
 
 		$data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
-		$data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
-		
+		$data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi disp JOIN tbl_surat_masuk sm USING(id_surat) JOIN tbl_struktural str ON str.id_struk=disp.dispo WHERE id_surat='$id'")->result();
+		// $data['dispo'] = $this->db->query("SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->result();
+
 		$id_users = $this->db->limit(1)->query("SELECT tbl_disposisi.id_user FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->row()->id_user;
-        
-		if ($id_users == 5){
-		    $id_sekdin = 2;
+
+		if ($id_users == 5) {
+			$id_sekdin = 2;
 		} elseif ($id_users == 36) {
-		    $id_sekdin = 17;
+			$id_sekdin = 17;
 		}
 		$data['sekdin'] = $this->db->query("SELECT * FROM tbl_pegawai WHERE id_pegawai ='$id_sekdin'")->result();
 
@@ -359,11 +373,11 @@ class Dispo extends CI_Controller
 	{
 		date_default_timezone_set('Asia/Jakarta');
 		$waktu = date('Y-m-d H:i:s');
-		
+
 		$data['surat'] = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE id_surat='$id'")->result();
-		
+
 		$id_sekdin = $this->db->limit(1)->query("SELECT id_sekdin FROM tbl_surat_masuk WHERE id_surat='$id'")->row()->id_sekdin;
-        
+
 		$data['sekdin'] = $this->db->query("SELECT * FROM tbl_pegawai WHERE id_pegawai ='$id_sekdin'")->result();
 
 		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
