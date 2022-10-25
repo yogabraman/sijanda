@@ -290,8 +290,21 @@ class Dispo extends CI_Controller
 		$id_disposisi = $this->input->post("id_disposisi");
 		$id_surat = $this->input->post("id_surat");
 
+		$kodebid = null;
+		if ($this->input->post('bidang') != null) {
+			foreach ($this->input->post('bidang') as $x => $val) {
+				$kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$val'")->row()->id_struk;
+				if ($kodebid == '') {
+					$kodebid .= $kbid;
+				} else {
+					$kodebid .= ',' . $kbid;
+				}
+			}
+		}
+
 		$data = array(
 			'tujuan' => json_encode($this->input->post('bidang')),
+			'dispo' => $kodebid,
 			'perintah' => json_encode($this->input->post('perintah')),
 			'isi_disposisi' => $this->input->post('isi_disposisi'),
 			'sifat' => $this->input->post('sifat'),
