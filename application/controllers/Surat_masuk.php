@@ -57,7 +57,8 @@ class Surat_masuk extends CI_Controller
         // exit();
 
         $nosurat = $this->input->post('no_surat');
-        $valid = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE no_surat LIKE '%$nosurat%'")->result();
+        $tglsurat = $this->input->post('tgl_surat');
+        $valid = $this->db->query("SELECT no_surat, tgl_surat FROM tbl_surat_masuk WHERE no_surat = '$nosurat' AND tgl_surat = '$tglsurat' ")->result();
 
         if ($valid) {
             $this->session->set_flashdata('error', 'Surat masuk sudah diinput');
