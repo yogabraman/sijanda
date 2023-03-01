@@ -289,21 +289,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Nomor Surat</label>
-                                        <input class="form-control" type="text" name="no_surat" placeholder="Nomor Surat">
+                                        <input class="form-control" type="text" name="no_surat" placeholder="Nomor Surat" required>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Tanggal Surat</label>
-                                        <input class="form-control" type="date" name="tgl_surat">
+                                        <input class="form-control" type="date" name="tgl_surat" required>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Perihal</label>
-                                        <textarea class="form-control" type="textarea" name="isi"></textarea>
+                                        <textarea class="form-control" type="textarea" name="isi" required></textarea>
                                     </div>
                                 </div>
 

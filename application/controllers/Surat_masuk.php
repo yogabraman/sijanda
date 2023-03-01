@@ -56,74 +56,82 @@ class Surat_masuk extends CI_Controller
         // print_r($new);
         // exit();
 
-        if ($jenis_surat == 0) {
+        $nosurat = $this->input->post('no_surat');
+        $valid = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE no_surat LIKE '%$nosurat%'")->result();
 
-            $data_surat = array(
-                'no_agenda' => $this->input->post('no_agenda'),
-                'no_surat' => $this->input->post('no_surat'),
-                'asal_surat' => $this->input->post('asal_surat'),
-                'isi' => $this->input->post('isi'),
-                'tgl_surat' => $this->input->post('tgl_surat'),
-                'tgl_diterima' => $waktu,
-                'file' => $this->m_sm->_uploadFile($new),
-                'keterangan' => "",
-                'status_dispo' => 0,
-                'tipe_surat' => $this->input->post('tipe_surat'),
-                'id_user' => $id_user
-            );
-
-            $result = $this->m_sm->add_sm($data_surat);
-
-            if ($result) {
-                $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Disimpan!!.');
-                redirect(site_url('surat_masuk/list'));
-            } else {
-                $this->session->set_flashdata('error', 'Gagal Simpan Data Surat Biasa!!.');
-                redirect(site_url('surat_masuk/list'));
-            }
+        if ($valid) {
+            $this->session->set_flashdata('error', 'Surat masuk sudah diinput');
+            redirect(site_url('surat_masuk/list'));
         } else {
+            if ($jenis_surat == 0) {
 
-            $data_surat = array(
-                'no_agenda' => $this->input->post('no_agenda'),
-                'no_surat' => $this->input->post('no_surat'),
-                'asal_surat' => $this->input->post('asal_surat'),
-                'isi' => $this->input->post('isi'),
-                'tgl_surat' => $this->input->post('tgl_surat'),
-                'tgl_diterima' => $waktu,
-                'file' => $this->m_sm->_uploadFile($new),
-                'keterangan' => "",
-                'status_dispo' => 0,
-                'tipe_surat' => $this->input->post('tipe_surat'),
-                'id_user' => $id_user
-            );
-
-            $result = $this->m_sm->add_sm($data_surat);
-
-            if ($result) {
-                $last_insert = $this->db->insert_id();
-
-                $data_undangan = array(
-                    'asal' => $this->input->post('asal_surat'),
+                $data_surat = array(
+                    'no_agenda' => $this->input->post('no_agenda'),
+                    'no_surat' => $this->input->post('no_surat'),
+                    'asal_surat' => $this->input->post('asal_surat'),
                     'isi' => $this->input->post('isi'),
-                    'tgl_agenda' => $this->input->post('tgl_agenda'),
-                    'waktu_agenda' => $this->input->post('waktu_agenda'),
-                    'tempat' => $this->input->post('tempat'),
-                    'id_surat' => $last_insert,
+                    'tgl_surat' => $this->input->post('tgl_surat'),
+                    'tgl_diterima' => $waktu,
+                    'file' => $this->m_sm->_uploadFile($new),
+                    'keterangan' => "",
+                    'status_dispo' => 0,
+                    'tipe_surat' => $this->input->post('tipe_surat'),
                     'id_user' => $id_user
                 );
 
-                $result2 = $this->m_sm->add_ag($data_undangan);
+                $result = $this->m_sm->add_sm($data_surat);
 
-                if ($result2) {
-                    $this->session->set_flashdata('success', 'Data Undangan Berhasil Disimpan!!.');
+                if ($result) {
+                    $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Disimpan!!.');
                     redirect(site_url('surat_masuk/list'));
+                } else {
+                    $this->session->set_flashdata('error', 'Gagal Simpan Data Surat Biasa!!.');
+                    redirect(site_url('surat_masuk/list'));
+                }
+            } else {
+
+                $data_surat = array(
+                    'no_agenda' => $this->input->post('no_agenda'),
+                    'no_surat' => $this->input->post('no_surat'),
+                    'asal_surat' => $this->input->post('asal_surat'),
+                    'isi' => $this->input->post('isi'),
+                    'tgl_surat' => $this->input->post('tgl_surat'),
+                    'tgl_diterima' => $waktu,
+                    'file' => $this->m_sm->_uploadFile($new),
+                    'keterangan' => "",
+                    'status_dispo' => 0,
+                    'tipe_surat' => $this->input->post('tipe_surat'),
+                    'id_user' => $id_user
+                );
+
+                $result = $this->m_sm->add_sm($data_surat);
+
+                if ($result) {
+                    $last_insert = $this->db->insert_id();
+
+                    $data_undangan = array(
+                        'asal' => $this->input->post('asal_surat'),
+                        'isi' => $this->input->post('isi'),
+                        'tgl_agenda' => $this->input->post('tgl_agenda'),
+                        'waktu_agenda' => $this->input->post('waktu_agenda'),
+                        'tempat' => $this->input->post('tempat'),
+                        'id_surat' => $last_insert,
+                        'id_user' => $id_user
+                    );
+
+                    $result2 = $this->m_sm->add_ag($data_undangan);
+
+                    if ($result2) {
+                        $this->session->set_flashdata('success', 'Data Undangan Berhasil Disimpan!!.');
+                        redirect(site_url('surat_masuk/list'));
+                    } else {
+                        $this->session->set_flashdata('error', 'Gagal Simpan Data Undangan!!.');
+                        redirect(site_url('surat_masuk/list'));
+                    }
                 } else {
                     $this->session->set_flashdata('error', 'Gagal Simpan Data Undangan!!.');
                     redirect(site_url('surat_masuk/list'));
                 }
-            } else {
-                $this->session->set_flashdata('error', 'Gagal Simpan Data Undangan!!.');
-                redirect(site_url('surat_masuk/list'));
             }
         }
     }
@@ -225,10 +233,10 @@ class Surat_masuk extends CI_Controller
         // );
 
         $data_sm = array(
-			'nodin' => 2,
+            'nodin' => 2,
             'tgl_nodin' => $waktu,
             'file_nodin' => $this->m_nota->_uploadFileNota($new)
-		);
+        );
 
         // $result = $this->m_nota->add_nota($data);
         $result = $this->m_sm->update_sm($data_sm, $id_surat);
@@ -247,8 +255,8 @@ class Surat_masuk extends CI_Controller
     {
         $level = $this->session->userdata('level');
         $bidang = $this->session->userdata('bidang');
-        $kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$bidang'")->row()->id_struk;
-        if ($level == 5 || $level == 6){
+        if ($level == 5 || $level == 6) {
+            $kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$bidang'")->row()->id_struk;
             $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE tbl_disposisi.dispo LIKE '%$kbid%' ORDER by id_surat DESC")->result();
         } else {
             $masuk = $this->db->query("SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC")->result();
@@ -268,40 +276,40 @@ class Surat_masuk extends CI_Controller
     public function rekap_sm()
     {
         $id_user = $this->session->userdata('id_user');
-		$level = $this->session->userdata('admin');
+        $level = $this->session->userdata('admin');
 
-		//menghitung jumlah surat masuk
-		$count1 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-01-01' AND '2022-01-31'")->num_rows();
-		$count2 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-02-01' AND '2022-02-31'")->num_rows();
-		$count3 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-03-01' AND '2022-03-31'")->num_rows();
-		$count4 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-04-01' AND '2022-04-31'")->num_rows();
-		$count5 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-05-01' AND '2022-05-31'")->num_rows();
-		$count6 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-06-01' AND '2022-06-31'")->num_rows();
-		$count7 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-07-01' AND '2022-07-31'")->num_rows();
-		$count8 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-08-01' AND '2022-08-31'")->num_rows();
-		$count9 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-09-01' AND '2022-09-31'")->num_rows();
-		$count10 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-10-01' AND '2022-10-31'")->num_rows();
-		$count11 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-11-01' AND '2022-11-31'")->num_rows();
-		$count12 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-12-01' AND '2022-12-31'")->num_rows();
-		
-		$data = array(
-			'title' => "Dashboard",
-			'count1' => $count1,
-			'count2' => $count2,
-			'count3' => $count3,
-			'count4' => $count4,
-			'count5' => $count5,
-			'count6' => $count6,
-			'count7' => $count7,
-			'count8' => $count8,
-			'count9' => $count9,
-			'count10' => $count10,
-			'count11' => $count11,
-			'count12' => $count12,
-		);
-		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/surat_masuk/v_rekap', $data);
-		$this->load->view('admin/layouts/footer', $data);
+        //menghitung jumlah surat masuk
+        $count1 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-01-01' AND '2022-01-31'")->num_rows();
+        $count2 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-02-01' AND '2022-02-31'")->num_rows();
+        $count3 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-03-01' AND '2022-03-31'")->num_rows();
+        $count4 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-04-01' AND '2022-04-31'")->num_rows();
+        $count5 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-05-01' AND '2022-05-31'")->num_rows();
+        $count6 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-06-01' AND '2022-06-31'")->num_rows();
+        $count7 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-07-01' AND '2022-07-31'")->num_rows();
+        $count8 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-08-01' AND '2022-08-31'")->num_rows();
+        $count9 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-09-01' AND '2022-09-31'")->num_rows();
+        $count10 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-10-01' AND '2022-10-31'")->num_rows();
+        $count11 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-11-01' AND '2022-11-31'")->num_rows();
+        $count12 = $this->db->query("SELECT * FROM tbl_surat_masuk WHERE tgl_diterima BETWEEN '2022-12-01' AND '2022-12-31'")->num_rows();
+
+        $data = array(
+            'title' => "Dashboard",
+            'count1' => $count1,
+            'count2' => $count2,
+            'count3' => $count3,
+            'count4' => $count4,
+            'count5' => $count5,
+            'count6' => $count6,
+            'count7' => $count7,
+            'count8' => $count8,
+            'count9' => $count9,
+            'count10' => $count10,
+            'count11' => $count11,
+            'count12' => $count12,
+        );
+        $this->load->view('admin/layouts/header', $data);
+        $this->load->view('admin/surat_masuk/v_rekap', $data);
+        $this->load->view('admin/layouts/footer', $data);
     }
 
     //list surat keluar
@@ -629,7 +637,7 @@ class Surat_masuk extends CI_Controller
                                         <label class="control-label">Konseptor Surat</label>
                                         <select class="form-control" type="text" name="dari" required>
                                             <option value="' . $dari . '" >' . $dari . '</option>
-                                            '.$abc.'
+                                            ' . $abc . '
                                         </select>
                                     </div>
                                 </div>
