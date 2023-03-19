@@ -72,17 +72,6 @@
             text-align: center;
         }
 
-        .judul {
-            text-align: center;
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
-        .tl {
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
         #nama {
             font-size: 1.05rem;
             margin-bottom: -1rem;
@@ -156,18 +145,18 @@
         // variabel pecahkan 1 = bulan
         // variabel pecahkan 2 = tahun
 
-        return substr($pecahkan[2], 0,2) . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+        return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
     }
 
     ?>
     <?php foreach ($surat as $rows) { ?>
 
-        <!-- <div class="lbr-dispo" style="text-align:right"> Lembar Disposisi</div> -->
+        <div class="lbr-dispo" style="text-align:right"> Lembar Disposisi</div>
 
         <table border="1" width="100%">
             <tbody>
                 <tr>
-                    <td class="tgh" id="lbr" colspan="4">
+                    <td class="tgh" id="lbr" colspan="5">
                         <div class="disp">
                             <img class="logodisp" src="<?php echo base_url(); ?>assets/img/jateng.png" />
                             <span id="nama" style="margin-bottom: -10px;">
@@ -182,44 +171,31 @@
                     </td>
                 </tr>
 
-
                 <tr>
-                    <td class="judul" id="lbr" colspan="4"><strong>LEMBAR DISPOSISI</strong></td>
-                </tr>
-
-                <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Surat Dari</strong></td>
-                    <td id="left" style="font-size: 13px; padding-left: 10px">: <?= $rows->asal_surat ?></td>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Diterima tgl</strong></td>
-                    <td id="left" style="font-size: 13px; padding-left: 10px">: <?= $rows->tgl_diterima ?></td>
+                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Surat Masuk</strong></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_surat ?></td>
                 </tr>
                 <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Surat</strong></td>
-                    <td id="left" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_surat ?></td>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Agenda</strong></td>
-                    <td id="left" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
+                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Tanggal Surat</strong></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= tgl_indo($rows->tgl_surat) ?></td>
+                </tr>
+                <tr>
+                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Dari</strong></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->asal_surat ?></td>
+                </tr>
+                <tr>
+                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->isi ?></td>
+                </tr>
+                <tr>
+                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Pencatat Kendali</strong></td>
+                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
                 </tr>
                 <?php foreach ($dispo as $row) { ?>
                     <tr>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Tanggal Surat</strong></td>
-                        <td id="left" style="font-size: 13px; padding-left: 10px">: <?= tgl_indo($rows->tgl_surat) ?></td>
-                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Sifat Disposisi</strong></td>
-                        <td id="left" style="font-size: 13px; padding-left: 10px">: <?= $row->sifat ?></td>
-                    </tr>
-                    <tr>
-                        <td id="right" colspan="1" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
-                        <td id="left" colspan="3" style="font-size: 13px; padding-left: 10px">: <?= $rows->isi ?></td>
-                    </tr>
-                    <tr>
-                        <td class="tl" colspan="2" style="font-size: 13px; padding-left: 10px"><strong>Diteruskan Kepada Sdr :</strong> <br> <?= !empty($row->tujuan) ? implode("<br>", json_decode($row->tujuan)) : "" ?></td>
-                        <td class="tl" colspan="2" style="font-size: 13px; padding-left: 10px"><strong>Dengan hormat harap :</strong> <br> <?= !empty($row->perintah) ? implode("<br>", json_decode($row->perintah)) : "" ?></td>
-                    </tr>
-                    <tr>
-                        <td id="right" colspan="2" style="font-size: 13px; padding-left: 10px">
-                            <strong>Isi Disposisi :</strong><br /> <?= $row->isi_disposisi ?>
-                            <div style="height: 50px;"></div>
-                        </td>
-                        <td id="left" colspan="2" style="font-size: 13px; padding-left: 10px"><strong>Tanggal : <?= tgl_indo($row->tgl_dispo) ?></strong>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Disediakan kepada Yth</strong></td>
+                        <td id="left" style="font-size: 13px; padding-left: 10px">: <?= !empty($row->tujuan) ? implode("<br>&nbsp;&nbsp;", json_decode($row->tujuan)) : "" ?></td>
+                        <td rowspan="3" colspan="3" style="font-size: 13px; padding-left: 10px"><strong>Tanggal : <?= tgl_indo($row->tgl_dispo) ?></strong>
                             <?php foreach ($sekdin as $rowx) { ?>
                                 <div id="lead">
                                     <p style="font-size: 13px; padding-left: 10px">
@@ -239,6 +215,17 @@
                                     </p>
                                 </div>
                             <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Untuk</strong></td>
+                        <td id="left" style="font-size: 13px; padding-left: 10px">: <?= !empty($row->perintah) ? implode("<br>&nbsp;&nbsp;", json_decode($row->perintah)) : "" ?></td>
+                    </tr>
+                    <tr class="isi">
+                        <td colspan="2" style="font-size: 13px; padding-left: 10px">
+                            <strong>Isi Disposisi :</strong><br /> <?= $row->isi_disposisi ?>
+                            <div style="height: 50px;"></div>
+                            <p style="padding-bottom: 10px"><strong>Catatan</strong> :<br /> <?= $row->catatan ?></p>
                         </td>
                     </tr>
                 <?php } ?>
