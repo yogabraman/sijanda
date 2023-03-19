@@ -187,11 +187,13 @@
                     <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Perihal</strong></td>
                     <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->isi ?></td>
                 </tr>
-                <tr>
-                    <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Pencatat Kendali</strong></td>
-                    <td id="left" colspan="4" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
-                </tr>
                 <?php foreach ($dispo as $row) { ?>
+                    <tr>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Nomor Pencatat Kendali</strong></td>
+                        <td id="left" colspan="1" style="font-size: 13px; padding-left: 10px">: <?= $rows->no_agenda ?></td>
+                        <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Sifat Disposisi</strong></td>
+                        <td id="left" colspan="2" style="font-size: 13px; padding-left: 10px">: <?= $row->sifat ?></td>
+                    </tr>
                     <tr>
                         <td id="right" style="font-size: 13px; padding-left: 10px"><strong>Disediakan kepada Yth</strong></td>
                         <td id="left" style="font-size: 13px; padding-left: 10px">: <?= !empty($row->tujuan) ? implode("<br>&nbsp;&nbsp;", json_decode($row->tujuan)) : "" ?></td>
