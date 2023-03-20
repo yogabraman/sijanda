@@ -327,7 +327,7 @@ $result = date_format($date, "Y");
             var smId = $(this).attr('id');
             $('#idnodin').empty();
             $('#uploadNodin').modal('show');
-            $('#idnodin').append('<input class="form-control" type="hidden" name="id_surat" value="'+smId+'">');
+            $('#idnodin').append('<input class="form-control" type="hidden" name="id_surat" value="' + smId + '">');
         });
     });
 </script>
@@ -342,7 +342,7 @@ $result = date_format($date, "Y");
             $('#printNodin').empty();
             $('#file_nodin').empty();
             $('#viewModal').modal('show');
-            $('#printNodin').append('<a target="_blank" href="<?= site_url('dispo/print_dispo_nodin/') ?>' + IdN[1] + '" class="btn btn-success" id="'+IdN[1]+'" title="Disposisi"><i class="fa fa-print"></i> Print Dispo Nodin</a>');
+            $('#printNodin').append('<a target="_blank" href="<?= site_url('dispo/print_dispo_nodin/') ?>' + IdN[1] + '" class="btn btn-success" id="' + IdN[1] + '" title="Disposisi"><i class="fa fa-print"></i> Print Dispo Nodin</a>');
             $('#file_nodin').append('<embed src="<?= base_url() ?>assets/notadinas/' + IdN[0] + '" width="800px" height="1000px" />');
         });
     });
@@ -821,6 +821,23 @@ $result = date_format($date, "Y");
                 undangan.style.display = "block";
 
             }
+
+        });
+
+    });
+</script>
+
+<!-- Rekap Surat Masuk by Year -->
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var rekapsm = document.getElementById("rekapsm");
+
+        // rekap.style.display = "none";
+
+        $('.rekapsm').on('change', function(e) {
+            var id = $(this).val();
+            window.location.href = "<?php echo site_url('surat_masuk/rekap_sm_thn/'); ?>" + id;
 
         });
 
