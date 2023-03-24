@@ -65,7 +65,7 @@ class Dispo extends CI_Controller
 			'isi_disposisi' => $this->input->post('isi_disposisi'),
 			'sifat' => $this->input->post('sifat'),
 			'tgl_dispo' => $waktu,
-			'catatan' => $this->input->post('catatan'),
+			'catatan' => null,//$this->input->post('catatan'),
 			'id_surat' => $id_surat,
 			'id_user' => $id_user
 		);
@@ -248,19 +248,14 @@ class Dispo extends CI_Controller
                                     </div>
                              </div>
 
-							<div class="col-md-12 col-12">
-								<div class="form-group">
-									<label class="control-label">Isi Disposisi</label>
-									<textarea class="form-control" type="text" name="isi_disposisi" value="' . $rows->isi_disposisi . '"></textarea>
-								</div>
-							</div>
-
-							<div class="col-md-12 col-12">
-								<div class="form-group">
-									<label class="control-label">Catatan</label>
-									<textarea class="form-control" type="text" name="catatan" value="' . $rows->catatan . '"></textarea>
-								</div>
-							</div>
+							 <div class="col-md-12 col-12">
+								 <div class="form-group">
+									 <label class="control-label">Isi Disposisi</label>
+									 <input type="hidden" name="isi_disposisi" value=" ' . html_escape($rows->isi_disposisi) . '">
+									 <div id="editor-edit" style="min-height: 160px;">' . $rows->isi_disposisi . '</div>
+									
+								 </div>
+							 </div>
 
 						</div>
 
@@ -280,6 +275,7 @@ class Dispo extends CI_Controller
 			';
 		}
 		echo $output;
+		$this->load->view('admin/layouts/footer-tambahan');
 	}
 
 	function edit_dispo()
@@ -309,7 +305,7 @@ class Dispo extends CI_Controller
 			'isi_disposisi' => $this->input->post('isi_disposisi'),
 			'sifat' => $this->input->post('sifat'),
 			'tgl_dispo' => $waktu,
-			'catatan' => $this->input->post('catatan')
+			'catatan' => null//$this->input->post('catatan')
 		);
 
 		$result = $this->m_dispo->update_dispo($data, $id_disposisi);

@@ -20,9 +20,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
             </div> -->
             <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
-                <?php if(strpos($title, 'Surat Masuk') !== false){?>
-                <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
-                <a href="<?= site_url('surat_masuk/cetak') ?>" class="btn btn-info"><i class="fa fa-print"></i> Cetak Surat Masuk</a>
+                <?php if (strpos($title, 'Surat Masuk') !== false) { ?>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Surat Masuk</button>
+                    <a href="<?= site_url('surat_masuk/cetak') ?>" class="btn btn-info"><i class="fa fa-print"></i> Cetak Surat Masuk</a>
                 <?php } ?>
             <?php } else {
                 echo "";
@@ -87,26 +87,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td class="text-center" style="min-width:180px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
 
-                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
+                                        <?php if (strpos($title, 'Surat Masuk') !== false) { ?>
                                             <button class="btn btn-info edit-sm" id="<?= $rows->id_surat ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <?php } ?>
 
                                         <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
 
-                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
+                                        <?php if (strpos($title, 'Surat Masuk') !== false) { ?>
                                             <button class="btn btn-danger hapus-sm" id="<?= $rows->id_surat ?>" title="Hapus"><i class="fa fa-trash"></i></button>
                                         <?php } ?>
 
-                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
-                                        <?php if ($rows->status_dispo == 0 && $rows->status_print == 0 && $rows->penerima == null) { ?>
-                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
-                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0 && $rows->penerima == null) { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                        <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 1 && $rows->penerima == null) { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
-                                        <?php } else { ?>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
-                                        <?php } ?>
+                                        <?php if (strpos($title, 'Surat Masuk') !== false) { ?>
+                                            <?php if ($rows->status_dispo == 0 && $rows->status_print == 0 && $rows->penerima == null) { ?>
+                                                <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
+                                            <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 0 && $rows->penerima == null) { ?>
+                                                <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                            <?php } elseif ($rows->status_dispo == 1 && $rows->status_print == 1 && $rows->penerima == null) { ?>
+                                                <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                            <?php } else { ?>
+                                                <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
+                                            <?php } ?>
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
@@ -120,15 +120,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
 
                                         <a target="_blank" href="<?= base_url() ?>assets/suratmasuk/<?= $rows->file ?>" class="btn btn-warning" title="Lihat File"><i class="fa fa-file"></i></a>
-                                        
-                                        <?php if(strpos($title, 'Surat Masuk') !== false){?>
-                                        <?php if ($rows->status_dispo == 0) { ?>
-                                            <button class="btn btn-success add-dispo" id="<?= $rows->file ?>/-/<?= $rows->id_surat ?>" title=" Disposisi"><i class="fa fa-pen"></i></button>
-                                            <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
-                                        <?php } else { ?>
-                                            <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
-                                            <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
-                                        <?php } ?>
+
+                                        <?php if (strpos($title, 'Surat Masuk') !== false) { ?>
+                                            <?php if ($rows->status_dispo == 0) { ?>
+                                                <button class="btn btn-success add-dispo" id="<?= $rows->file ?>/-/<?= $rows->id_surat ?>" title=" Disposisi"><i class="fa fa-pen"></i></button>
+                                                <!-- <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success edit-sm " id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-pen"></i></a> -->
+                                            <?php } else { ?>
+                                                <a href="<?= site_url('dispo/get_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-primary" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-eye"></i></a>
+                                                <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-print"></i></a>
+                                            <?php } ?>
                                         <?php } ?>
 
                                         <?php if ($rows->nodin == 1) { ?>
@@ -422,11 +422,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
                                         foreach ($struk as $rows) {
-                                            if ($this->session->userdata('level') == 5){
+                                            if ($this->session->userdata('level') == 5) {
                                                 if ($rows->id_struk == 1) continue;
                                                 echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
                                                 echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
-                                            }else {
+                                            } else {
                                                 echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
                                                 echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
                                             }
@@ -441,7 +441,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php
                                         $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
                                         foreach ($struk as $rows) {
-                                            if ($this->session->userdata('level') == 5){
+                                            if ($this->session->userdata('level') == 5) {
                                                 if ($rows->id_perintah == 8) continue;
                                                 echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]" >';
                                                 echo '<label for="' . $rows->id_perintah . '" for="perintah" >&nbsp' . $rows->perintah . '</label>';
@@ -454,20 +454,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                 </div>
 
-                                <?php if ($this->session->userdata('level') != 5){?>
+                                <?php if ($this->session->userdata('level') != 5) { ?>
                                     <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Buatkan Nota Dinas?</label><br>
-                                        <div class="col-3">
-                                            <input type="radio" name="nodin" value="0" checked>
-                                            <label for="nodin">Tidak</label>
-                                        </div>
-                                        <div class="col-3">
-                                            <input type="radio" name="nodin" value="1">
-                                            <label for="nodin">Ya</label>
+                                        <div class="form-group">
+                                            <label class="control-label">Buatkan Nota Dinas?</label><br>
+                                            <div class="col-3">
+                                                <input type="radio" name="nodin" value="0" checked>
+                                                <label for="nodin">Tidak</label>
+                                            </div>
+                                            <div class="col-3">
+                                                <input type="radio" name="nodin" value="1">
+                                                <label for="nodin">Ya</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 <?php } ?>
 
                                 <div class="col-md-12 col-12">
@@ -484,6 +484,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
+                                        <label class="control-label">Disposisi</label>
+                                        <input type="hidden" name="isi_disposisi" value="<?= set_value('isi_disposisi') ?>">
+                                        <div id="editor" style="min-height: 160px;"><?= set_value('isi_disposisi') ?></div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-12 col-12">
+                                    <div class="form-group">
                                         <label class="control-label">Isi Disposisi</label>
                                         <textarea class="form-control" type="text" name="isi_disposisi"></textarea>
                                     </div>
@@ -494,7 +502,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <label class="control-label">Catatan</label>
                                         <textarea class="form-control" type="text" name="catatan"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
 
@@ -628,7 +636,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-12 col-12">
-                            <div id="printNodin" class="row"></div>
+                                <div id="printNodin" class="row"></div>
                                 <div class="form-group">
                                     <br>
                                     <div id="file_nodin" class="row"></div>
@@ -655,9 +663,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 <script>
-function belum() {
-  alert("Nota Dinas Belum Diupload!");
-}
+    function belum() {
+        alert("Nota Dinas Belum Diupload!");
+    }
 </script>
 
 <!-- End of Main Content -->

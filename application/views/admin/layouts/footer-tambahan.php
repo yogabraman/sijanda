@@ -8,10 +8,10 @@ $date = date_create($waktu);
 $result = date_format($date, "Y");
 ?>
 <footer class="main-footer">
-  <div class="footer-left">
+  <!-- <div class="footer-left">
     Copyright &copy; <?= $result ?> <div class="bullet"></div> Design By <a href="#">Irfan Ardian</a>
   </div>
-  <div class="footer-right">
+  <div class="footer-right"> -->
 
   </div>
 </footer>
@@ -66,7 +66,7 @@ $result = date_format($date, "Y");
     },
   });
   quill.on('text-change', function(delta, oldDelta, source) {
-    document.querySelector("input[name='des']").value = quill.root.innerHTML;
+    document.querySelector("input[name='isi_disposisi']").value = quill.root.innerHTML;
   });
 </script>
 
