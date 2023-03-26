@@ -8,6 +8,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
     </div>
+
+    <a href="<?= base_url('auto/kirim_file_saja'); ?>" class="btn btn-success"><i class="fa fa-comment-dots"></i>  Coba WA</a><br><br>
+
     <!-- Content Row -->
     <div class="row mb-4">
 
