@@ -58,80 +58,85 @@ class Surat_masuk extends CI_Controller
 
         $nosurat = $this->input->post('no_surat');
         $tglsurat = $this->input->post('tgl_surat');
-        $valid = $this->db->query("SELECT no_surat, tgl_surat FROM tbl_surat_masuk WHERE no_surat = '$nosurat' AND tgl_surat = '$tglsurat' ")->result();
+        $valid = $this->db->query("SELECT no_surat, tgl_surat FROM tbl_surat_masuk WHERE no_surat = '$nosurat' ")->result();
 
         if ($valid) {
             $this->session->set_flashdata('error', 'Surat masuk sudah diinput');
             redirect(site_url('surat_masuk/list'));
         } else {
-            if ($jenis_surat == 0) {
-
-                $data_surat = array(
-                    'no_agenda' => $this->input->post('no_agenda'),
-                    'no_surat' => $this->input->post('no_surat'),
-                    'asal_surat' => $this->input->post('asal_surat'),
-                    'isi' => $this->input->post('isi'),
-                    'tgl_surat' => $this->input->post('tgl_surat'),
-                    'tgl_diterima' => $waktu,
-                    'file' => $this->m_sm->_uploadFile($new),
-                    'keterangan' => "",
-                    'status_dispo' => 0,
-                    'tipe_surat' => $this->input->post('tipe_surat'),
-                    'id_user' => $id_user
-                );
-
-                $result = $this->m_sm->add_sm($data_surat);
-
-                if ($result) {
-                    $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Disimpan!!.');
-                    redirect(site_url('surat_masuk/list'));
-                } else {
-                    $this->session->set_flashdata('error', 'Gagal Simpan Data Surat Biasa!!.');
-                    redirect(site_url('surat_masuk/list'));
-                }
+            if ($tglsurat == $valid[0]->tgl_surat) {
+                $this->session->set_flashdata('error', 'Surat masuk sudah diinput');
+                redirect(site_url('surat_masuk/list'));
             } else {
-
-                $data_surat = array(
-                    'no_agenda' => $this->input->post('no_agenda'),
-                    'no_surat' => $this->input->post('no_surat'),
-                    'asal_surat' => $this->input->post('asal_surat'),
-                    'isi' => $this->input->post('isi'),
-                    'tgl_surat' => $this->input->post('tgl_surat'),
-                    'tgl_diterima' => $waktu,
-                    'file' => $this->m_sm->_uploadFile($new),
-                    'keterangan' => "",
-                    'status_dispo' => 0,
-                    'tipe_surat' => $this->input->post('tipe_surat'),
-                    'id_user' => $id_user
-                );
-
-                $result = $this->m_sm->add_sm($data_surat);
-
-                if ($result) {
-                    $last_insert = $this->db->insert_id();
-
-                    $data_undangan = array(
-                        'asal' => $this->input->post('asal_surat'),
+                if ($jenis_surat == 0) {
+    
+                    $data_surat = array(
+                        'no_agenda' => $this->input->post('no_agenda'),
+                        'no_surat' => $this->input->post('no_surat'),
+                        'asal_surat' => $this->input->post('asal_surat'),
                         'isi' => $this->input->post('isi'),
-                        'tgl_agenda' => $this->input->post('tgl_agenda'),
-                        'waktu_agenda' => $this->input->post('waktu_agenda'),
-                        'tempat' => $this->input->post('tempat'),
-                        'id_surat' => $last_insert,
+                        'tgl_surat' => $this->input->post('tgl_surat'),
+                        'tgl_diterima' => $waktu,
+                        'file' => $this->m_sm->_uploadFile($new),
+                        'keterangan' => "",
+                        'status_dispo' => 0,
+                        'tipe_surat' => $this->input->post('tipe_surat'),
                         'id_user' => $id_user
                     );
-
-                    $result2 = $this->m_sm->add_ag($data_undangan);
-
-                    if ($result2) {
-                        $this->session->set_flashdata('success', 'Data Undangan Berhasil Disimpan!!.');
+    
+                    $result = $this->m_sm->add_sm($data_surat);
+    
+                    if ($result) {
+                        $this->session->set_flashdata('success', 'Data Surat Biasa Berhasil Disimpan!!.');
                         redirect(site_url('surat_masuk/list'));
+                    } else {
+                        $this->session->set_flashdata('error', 'Gagal Simpan Data Surat Biasa!!.');
+                        redirect(site_url('surat_masuk/list'));
+                    }
+                } else {
+    
+                    $data_surat = array(
+                        'no_agenda' => $this->input->post('no_agenda'),
+                        'no_surat' => $this->input->post('no_surat'),
+                        'asal_surat' => $this->input->post('asal_surat'),
+                        'isi' => $this->input->post('isi'),
+                        'tgl_surat' => $this->input->post('tgl_surat'),
+                        'tgl_diterima' => $waktu,
+                        'file' => $this->m_sm->_uploadFile($new),
+                        'keterangan' => "",
+                        'status_dispo' => 0,
+                        'tipe_surat' => $this->input->post('tipe_surat'),
+                        'id_user' => $id_user
+                    );
+    
+                    $result = $this->m_sm->add_sm($data_surat);
+    
+                    if ($result) {
+                        $last_insert = $this->db->insert_id();
+    
+                        $data_undangan = array(
+                            'asal' => $this->input->post('asal_surat'),
+                            'isi' => $this->input->post('isi'),
+                            'tgl_agenda' => $this->input->post('tgl_agenda'),
+                            'waktu_agenda' => $this->input->post('waktu_agenda'),
+                            'tempat' => $this->input->post('tempat'),
+                            'id_surat' => $last_insert,
+                            'id_user' => $id_user
+                        );
+    
+                        $result2 = $this->m_sm->add_ag($data_undangan);
+    
+                        if ($result2) {
+                            $this->session->set_flashdata('success', 'Data Undangan Berhasil Disimpan!!.');
+                            redirect(site_url('surat_masuk/list'));
+                        } else {
+                            $this->session->set_flashdata('error', 'Gagal Simpan Data Undangan!!.');
+                            redirect(site_url('surat_masuk/list'));
+                        }
                     } else {
                         $this->session->set_flashdata('error', 'Gagal Simpan Data Undangan!!.');
                         redirect(site_url('surat_masuk/list'));
                     }
-                } else {
-                    $this->session->set_flashdata('error', 'Gagal Simpan Data Undangan!!.');
-                    redirect(site_url('surat_masuk/list'));
                 }
             }
         }
