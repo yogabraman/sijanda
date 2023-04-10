@@ -57,13 +57,13 @@ class Surat_masuk extends CI_Controller
         // exit();
 
         $nosurat = $this->input->post('no_surat');
-        $tglsurat = $this->input->post('tgl_surat');
         $valid = $this->db->query("SELECT no_surat, tgl_surat FROM tbl_surat_masuk WHERE no_surat = '$nosurat' ")->result();
 
         if ($valid) {
             $this->session->set_flashdata('error', 'Surat masuk sudah diinput');
             redirect(site_url('surat_masuk/list'));
         } else {
+            $tglsurat = $this->input->post('tgl_surat');
             if ($tglsurat == $valid[0]->tgl_surat) {
                 $this->session->set_flashdata('error', 'Surat masuk sudah diinput');
                 redirect(site_url('surat_masuk/list'));

@@ -1,18 +1,39 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
-	public function __construct()
+class Login extends CI_Controller
+{
+    public function __construct()
     {
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->model('m_login');
         $this->load->library('session');
-
-        
+        $this->load->library('pdf');
     }
 
-	public function index() {
+    public function pdf()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
+
+        $data = array(
+            'status_print' => 1
+        );
+
+        // $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+        // $this->pdf->filename = "print-disposisi-" . $waktu . ".pdf";
+        $this->pdf->set_option('isRemoteEnabled', true);
+        $this->pdf->load_view('admin/login/template_spj', $data);
+        $this->pdf->render();
+        $output = $this->pdf->output();
+        $filename = './assets/notadinas/pdffile.pdf';
+        // $this->pdf->stream($filename.'.pdf');
+        file_put_contents($filename, $output);
+    }
+
+    public function index()
+    {
 
         // $hash = "123";
 
@@ -23,12 +44,10 @@ class Login extends CI_Controller {
         // print_r($result);
         // exit();
 
-        if ($this->session->userdata('status') == "login")
-        {
+        if ($this->session->userdata('status') == "login") {
 
             redirect('dashboard');
-
-        }else{
+        } else {
             // $data['coba'] = $this->db->query("SELECT * FROM user WHERE username='mnkmon'")->result();
             $data = array(
                 'title' => "Login"
@@ -37,83 +56,79 @@ class Login extends CI_Controller {
             $this->load->view('admin/login/v_login');
             $this->load->view('admin/layouts/footer-login', $data);
         }
+    }
 
-		
-	}
+    function proses_login()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
 
-	function proses_login() {
-            date_default_timezone_set('Asia/Jakarta');
-            $waktu = date('Y-m-d H:i:s');
+        $username = $this->input->post('username');
+        $password = md5($this->input->post('password'));
 
-            $username = $this->input->post('username');
-            $password = md5($this->input->post('password'));
+        $where = array(
+            'username' => $username,
+            'password' => $password
+        );
 
-            $where = array(
-                'username' => $username,
-                'password' => $password
+        $data_update = array(
+            'islogin' => 1,
+            'lastlogin' => $waktu
+        );
+
+        $login = $this->m_login->cek_user("tbl_user", $where)->result_array();
+
+
+        if (!empty($login)) {
+
+            $update_login = $this->m_login->update_user($data_update, $username);
+
+            $data_login = array(
+
+                'id_user' => $login[0]['id_user'],
+                'nama' => $username,
+                'status' => "login",
+                'level' => $login[0]['admin'],
+                'bidang' => $login[0]['nip']
             );
 
-            $data_update = array(
-                'islogin' => 1,
-                'lastlogin' => $waktu
-            );
+            // print_r($data_login);
+            // exit();
 
-            $login = $this->m_login->cek_user("tbl_user", $where)->result_array();
 
-            
-            if(!empty($login)) {
 
-                $update_login = $this->m_login->update_user($data_update, $username);
-
-                $data_login = array(
-
-                    'id_user' => $login[0]['id_user'],
-                    'nama' => $username,
-                    'status' => "login",
-                    'level' => $login[0]['admin'],
-                    'bidang' => $login[0]['nip']
-                );
-
-                // print_r($data_login);
-                // exit();
-
-                
-
-                // login berhasil
-                $this->session->set_flashdata('success', 'Berhasil Login!!');
-                $this->session->set_userdata($data_login);
-                redirect('dashboard');
-
-            } else {
-                // login gagal
-                $this->session->set_flashdata('error', 'Username atau Password Salah atau Akun Anda Tidak Ada Akses!!');
-                redirect('login');
-            }
+            // login berhasil
+            $this->session->set_flashdata('success', 'Berhasil Login!!');
+            $this->session->set_userdata($data_login);
+            redirect('dashboard');
+        } else {
+            // login gagal
+            $this->session->set_flashdata('error', 'Username atau Password Salah atau Akun Anda Tidak Ada Akses!!');
+            redirect('login');
         }
+    }
 
 
-    function logout($user){
+    function logout($user)
+    {
 
-            $this->session->sess_destroy();
-            date_default_timezone_set('Asia/Jakarta');
-            $waktu = date('Y-m-d H:i:s');
+        $this->session->sess_destroy();
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu = date('Y-m-d H:i:s');
 
-            $data_logout = array(
-                'islogin' => 0,
-                'lastlogin' => $waktu
-            );
+        $data_logout = array(
+            'islogin' => 0,
+            'lastlogin' => $waktu
+        );
 
-            $result = $this->m_login->logout($data_logout, $user);
+        $result = $this->m_login->logout($data_logout, $user);
 
-            if($result){
-                $this->session->set_flashdata('success', 'Berhasil Logout!!');
-                redirect('login');
-            } else {
-                $this->session->set_flashdata('error', 'Gagal Logout!!');
-                redirect('login');
-            }
+        if ($result) {
+            $this->session->set_flashdata('success', 'Berhasil Logout!!');
+            redirect('login');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal Logout!!');
+            redirect('login');
         }
-
-
-
+    }
 }
