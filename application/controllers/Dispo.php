@@ -347,6 +347,27 @@ class Dispo extends CI_Controller
 		}
 	}
 
+	public function print_memo()
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$waktu = date('Y-m-d H:i:s');
+
+		// $id_users = $this->db->limit(1)->query("SELECT tbl_disposisi.id_user FROM tbl_disposisi JOIN tbl_surat_masuk USING(id_surat) WHERE tbl_disposisi.id_surat='$id'")->row()->id_user;
+
+		// if ($id_users == 5) {
+			$id_sekdin = 2;
+		// } elseif ($id_users == 36) {
+		// 	$id_sekdin = 17;
+		// }
+		$data['sekdin'] = $this->db->query("SELECT * FROM tbl_pegawai WHERE id_pegawai ='$id_sekdin'")->result();
+
+		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+		$this->pdf->filename = "print-memo-" . $waktu . ".pdf";
+		$this->pdf->set_option('isRemoteEnabled', true);
+		$this->pdf->load_view('admin/memo/print_memo', $data);
+		$this->pdf->render();
+	}
+
 	public function print_dispo($id)
 	{
 		date_default_timezone_set('Asia/Jakarta');

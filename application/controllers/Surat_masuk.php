@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Surat_masuk extends CI_Controller
 {
     public function __construct()
@@ -375,6 +378,86 @@ class Surat_masuk extends CI_Controller
         $this->load->view('admin/surat_masuk/v_rekap', $data);
         $this->load->view('admin/layouts/footer', $data);
     }
+
+	function excel_rekap()
+	{
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue('A1', 'No');
+		$sheet->setCellValue('B1', 'Kode Arsip');
+		$sheet->setCellValue('C1', 'Uraian Arsip');
+		$sheet->setCellValue('D1', 'Kurun Waktu');
+		$sheet->setCellValue('E1', 'Jumlah');
+		$sheet->setCellValue('F1', 'Ket');
+		$sheet->setCellValue('G1', 'Keamanan');
+		$sheet->setCellValue('H1', 'Hak Akses');
+		$sheet->setCellValue('I1', 'Dasar Pertimbangan');
+
+		$spreadsheet->getActiveSheet()->getStyle('A1:H1')
+			->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$styleArray = [
+			'font' => [
+				'bold' => true,
+			],
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+			],
+		];
+
+		$spreadsheet->getActiveSheet()->getStyle('A1:H1')->applyFromArray($styleArray);
+
+        $kbid = 7;
+        $sm = $this->db->query("SELECT * FROM tbl_surat_masuk JOIN tbl_disposisi USING(id_surat) WHERE tbl_disposisi.dispo LIKE '%$kbid%' ORDER by id_surat DESC")->result();
+        $no = 1;
+        $baris = 2;
+
+        foreach ($sm as $data) {
+            $sheet->setCellValue('A' . $baris, $no++);
+            $sheet->setCellValue('B' . $baris, $data->no_surat);
+            $sheet->setCellValue('C' . $baris, $data->isi);
+            $sheet->setCellValue('D' . $baris, $data->tgl_surat);
+            $sheet->setCellValue('E' . $baris, "");
+            $sheet->setCellValue('F' . $baris, "baik");
+            $sheet->setCellValue('G' . $baris, $data->sifat);
+            $sheet->setCellValue('H' . $baris, "");
+            $sheet->setCellValue('I' . $baris, "Tidak memiliki dampak yang menganggu kinerja Perangkat Daerah");
+
+            $baris++;
+        }
+
+		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+
+		$styleArray = [
+			'borders' => [
+				'allBorders' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+				],
+			],
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+			],
+		];
+		$sheet->getStyle('A1:I1')->applyFromArray($styleArray);
+
+		$writer = new Xlsx($spreadsheet);
+		$filename = 'Rekap_surat_masuk';
+
+		ob_end_clean();
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
+	}
 
     //list surat keluar
     public function list1()
