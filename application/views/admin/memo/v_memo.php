@@ -2,41 +2,36 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <!-- Begin Page Content -->
-<?= $id_surat = "" ?>
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Disposisi</h1>
+        <h1 class="h3 mb-0 text-gray-800">Agenda</h1>
     </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Disposisi</button> -->
+            <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Agenda</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTableDispo" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTableAgenda" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Tujuan Disposisi</th>
-                            <th>Perintah Disposisi</th>
-                            <th>Isi Disposisi</th>
-                            <th>Sifat<br />Tgl Dispo</th>
+                            <th>No. Memo<br />Tgl Memo</th>
+                            <th>Tujuan</th>
+                            <th>Isi</th>
                             <th>Action</th>
-                            <th>tgl dispo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1;
-                        foreach ($dispo as $rows) { ?>
+                        <?php foreach ($memo as $rows) { ?>
                             <?php
-                            $y = substr($rows->tgl_dispo, 0, 4);
-                            $m = substr($rows->tgl_dispo, 5, 2);
-                            $d = substr($rows->tgl_dispo, 8, 2);
-                            $id_surat = $rows->id_surat;
+                            $y = substr($rows->created_at, 0, 4);
+                            $m = substr($rows->created_at, 5, 2);
+                            $d = substr($rows->created_at, 8, 2);
+                            $id_memo = $rows->id_memo;
 
                             if ($m == "01") {
                                 $nm = "Januari";
@@ -63,32 +58,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             } elseif ($m == "12") {
                                 $nm = "Desember";
                             }
-                            $tujuan = !empty($rows->tujuan) ? implode("<br>",json_decode($rows->tujuan)): "";
-                            $perintah = !empty($rows->perintah) ? implode("<br>",json_decode($rows->perintah)): "";
                             ?>
                             <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= $tujuan ?></td>
-                                <td><?= $perintah ?></td>
-                                <td><?= $rows->isi_disposisi ?></td>
-                                <td><?= $rows->sifat ?> <br>
+                                <td><?= $rows->no_surat ?> <br>
                                     <hr /> <?= $d . " " . $nm . " " . $y ?>
                                 </td>
-                                <td class="text-center">
+                                <td><?= $rows->dispo ?></td>
+                                <td><?= $rows->isi ?></td>
+                                <td class="text-center" style="min-width:80px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
-
-                                        <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-warning" title="cetak dispo"><i class="fa fa-print"></i></a>
-
+                                        <button class="btn btn-info edit-agenda" id="<?= $rows->id_memo ?>" title="Edit"><i class="fa fa-edit"></i></button>
+                                        <button style="margin-top :3px" class="btn btn-danger hapus-agenda" id="<?= $rows->id_memo ?>"><i class="fa fa-trash"></i></button>
+                                        <a target="_blank" href="<?= site_url('dispo/print_dispo/') ?><?= $rows->id_surat ?>" class="btn btn-success" id="<?= $rows->id_surat ?>" title="Disposisi"><i class="fa fa-user"></i></a>
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
-
-                                        <button class="btn btn-info edit-dispo" id="<?= $rows->id_disposisi ?>" title="Edit"><i class="far fa-edit"></i></button>
-
-                                        <button class="btn btn-danger hapus-dispo" id="<?= $rows->id_disposisi ?>" title="Hapus"><i class="fa fa-trash"></i></button>
-
+                                        <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="far fa-edit"></i></button>
+                                        <button class="btn btn-danger hapus-agenda" id="<?= $rows->id_agenda ?>"><i class="fa fa-trash"></i></button>
+                                        <?php } elseif ($this->session->userdata('level') == 3) {
+                                        if (strpos($rows->dispo, $this->session->userdata('bidang')) !== false) { ?>
+                                            <button class="btn btn-info edit-agenda" id="<?= $rows->id_agenda ?>" title="Edit"><i class="fa fa-edit"></i></button>
+                                            <button style="margin-top :3px" class="btn btn-warning upload-dukung" id="<?= $rows->id_agenda ?>" title="Upload"><i class="fa fa-file"></i></button>
+                                        <?php } else { ?>
+                                            <button class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i></button>
+                                        <?php } ?>
                                     <?php } ?>
-
                                 </td>
-                                <td><?= $rows->tgl_dispo ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -107,65 +100,37 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Surat Masuk</h4>
+                <h4 class="modal-title">Tambah Memo</h4>
                 <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
             </div>
             <div class="modal-body">
                 <div class="card-body">
                     <div class="form-body">
-                        <form action="<?= site_url('dispo/add_agenda') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= site_url('memo/add_memo') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
 
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Kepada Yth:</label>
-                                        <?php
-                                        $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-                                        foreach ($struk as $rows) {
-                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
-                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
-                                        }
-                                        ?>
+                                <?php if ($this->session->userdata('level') == 3) { ?>
+                                    <input class="form-control" type="hidden" name="bidang[]" value="<?= $this->session->userdata('bidang') ?>">
+                                <?php } else { ?>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Bidang :</label>
+                                            <?php
+                                            $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
+                                            foreach ($struk as $rows) {
+                                                echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
+                                                echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Untuk :</label>
-                                        <?php
-                                        $struk = $this->db->query("SELECT * FROM tbl_perintah")->result();
-                                        foreach ($struk as $rows) {
-                                            echo '<br><input id="' . $rows->id_perintah . '" class="form-control-input" value="' . $rows->perintah . '" type="checkbox" name="perintah[]">';
-                                            echo '<label for="' . $rows->id_perintah . '" for="perintah">&nbsp' . $rows->perintah . '</label>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
+                                <?php } ?>
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Pilih Sifat Disposisi</label>
-                                        <select class="form-control" id="sifat" type="text" name="sifat" required>
-                                            <option value="Biasa">Biasa</option>
-                                            <option value="Penting">Penting</option>
-                                            <option value="Segera">Segera</option>
-                                            <option value="Rahasia">Rahasia</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Isi Disposisi</label>
-                                        <textarea class="form-control" type="textarea" name="isi_disposisi"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Catatan</label>
-                                        <textarea class="form-control" type="textarea" name="catatan"></textarea>
+                                        <label class="control-label">Isi Acara</label>
+                                        <textarea class="form-control" type="text" name="isi"></textarea>
                                     </div>
                                 </div>
 
@@ -206,7 +171,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <!-- Modal Hapus -->
 <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ingin Menghapus Data?</h5>
@@ -222,6 +187,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Upload File -->
+<div class="modal fade" id="uploadModal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" id="upload_result">
+        <!-- Modal content-->
+    </div>
+
 </div>
 
 </div>

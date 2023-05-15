@@ -75,6 +75,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                 </li>
 
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item <?php echo $this->uri->segment(1) == 'memo' || $this->uri->segment(2) == 'list2' || $this->uri->segment(2) == 'cetak2' ? 'active' : ''; ?>">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAgenda" aria-expanded="true" aria-controls="collapseAgenda">
+                        <i class="fas fa-fw fa-print"></i>
+                        <span>Agenda</span>
+                    </a>
+                    <div id="collapseAgenda" class="collapse <?php echo $this->uri->segment(2) == 'list2' || $this->uri->segment(2) == 'cetak2' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header"></h6>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'list2' ? 'active' : ''; ?>" href="<?= site_url('agenda/list2') ?>">List Agenda</a>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'cetak2' ? 'active' : ''; ?>" href="<?= site_url('agenda/cetak2') ?>">Cetak</a>
+                        </div>
+                    </div>
+                </li>
+
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
