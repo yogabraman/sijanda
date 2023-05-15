@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="card-header py-3">
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Laporan</button> -->
             <a href="<?= base_url('surat_masuk/excel_rekap'); ?>" class="btn btn-success"><i class="fa fa-download"></i>Download Rekap Surat</a>
-            <a href="<?= base_url('dispo/print_memo'); ?>" class="btn btn-info"><i class="fa fa-download"></i>Memo</a>
+            <a target="_blank" href="<?= base_url('dispo/print_memo'); ?>" class="btn btn-info"><i class="fa fa-download"></i>Memo</a>
         </div>
 
         <div class="card-body">
