@@ -36,13 +36,13 @@ class Memo extends CI_Controller
         $waktu = date('Y-m-d H:i:s');
 
         $id_user = $this->session->userdata('id_user');
-        $dispo = json_encode($this->input->post('dispo'));
+        $dispo = json_encode($this->input->post('bidang'));
 
         $data = array(
             'no_memo' => $this->input->post('no_memo'),
-            'tgl_memo' => $this->input->post('created_at'),
-            'isi' => $this->input->post('isi'),
+            'isi' => $this->input->post('isi_memo'),
             'dispo' => $dispo,
+            'created_at' => $waktu,
             'id_user' => $id_user
         );
 
@@ -64,9 +64,15 @@ class Memo extends CI_Controller
         $record = $this->db->query("SELECT * FROM tbl_memo WHERE id_memo ='$id'")->result();
         $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
         $nama_bidang = $this->db->limit(1)->query("SELECT dispo FROM tbl_memo WHERE id_memo ='$id'")->row()->dispo;
+        $pegawai = $this->db->query("SELECT pegawai FROM tbl_pegawai")->result();
 
         $output = "";
         $abc = "";
+        $def = "";
+
+        foreach ($pegawai as $row) {
+            $def .= '<option value="' . $row->pegawai . '">' . $row->pegawai . '</option>';
+        }
 
         if ($this->session->userdata('level') != 3) {
             foreach ($struk as $row) {
@@ -100,52 +106,41 @@ class Memo extends CI_Controller
                         </div>
                         <div class="modal-body">
                             <div class="card-body">
-                                <form action="' . base_url("agenda/edit_agenda") . '" method="post" enctype="multipart/form-data">
+                                <form action="' . base_url("memo/edit_memo") . '" method="post" enctype="multipart/form-data">
                                     <div class="form-body">
 
                                         <div class="row">
 										<div class="col-md-6 col-12">
                                     <div class="form-group">
-
-                                        <input class="form-control" type="hidden" name="id_agenda" value="' . $id . '">
-                                        <input class="form-control" type="hidden" name="id_surat" value="' . $rows->id_surat . '">
-                                        <label class="control-label">Tanggal Acara</label>
-                                        <input class="form-control" type="date" name="tgl_acara" value="' . $rows->tgl_agenda . '">
+                                        <input class="form-control" type="hidden" name="id_memo" value="' . $id . '">
+                                        <label class="control-label">No Memo</label>
+                                        <input class="form-control" type="text" name="no_memo" value="' . $rows->no_memo . '" readonly>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Tempat Acarat</label>
-                                        <input class="form-control" type="text" name="tempat" value="' . $rows->tempat . '">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Waktu Acara</label>
-                                        <input class="form-control" type="time" name="wkt_acara" value="' . $rows->waktu_agenda . '">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Dari</label>
-                                        <input class="form-control" type="text" name="dari" value="' . $rows->asal . '">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Isi Acara</label>
-                                        <input class="form-control" type="text" name="isi" value="' . $rows->isi . '">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Bidang :</label>
                                         ' . $abc . '
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Isi Memo</label>
+                                        <input type="hidden" name="isi_memo" value=" ' . html_escape($rows->isi) . '">
+                                        <div id="editor-edit" style="min-height: 160px;">' . $rows->isi . '</div>
+                                       
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Pegawai Penerima</label>
+                                        <select class="form-control" id="penerima" type="text" name="penerima">
+                                            <option value="' . $rows->penerima . '" >' . $rows->penerima . '</option>
+                                            ' . $def . '
+                                        </select>
                                     </div>
                                 </div>
 										</div>
@@ -168,7 +163,7 @@ class Memo extends CI_Controller
         echo $output;
     }
 
-    function edit_agenda()
+    function edit_memo()
     {
         date_default_timezone_set('Asia/Jakarta');
         $waktu = date('Y-m-d H:i:s');
@@ -209,4 +204,26 @@ class Memo extends CI_Controller
             redirect(site_url('memo/listmemo'));
         }
     }
+
+	public function print_memo($id)
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$waktu = date('Y-m-d H:i:s');
+        $id_sekdin = 2;
+
+		//update surat masuk
+		$data_mm = array(
+			'status_print' => 1
+		);
+		$this->m_memo->update_memo($data_mm, $id);
+
+		$data['memo'] = $this->db->query("SELECT * FROM tbl_memo WHERE id_memo='$id'")->result();
+		$data['sekdin'] = $this->db->query("SELECT * FROM tbl_pegawai WHERE id_pegawai ='$id_sekdin'")->result();
+
+		// $this->pdf->setPaper('A4', 'potrait'); //landscape //potrait
+		$this->pdf->filename = "print-memo-" . $waktu . ".pdf";
+		$this->pdf->set_option('isRemoteEnabled', true);
+		$this->pdf->load_view('admin/memo/print_memo', $data);
+		$this->pdf->render();
+	}
 }
