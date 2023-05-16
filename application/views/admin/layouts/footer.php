@@ -688,6 +688,53 @@ $result = date_format($date, "Y");
     });
 </script> -->
 
+<!-- Edit Memo -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableMemo').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableMemo').on('click', '.edit-memo', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var memoId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('memo/get_memo') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    memoId: memoId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
+
+<!-- Hapus Agenda -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableMemo').DataTable();
+        $('#dataTableMemo').on('click', '.hapus-memo', function() {
+            var memoId = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('memo/hapus/') ?>' + memoId + '">Hapus</a>');
+        });
+    });
+</script>
+
 <!-- Edit Pegawai -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded
@@ -839,6 +886,7 @@ $result = date_format($date, "Y");
     });
     quill.on('text-change', function(delta, oldDelta, source) {
         document.querySelector("input[name='isi_disposisi']").value = quill.root.innerHTML;
+        document.querySelector("input[name='isi_memo']").value = quill.root.innerHTML;
     });
 </script>
 

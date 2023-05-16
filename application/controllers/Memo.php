@@ -15,30 +15,17 @@ class Memo extends CI_Controller
         }
     }
 
-    public function index()
-    {
-
-        $id_user = $this->session->userdata('id_user');
-
-        $data = array(
-            'title' => "Agenda"
-        );
-        $this->load->view('admin/layouts/header', $data);
-        $this->load->view('admin/riwayat/v_riwayat', $data);
-        $this->load->view('admin/layouts/footer', $data);
-    }
-
     public function listmemo()
     {
         $dates = date("Y-m-d");
 
-        $memo = $this->db->query("SELECT * FROM `tbl_memo` WHERE tbl_memo >= '$dates' ORDER by created_at ASC ")->result();
+        $memo = $this->db->query("SELECT * FROM `tbl_memo` ORDER by created_at ASC ")->result();
         $data = array(
             'title' => "List Memo",
-            'agenda' => $memo
+            'memo' => $memo
         );
         $this->load->view('admin/layouts/header', $data);
-        $this->load->view('admin/agenda/v_memo', $data);
+        $this->load->view('admin/memo/v_memo', $data);
         $this->load->view('admin/layouts/footer', $data);
     }
 
@@ -72,11 +59,11 @@ class Memo extends CI_Controller
 
     public function get_memo()
     {
-        $id = $this->input->post("agId");
+        $id = $this->input->post("memoId");
 
-        $record = $this->db->query("SELECT * FROM tbl_agenda WHERE id_agenda ='$id'")->result();
+        $record = $this->db->query("SELECT * FROM tbl_memo WHERE id_memo ='$id'")->result();
         $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-        $nama_bidang = $this->db->limit(1)->query("SELECT dispo FROM tbl_agenda WHERE id_agenda ='$id'")->row()->dispo;
+        $nama_bidang = $this->db->limit(1)->query("SELECT dispo FROM tbl_memo WHERE id_memo ='$id'")->row()->dispo;
 
         $output = "";
         $abc = "";
@@ -108,7 +95,7 @@ class Memo extends CI_Controller
             $output .= '
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Agenda</h4>
+                            <h4 class="modal-title">Edit Memo</h4>
                             <button type="button" class="close" data-dismiss="modal"><i class="ion-close"></i></button>
                         </div>
                         <div class="modal-body">
@@ -212,14 +199,14 @@ class Memo extends CI_Controller
 
     function hapus($id)
     {
-        $result = $this->m_sm->hapus_agenda($id);
+        $result = $this->m_memo->hapus_memo($id);
 
         if ($result) {
             $this->session->set_flashdata('success', 'Data Berhasil dihapus!!.');
-            redirect(site_url('agenda/list2'));
+            redirect(site_url('memo/listmemo'));
         } else {
             $this->session->set_flashdata('error', 'Data Gagal dihapus!!.');
-            redirect(site_url('agenda/list2'));
+            redirect(site_url('memo/listmemo'));
         }
     }
 }

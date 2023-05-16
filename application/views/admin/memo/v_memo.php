@@ -6,13 +6,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Agenda</h1>
+        <h1 class="h3 mb-0 text-gray-800">Memo</h1>
     </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Agenda</button>
+            <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah Memo</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -109,6 +109,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <form action="<?= site_url('memo/add_memo') ?>" method="post" enctype="multipart/form-data">
 
                             <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Nomor Memo</label>
+                                        <?php
+
+                                        $rand = date("Ymd");
+                                        //new logic
+                                        $no_memo = $this->db->limit(1)->query("SELECT no_memo FROM tbl_memo ORDER BY id_memo DESC")->row()->no_memo;
+                                        print_r($no_memo);
+                                        $regex = explode("/", $no_memo);
+                                        $ymd = $regex[0];
+                                        $num = $regex[1] + 1;
+                                        if ($ymd == $rand) {
+                                            echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/'.'MEMO/' . $num . '" readonly>';
+                                        } else {
+                                            echo '<input class="form-control" type="text" name="no_agenda" value="' . $rand . '/MEMO/1" readonly>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
 
                                 <?php if ($this->session->userdata('level') == 3) { ?>
                                     <input class="form-control" type="hidden" name="bidang[]" value="<?= $this->session->userdata('bidang') ?>">
@@ -129,8 +149,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Isi Acara</label>
-                                        <textarea class="form-control" type="text" name="isi"></textarea>
+                                        <label class="control-label">Disposisi</label>
+                                        <input type="hidden" name="isi_disposisi" value="<?= set_value('isi_disposisi') ?>">
+                                        <div id="editor" style="min-height: 160px;"><?= set_value('isi_disposisi') ?></div>
                                     </div>
                                 </div>
 
@@ -183,7 +204,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="modal-footer">
                 <div id="test"></div>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <!-- <a class="btn btn-danger" href="<?= site_url('user/hapus') ?>">Hapus</a> -->
             </div>
         </div>
     </div>

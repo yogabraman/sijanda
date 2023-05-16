@@ -20,12 +20,6 @@ class M_memo extends CI_Model
         return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
     }
 
-    public function update_memo($data, $id_memo)
-    {
-        $this->db->update('tbl_memo', $data, array('id_memo' => $id_memo));
-        return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-    }
-
     public function hapus_memo($id_memo)
     {
         $this->db->delete('tbl_memo', array('id_memo' => $id_memo));
