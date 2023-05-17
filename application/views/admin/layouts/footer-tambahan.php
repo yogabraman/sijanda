@@ -70,6 +70,42 @@ $result = date_format($date, "Y");
   });
 </script>
 
+<script>
+  var quill = new Quill('#editormemo-edit', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        [{
+          header: [1, 2, 3, 4, 5, 6, false]
+        }],
+        [{
+          font: []
+        }],
+        ["bold", "italic"],
+        ["link", "blockquote", "code-block", "image"],
+        [{
+          list: "ordered"
+        }, {
+          list: "bullet"
+        }],
+        [{
+          script: "sub"
+        }, {
+          script: "super"
+        }],
+        [{
+          color: []
+        }, {
+          background: []
+        }],
+      ]
+    },
+  });
+  quill.on('text-change', function(delta, oldDelta, source) {
+    document.querySelector("input[name='isi_memo']").value = quill.root.innerHTML;
+  });
+</script>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $('.terlaksana').on('change', function(e) {

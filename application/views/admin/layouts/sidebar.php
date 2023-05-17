@@ -160,6 +160,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </div>
                 </li>
+                
+
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item <?php echo $this->uri->segment(1) == 'memo' || $this->uri->segment(2) == 'list2' ? 'active' : ''; ?>">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMemo" aria-expanded="true" aria-controls="collapseMemo">
+                        <i class="fas fa-fw fa-sticky-note"></i>
+                        <span>Memo</span>
+                    </a>
+                    <div id="collapseMemo" class="collapse <?php echo $this->uri->segment(2) == 'listmemo' ? 'show' : ''; ?>" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header"></h6>
+                            <a class="collapse-item <?php echo $this->uri->segment(2) == 'listmemo' ? 'active' : ''; ?>" href="<?= site_url('memo/listmemo') ?>">List Memo</a>
+                        </div>
+                    </div>
+                </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <!--<li class="nav-item">-->

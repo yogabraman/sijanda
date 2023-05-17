@@ -59,7 +59,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 $nm = "Desember";
                             }
 
-                            $disp = !empty($rows->dispo) ? implode("<br>", json_decode($rows->dispo)) : "";
+                            $disp = !empty($rows->tujuan) ? implode("<br>", json_decode($rows->tujuan)) : "";
                             ?>
                             <tr>
                                 <td><?= $rows->no_memo ?> <br>
@@ -70,12 +70,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td class="text-center" style="min-width:80px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                                         <button class="btn btn-info edit-memo" id="<?= $rows->id_memo ?>" title="Edit"><i class="fa fa-edit"></i></button>
-                                        <button style="margin-top :3px" class="btn btn-danger hapus-memo" id="<?= $rows->id_memo ?>"><i class="fa fa-trash"></i></button>
-                                        <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-primary" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-eye"></i></a>
+                                        <button class="btn btn-danger hapus-memo" id="<?= $rows->id_memo ?>"><i class="fa fa-trash"></i></button>
+
+                                        <?php if ($rows->status_print == 0 && $rows->penerima == null) { ?>
+                                            <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-primary" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-eye"></i></a>
+                                        <?php } elseif ($rows->status_print == 1 && $rows->penerima == null) { ?>
+                                            <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-success" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-print"></i></a>
+                                        <?php } else { ?>
+                                            <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-success" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-user"></i></a>
+                                        <?php } ?>
+
                                     <?php } elseif ($this->session->userdata('level') == 2) { ?>
                                         <button class="btn btn-info edit-memo" id="<?= $rows->id_memo ?>" title="Edit"><i class="far fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-memo" id="<?= $rows->id_memo ?>"><i class="fa fa-trash"></i></button>
-                                        <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-primary" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-eye"></i></a>
+
+                                        <?php if ($rows->status_print == 0 && $rows->penerima == null) { ?>
+                                            <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-primary" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-eye"></i></a>
+                                        <?php } elseif ($rows->status_print == 1 && $rows->penerima == null) { ?>
+                                            <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-success" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-print"></i></a>
+                                        <?php } else { ?>
+                                            <a target="_blank" href="<?= site_url('memo/print_memo/') ?><?= $rows->id_memo ?>" class="btn btn-success" id="<?= $rows->id_memo ?>" title="Memo"><i class="fa fa-user"></i></a>
+                                        <?php } ?>
+
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -119,7 +135,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         // }else{
                                         //     echo"ada";
                                         // }
-                                        $regex = explode("/", $no_memo);
+                                        $regex = explode("/MEMO/", $no_memo);
                                         $ymd = $regex[0];
                                         $num = $regex[1] + 1;
                                         if ($ymd == $rand) {
@@ -133,12 +149,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Bidang :</label>
+                                        <label class="control-label">Kepada Yth: </label>
                                         <?php
                                         $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
                                         foreach ($struk as $rows) {
-                                            echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]">';
-                                            echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            if ($this->session->userdata('level') == 5) {
+                                                if ($rows->id_struk == 1) continue;
+                                                echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
+                                                echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            } else {
+                                                echo '<br><input id="struk_' . $rows->id_struk . '" class="form-control-input" value="' . $rows->nama . '" type="checkbox" name="bidang[]" >';
+                                                echo '<label for="struk_' . $rows->id_struk . '" for="bidang">&nbsp' . $rows->nama . '</label>';
+                                            }
                                         }
                                         ?>
                                     </div>
@@ -146,7 +168,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
-                                        <label class="control-label">Disposisi</label>
+                                        <label class="control-label">Isi Memo :</label>
                                         <input type="hidden" name="isi_memo" value="<?= set_value('isi_memo') ?>">
                                         <div id="editormemo" style="min-height: 160px;"><?= set_value('isi_memo') ?></div>
                                     </div>

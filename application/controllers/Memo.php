@@ -36,12 +36,24 @@ class Memo extends CI_Controller
         $waktu = date('Y-m-d H:i:s');
 
         $id_user = $this->session->userdata('id_user');
-        $dispo = json_encode($this->input->post('bidang'));
+		$bidang = $this->input->post('bidang') == null ? '[""]' : json_encode($this->input->post('bidang'));
+        $kodebid = null;
+		if ($this->input->post('bidang') != null) {
+			foreach ($this->input->post('bidang') as $x => $val) {
+				$kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$val'")->row()->id_struk;
+				if ($kodebid == '') {
+					$kodebid .= $kbid;
+				} else {
+					$kodebid .= ',' . $kbid;
+				}
+			}
+		}
 
         $data = array(
             'no_memo' => $this->input->post('no_memo'),
             'isi' => $this->input->post('isi_memo'),
-            'dispo' => $dispo,
+			'tujuan' => $bidang,
+			'dispo' => $kodebid,
             'created_at' => $waktu,
             'id_user' => $id_user
         );
@@ -63,7 +75,7 @@ class Memo extends CI_Controller
 
         $record = $this->db->query("SELECT * FROM tbl_memo WHERE id_memo ='$id'")->result();
         $struk = $this->db->query("SELECT * FROM tbl_struktural")->result();
-        $nama_bidang = $this->db->limit(1)->query("SELECT dispo FROM tbl_memo WHERE id_memo ='$id'")->row()->dispo;
+        $nama_bidang = $this->db->limit(1)->query("SELECT tujuan FROM tbl_memo WHERE id_memo ='$id'")->row()->tujuan;
         $pegawai = $this->db->query("SELECT pegawai FROM tbl_pegawai")->result();
 
         $output = "";
@@ -129,8 +141,7 @@ class Memo extends CI_Controller
                                     <div class="form-group">
                                         <label class="control-label">Isi Memo</label>
                                         <input type="hidden" name="isi_memo" value=" ' . html_escape($rows->isi) . '">
-                                        <div id="editor-edit" style="min-height: 160px;">' . $rows->isi . '</div>
-                                       
+                                        <div id="editormemo-edit" style="min-height: 160px;">' . $rows->isi . '</div> 
                                     </div>
                                 </div>
 
@@ -161,6 +172,7 @@ class Memo extends CI_Controller
                 ';
         }
         echo $output;
+		$this->load->view('admin/layouts/footer-tambahan');
     }
 
     function edit_memo()
@@ -168,27 +180,38 @@ class Memo extends CI_Controller
         date_default_timezone_set('Asia/Jakarta');
         $waktu = date('Y-m-d H:i:s');
 
-        $id_agenda = $this->input->post("id_agenda");
+        $id_memo = $this->input->post("id_memo");
         $id_user = $this->session->userdata('id_user');
 
+        $kodebid = null;
+		if ($this->input->post('bidang') != null) {
+			foreach ($this->input->post('bidang') as $x => $val) {
+				$kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$val'")->row()->id_struk;
+				if ($kodebid == '') {
+					$kodebid .= $kbid;
+				} else {
+					$kodebid .= ',' . $kbid;
+				}
+			}
+		}
+
         $data = array(
-            'asal' => $this->input->post('dari'),
+			'tujuan' => json_encode($this->input->post('bidang')),
+			'dispo' => $kodebid,
             'isi' => $this->input->post('isi'),
-            'tgl_agenda' => $this->input->post('tgl_acara'),
-            'waktu_agenda' => $this->input->post('waktu_agenda'),
-            'tempat' => $this->input->post('tempat'),
-            'dispo' => json_encode($this->input->post('bidang')),
+            'penerima' => $this->input->post('penerima'),
+            'updated_at' => $waktu,
             'id_user' => $id_user
         );
 
-        $result = $this->m_sm->update_agenda($data, $id_agenda);
+        $result = $this->m_memo->update_memo($data, $id_memo);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Data Undangan Berhasil Diubah!!.');
-            redirect(site_url('memo/list2'));
+            $this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');
+            redirect(site_url('memo/listmemo'));
         } else {
-            $this->session->set_flashdata('error', 'Gagal Ubah Data Undangan!!.');
-            redirect(site_url('agenda/list2'));
+            $this->session->set_flashdata('error', 'Gagal Ubah Data!!.');
+            redirect(site_url('memo/listmemo'));
         }
     }
 

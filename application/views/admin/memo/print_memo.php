@@ -16,11 +16,11 @@
             padding: 5px;
         }
 
-        tr,
+        /* tr,
         td {
             border: table-cell;
             border: 1px solid #444;
-        }
+        } */
 
         tr,
         td {
@@ -33,6 +33,10 @@
 
         #left {
             border-left: none !important;
+        }
+
+        .upper {
+            margin-top: -2rem;
         }
 
         .isi {
@@ -125,7 +129,7 @@
 
         .lbr-dispo {
             font-weight: bold;
-            margin: 0 10px 0 0;
+            /* margin: 0 10px 0 0; */
         }
     </style>
 
@@ -164,66 +168,71 @@
 
         <!-- <div class="lbr-dispo" style="text-align:right"> Lembar Disposisi</div> -->
 
+        <table border="0" width="100%" class="upper">
+            <tr>
+                <td class="tgh" id="lbr" colspan="4">
+                    <div class="disp">
+                        <img class="logodisp" src="<?php echo base_url(); ?>assets/img/jateng.png" />
+                        <span id="nama" style="margin-bottom: -10px;">
+                            PEMERINTAH PROVINSI JAWA TENGAH<br>
+                            <p style="margin-top: -5px;">DINAS PEMBERDAYAAN MASYARAKAT, DESA,</p>
+                            <p style="margin-top: -20px">KEPENDUDUKAN DAN PENCATATAN SIPIL</p>
+                        </span>
+                        <p id="alamat" style="margin-top: -15px;">
+                            Jl. Menteri Supeno No.17 TELP. (024) 88311621 FAX.8318492 SEMARANG 50243</p>
+                        <p id="alamat" style="margin-top: -15px">Email : dispermadesdukcapil@jatengprov.go.id</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr style="height:1px;border-width:0;color:gray;background-color:black">
+        <hr style="height:1.6px;background:black;margin-top:-15px">
+        <p class="judul" id="lbr"><strong>MEMO</strong></p>
         <table border="1" width="100%">
             <tbody>
-                <tr>
-                    <td class="tgh" id="lbr" colspan="4">
-                        <div class="disp">
-                            <img class="logodisp" src="<?php echo base_url(); ?>assets/img/jateng.png" />
-                            <span id="nama" style="margin-bottom: -10px;">
-                                PEMERINTAH PROVINSI JAWA TENGAH<br>
-                                <p style="margin-top: -5px;">DINAS PEMBERDAYAAN MASYARAKAT, DESA,</p>
-                                <p style="margin-top: -20px">KEPENDUDUKAN DAN PENCATATAN SIPIL</p>
-                            </span>
-                            <p id="alamat" style="margin-top: -15px;">
-                                Jl. Menteri Supeno No.17 TELP. (024) 88311621 FAX.8318492 SEMARANG 50243</p>
-                            <p id="alamat" style="margin-top: -15px">Email : dispermadesdukcapil@jatengprov.go.id</p>
-                        </div>
-                    </td>
-                </tr>
-
-
-                <tr>
-                    <td class="judul" id="lbr" colspan="4"><strong>MEMO</strong></td>
-                </tr>
                 <tr>
                     <td id="right" colspan="1" style="font-size: 13px; padding-left: 10px"><strong>Dari</strong></td>
                     <td id="left" colspan="3" style="font-size: 13px; padding-left: 10px">: Sekretaris</td>
                 </tr>
                 <tr>
                     <td id="right" colspan="1" style="font-size: 13px; padding-left: 10px"><strong>Kepada</strong></td>
-                    <td id="left" colspan="3" style="font-size: 13px; padding-left: 10px">: <?= !empty($rows->dispo) ? implode("<br>", json_decode($rows->dispo)) : "" ?></td>
+                    <td id="left" colspan="3" style="font-size: 13px; padding-left: 10px">: <?= !empty($rows->tujuan) ? implode("<br>", json_decode($rows->tujuan)) : "" ?></td>
                 </tr>
                 <tr>
-                    <td id="right" colspan="1" style="font-size: 13px; padding-left: 10px"><strong>Isi</strong></td>
-                    <td id="left" colspan="3" style="font-size: 13px; padding-left: 10px">: <?= $rows->isi ?></td>
-                </tr>
-                <tr>
-                    <td id="right" colspan="2" style="font-size: 13px; padding-left: 10px">
-                    </td>
-                    <td id="left" colspan="2" style="font-size: 13px; padding-left: 10px"><strong>Tanggal : <?= tgl_indo($rows->created_at) ?></strong>
-                        <?php foreach ($sekdin as $rowx) { ?>
-                            <div id="lead">
-                                <p style="font-size: 13px; padding-left: 10px">
-                                    <!--<center>Sekretaris Dinas</center>-->
-                                    <center><?= $rowx->bagian ?></center>
-                                </p>
-                                <div style="height: 50px;" style="font-size: 13px; padding-left: 10px">
-                                    <center>TTD.</center>
-                                </div>
-                                <p style="font-size: 13px; padding-left: 10px;">
-                                    <!--<center><b>Nur Kholis, SE, M.Si</b></center>-->
-                                    <center><b><?= $rowx->pegawai ?></b></center>
-                                </p>
-                                <p style="font-size: 13px; padding-left: 10px">
-                                    <!--<center>NIP. 197601211996031005</center>-->
-                                    <center><?= $rowx->nip ?></center>
-                                </p>
-                            </div>
-                        <?php } ?>
+                    <td colspan="4" style="font-size: 13px; padding-left: 10px">
+                        <strong>Isi :</strong><br /> <?= $rows->isi ?>
+                        <div style="height: 50px;"></div>
                     </td>
                 </tr>
             </tbody>
+        </table>
+        <table border="0" width="100%">
+            <tr>
+                <td width="12%"></td>
+                <td width="25%"></td>
+                <td width="23%"></td>
+                <td width="40%" align="center" style="font-size: 13px; padding-left: 10px"><strong>Semarang, <?= tgl_indo($rows->created_at) ?></strong>
+                    <?php foreach ($sekdin as $rowx) { ?>
+                        <div id="lead">
+                            <p style="font-size: 13px; padding-left: 10px">
+                                <!--<center>Sekretaris Dinas</center>-->
+                                <center><?= $rowx->bagian ?></center>
+                            </p>
+                            <div style="height: 50px;" style="font-size: 13px; padding-left: 10px">
+                                <center>TTD.</center>
+                            </div>
+                            <p style="font-size: 13px; padding-left: 10px;">
+                                <!--<center><b>Nur Kholis, SE, M.Si</b></center>-->
+                                <center><b><?= $rowx->pegawai ?></b></center>
+                            </p>
+                            <p style="font-size: 13px; padding-left: 10px">
+                                <!--<center>NIP. 197601211996031005</center>-->
+                                <center><?= $rowx->nip ?></center>
+                            </p>
+                        </div>
+                    <?php } ?>
+                </td>
+            </tr>
         </table>
 
     <?php } ?>
