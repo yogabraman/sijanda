@@ -19,7 +19,7 @@ class Memo extends CI_Controller
     {
         $dates = date("Y-m-d");
 
-        $memo = $this->db->query("SELECT * FROM `tbl_memo` ORDER by created_at ASC ")->result();
+        $memo = $this->db->query("SELECT * FROM `tbl_memo` ORDER BY created_at DESC ")->result();
         $data = array(
             'title' => "List Memo",
             'memo' => $memo
@@ -140,7 +140,7 @@ class Memo extends CI_Controller
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Memo</label>
-                                        <input type="hidden" name="isi_memo" value=" ' . html_escape($rows->isi) . '">
+                                        <input type="hidden" name="edit_memo" value=" ' . html_escape($rows->isi) . '">
                                         <div id="editormemo-edit" style="min-height: 160px;">' . $rows->isi . '</div> 
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@ class Memo extends CI_Controller
         $data = array(
 			'tujuan' => json_encode($this->input->post('bidang')),
 			'dispo' => $kodebid,
-            'isi' => $this->input->post('isi'),
+            'isi' => $this->input->post('edit_memo'),
             'penerima' => $this->input->post('penerima'),
             'updated_at' => $waktu,
             'id_user' => $id_user

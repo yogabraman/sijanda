@@ -688,6 +688,24 @@ $result = date_format($date, "Y");
     });
 </script> -->
 
+<!-- Tabel Memo -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        var tabel = $('#dataTableMemo').DataTable({
+            columnDefs: [{
+                targets: [2],
+                // visible: false
+            }],
+            order: [
+                [2, 'desc']
+            ]
+        });
+
+    });
+</script>
+
 <!-- Edit Memo -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded

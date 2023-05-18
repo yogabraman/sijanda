@@ -102,7 +102,7 @@ $result = date_format($date, "Y");
     },
   });
   quill.on('text-change', function(delta, oldDelta, source) {
-    document.querySelector("input[name='isi_memo']").value = quill.root.innerHTML;
+    document.querySelector("input[name='edit_memo']").value = quill.root.innerHTML;
   });
 </script>
 
