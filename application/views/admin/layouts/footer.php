@@ -869,45 +869,6 @@ $result = date_format($date, "Y");
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script>
-    var quill = new Quill('#editor', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                [{
-                    header: [1, 2, 3, 4, 5, 6, false]
-                }],
-                [{
-                    font: []
-                }],
-                ["bold", "italic"],
-                ["link", "blockquote", "code-block", "image"],
-                [{
-                    list: "ordered"
-                }, {
-                    list: "bullet"
-                }],
-                [{
-                    script: "sub"
-                }, {
-                    script: "super"
-                }],
-                [{
-                    color: []
-                }, {
-                    background: []
-                }],
-                [{
-                    align: []
-                }],
-            ]
-        },
-    });
-    quill.on('text-change', function(delta, oldDelta, source) {
-        document.querySelector("input[name='isi_disposisi']").value = quill.root.innerHTML;
-    });
-</script>
-
-<script>
     var quill = new Quill('#editormemo', {
         theme: 'snow',
         modules: {
@@ -943,6 +904,45 @@ $result = date_format($date, "Y");
     });
     quill.on('text-change', function(delta, oldDelta, source) {
         document.querySelector("input[name='isi_memo']").value = quill.root.innerHTML;
+    });
+</script>
+
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                [{
+                    header: [1, 2, 3, 4, 5, 6, false]
+                }],
+                [{
+                    font: []
+                }],
+                ["bold", "italic"],
+                ["link", "blockquote", "code-block", "image"],
+                [{
+                    list: "ordered"
+                }, {
+                    list: "bullet"
+                }],
+                [{
+                    script: "sub"
+                }, {
+                    script: "super"
+                }],
+                [{
+                    color: []
+                }, {
+                    background: []
+                }],
+                [{
+                    align: []
+                }],
+            ]
+        },
+    });
+    quill.on('text-change', function(delta, oldDelta, source) {
+        document.querySelector("input[name='isi_disposisi']").value = quill.root.innerHTML;
     });
 </script>
 

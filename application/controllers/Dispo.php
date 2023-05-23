@@ -72,7 +72,8 @@ class Dispo extends CI_Controller
 
 		$data_sm = array(
 			'status_dispo' => 1,
-			'nodin' => $this->input->post('nodin')
+			'nodin' => $this->input->post('nodin'),
+			'isi_dispo' => $this->input->post('isi_disposisi')
 		);
 
 		$data_ag = array(
@@ -317,6 +318,12 @@ class Dispo extends CI_Controller
 			//update surat masuk
 			$this->m_sm->update_sm($data_sm, $id_surat);
 		}
+
+		$data_sm = array(
+			'isi_dispo' => $this->input->post('isi_disposisi')
+		);
+		//update surat masuk
+		$this->m_sm->update_sm($data_sm, $id_surat);
 
 		if ($result) {
 			$this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');

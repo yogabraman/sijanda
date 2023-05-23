@@ -81,6 +81,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <td><?= $rows->no_agenda ?></td>
                                 <td><?= $rows->no_surat ?> <br>
                                     <hr /> <?= $d . " " . $nm . " " . $y ?>
+                                    <hr /> <?= mb_strimwidth($rows->isi_dispo, 0, 24, "...");?>
                                 </td>
                                 <td><?= $rows->asal_surat ?></td>
                                 <td><?= $rows->isi ?></td>
