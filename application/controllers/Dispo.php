@@ -47,52 +47,67 @@ class Dispo extends CI_Controller
 		$kodebid = null;
 		if ($this->input->post('bidang') != null) {
 			foreach ($this->input->post('bidang') as $x => $val) {
-				$kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$val'")->row()->id_struk;
-				if ($kodebid == '') {
-					$kodebid .= $kbid;
-				} else {
-					$kodebid .= ',' . $kbid;
+				// $kbid = $this->db->limit(1)->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$val'")->row()->id_struk;
+
+				$kbid = $this->db->query("SELECT id_struk FROM tbl_struktural WHERE nama ='$val'")->result();
+				foreach ($kbid as $row) {
+					if ($kodebid == '') {
+						$kodebid .= $row->id_struk;
+					} else {
+						$kodebid .= ',' . $row->id_struk;
+					}
 				}
+				
 			}
 		}
 
-		$tipe_surat = $this->db->limit(1)->query("SELECT tipe_surat FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->tipe_surat;
+		// $tipe_surat = $this->db->limit(1)->query("SELECT tipe_surat FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->row()->tipe_surat;
 
-		$data_dispo = array(
-			'tujuan' => $bidang,
-			'perintah' => $perintah,
-			'dispo' => $kodebid,
-			'isi_disposisi' => $this->input->post('isi_disposisi'),
-			'sifat' => $this->input->post('sifat'),
-			'tgl_dispo' => $waktu,
-			'catatan' => null,//$this->input->post('catatan'),
-			'id_surat' => $id_surat,
-			'id_user' => $id_user
-		);
+		$tipe_surat_arr = $this->db->query("SELECT tipe_surat FROM tbl_surat_masuk WHERE id_surat ='$id_surat'")->result();
+		$tipe_surat = null;
+		foreach ($tipe_surat_arr as $row) {
+			$tipe_surat = $row->tipe_surat;
+		}
 
-		$data_sm = array(
-			'status_dispo' => 1,
-			'nodin' => $this->input->post('nodin'),
-			'isi_dispo' => $this->input->post('isi_disposisi')
-		);
+		if ($tipe_surat != null && $kodebid != null) {
+			$data_dispo = array(
+				'tujuan' => $bidang,
+				'perintah' => $perintah,
+				'dispo' => $kodebid,
+				'isi_disposisi' => $this->input->post('isi_disposisi'),
+				'sifat' => $this->input->post('sifat'),
+				'tgl_dispo' => $waktu,
+				'catatan' => null, //$this->input->post('catatan'),
+				'id_surat' => $id_surat,
+				'id_user' => $id_user
+			);
 
-		$data_ag = array(
-			'dispo' => $bidang
-		);
+			$data_sm = array(
+				'status_dispo' => 1,
+				'nodin' => $this->input->post('nodin'),
+				'isi_dispo' => $this->input->post('isi_disposisi')
+			);
 
-		$result = $this->m_dispo->add_dispo($data_dispo);
-		//update surat masuk
-		$this->m_sm->update_sm($data_sm, $id_surat);
+			$data_ag = array(
+				'dispo' => $bidang
+			);
 
-		if ($result) {
-			if ($tipe_surat == 1) {
-				$this->m_sm->update_ag($data_ag, $id_surat);
+			$result = $this->m_dispo->add_dispo($data_dispo);
+			//update surat masuk
+			$this->m_sm->update_sm($data_sm, $id_surat);
+
+			if ($result) {
+				if ($tipe_surat == 1) {
+					$this->m_sm->update_ag($data_ag, $id_surat);
+				}
+				$this->session->set_flashdata('success', 'Data Berhasil Disimpan!!.');
+				redirect(site_url('surat_masuk/list'));
+			} else {
+				$this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
+				redirect(site_url('surat_masuk/list'));
 			}
-			$this->session->set_flashdata('success', 'Data Berhasil Disimpan!!.');
-			redirect(site_url('surat_masuk/list'));
 		} else {
-			$this->session->set_flashdata('error', 'Gagal Simpan Data!!.');
-			redirect(site_url('surat_masuk/list'));
+			echo "<script> alert('Gagal Simpan. Mohon Dispo Kembali');window.location.href='" . base_url() . "surat_masuk/list';</script>";
 		}
 	}
 
