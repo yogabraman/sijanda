@@ -695,11 +695,11 @@ $result = date_format($date, "Y");
         // Initiate DataTable function comes with plugin
         var tabel = $('#dataTableMemo').DataTable({
             columnDefs: [{
-                targets: [2],
-                // visible: false
+                targets: [4],
+                visible: false
             }],
             order: [
-                [2, 'desc']
+                [4, 'desc']
             ]
         });
 
@@ -868,7 +868,7 @@ $result = date_format($date, "Y");
 
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-<script>
+<!-- <script>
     var quill = new Quill('#editormemo', {
         theme: 'snow',
         modules: {
@@ -905,7 +905,7 @@ $result = date_format($date, "Y");
     quill.on('text-change', function(delta, oldDelta, source) {
         document.querySelector("input[name='isi_memo']").value = quill.root.innerHTML;
     });
-</script>
+</script> -->
 
 <script>
     var quill = new Quill('#editor', {
@@ -940,6 +940,9 @@ $result = date_format($date, "Y");
                 }],
             ]
         },
+    });
+    quill.on('text-change', function(delta, oldDelta, source) {
+        document.querySelector("input[name='isi_memo']").value = quill.root.innerHTML;
     });
     quill.on('text-change', function(delta, oldDelta, source) {
         document.querySelector("input[name='isi_disposisi']").value = quill.root.innerHTML;

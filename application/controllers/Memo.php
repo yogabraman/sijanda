@@ -140,8 +140,8 @@ class Memo extends CI_Controller
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Memo</label>
-                                        <input type="hidden" name="edit_memo" value=" ' . html_escape($rows->isi) . '">
-                                        <div id="editormemo-edit" style="min-height: 160px;">' . $rows->isi . '</div> 
+                                        <input type="hidden" name="isi" value=" ' . html_escape($rows->isi) . '">
+                                        <div id="editor-edit" style="min-height: 160px;">' . $rows->isi . '</div>
                                     </div>
                                 </div>
 
@@ -195,24 +195,26 @@ class Memo extends CI_Controller
 			}
 		}
 
-        $data = array(
-			'tujuan' => json_encode($this->input->post('bidang')),
-			'dispo' => $kodebid,
-            'isi' => $this->input->post('edit_memo'),
-            'penerima' => $this->input->post('penerima'),
-            'updated_at' => $waktu,
-            'id_user' => $id_user
-        );
+        echo $this->input->post('isi');
 
-        $result = $this->m_memo->update_memo($data, $id_memo);
+        // $data = array(
+		// 	'tujuan' => json_encode($this->input->post('bidang')),
+		// 	'dispo' => $kodebid,
+        //     'isi' => $this->input->post('isi_disposisi'),
+        //     'penerima' => $this->input->post('penerima'),
+        //     'updated_at' => $waktu,
+        //     'id_user' => $id_user
+        // );
 
-        if ($result) {
-            $this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');
-            redirect(site_url('memo/listmemo'));
-        } else {
-            $this->session->set_flashdata('error', 'Gagal Ubah Data!!.');
-            redirect(site_url('memo/listmemo'));
-        }
+        // $result = $this->m_memo->update_memo($data, $id_memo);
+
+        // if ($result) {
+        //     $this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');
+        //     redirect(site_url('memo/listmemo'));
+        // } else {
+        //     $this->session->set_flashdata('error', 'Gagal Ubah Data!!.');
+        //     redirect(site_url('memo/listmemo'));
+        // }
     }
 
     function hapus($id)

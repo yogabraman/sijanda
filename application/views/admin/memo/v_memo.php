@@ -23,6 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Tujuan</th>
                             <th>Isi</th>
                             <th>Action</th>
+                            <th>created at</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,7 +68,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </td>
                                 <td><?= $disp ?></td>
                                 <td><?= $rows->isi ?></td>
-                                <td class="text-center" style="min-width:80px;">
+                                <td class="text-center" style="min-width:150px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                                         <button class="btn btn-info edit-memo" id="<?= $rows->id_memo ?>" title="Edit"><i class="fa fa-edit"></i></button>
                                         <button class="btn btn-danger hapus-memo" id="<?= $rows->id_memo ?>"><i class="fa fa-trash"></i></button>
@@ -94,6 +95,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                     <?php } ?>
                                 </td>
+                                <td><?= $rows->created_at ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -170,7 +172,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="form-group">
                                         <label class="control-label">Isi Memo :</label>
                                         <input type="hidden" name="isi_memo" value="<?= set_value('isi_memo') ?>">
-                                        <div id="editormemo" style="min-height: 160px;"><?= set_value('isi_memo') ?></div>
+                                        <div id="editor" style="min-height: 160px;"><?= set_value('isi_memo') ?></div>
                                     </div>
                                 </div>
 
