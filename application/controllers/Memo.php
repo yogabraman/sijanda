@@ -51,7 +51,7 @@ class Memo extends CI_Controller
 
         $data = array(
             'no_memo' => $this->input->post('no_memo'),
-            'isi' => $this->input->post('isi_memo'),
+            'isi_disposisi' => $this->input->post('isi_disposisi'),
 			'tujuan' => $bidang,
 			'dispo' => $kodebid,
             'created_at' => $waktu,
@@ -140,8 +140,8 @@ class Memo extends CI_Controller
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Memo</label>
-                                        <input type="hidden" name="isi" value=" ' . html_escape($rows->isi) . '">
-                                        <div id="editor-edit" style="min-height: 160px;">' . $rows->isi . '</div>
+                                        <input type="hidden" name="isi_disposisi" value=" ' . html_escape($rows->isi_disposisi) . '">
+                                        <div id="editor-edit" style="min-height: 160px;">' . $rows->isi_disposisi . '</div>
                                     </div>
                                 </div>
 
@@ -195,26 +195,26 @@ class Memo extends CI_Controller
 			}
 		}
 
-        echo $this->input->post('isi');
+        // echo $this->input->post('isi');
 
-        // $data = array(
-		// 	'tujuan' => json_encode($this->input->post('bidang')),
-		// 	'dispo' => $kodebid,
-        //     'isi' => $this->input->post('isi_disposisi'),
-        //     'penerima' => $this->input->post('penerima'),
-        //     'updated_at' => $waktu,
-        //     'id_user' => $id_user
-        // );
+        $data = array(
+			'tujuan' => json_encode($this->input->post('bidang')),
+			'dispo' => $kodebid,
+            'isi_disposisi' => $this->input->post('isi_disposisi'),
+            'penerima' => $this->input->post('penerima'),
+            'updated_at' => $waktu,
+            'id_user' => $id_user
+        );
 
-        // $result = $this->m_memo->update_memo($data, $id_memo);
+        $result = $this->m_memo->update_memo($data, $id_memo);
 
-        // if ($result) {
-        //     $this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');
-        //     redirect(site_url('memo/listmemo'));
-        // } else {
-        //     $this->session->set_flashdata('error', 'Gagal Ubah Data!!.');
-        //     redirect(site_url('memo/listmemo'));
-        // }
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Berhasil Diubah!!.');
+            redirect(site_url('memo/listmemo'));
+        } else {
+            $this->session->set_flashdata('error', 'Gagal Ubah Data!!.');
+            redirect(site_url('memo/listmemo'));
+        }
     }
 
     function hapus($id)

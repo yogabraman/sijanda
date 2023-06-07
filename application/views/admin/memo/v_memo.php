@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <hr /> <?= $d . " " . $nm . " " . $y ?>
                                 </td>
                                 <td><?= $disp ?></td>
-                                <td><?= $rows->isi ?></td>
+                                <td><?= $rows->isi_disposisi ?></td>
                                 <td class="text-center" style="min-width:150px;">
                                     <?php if ($this->session->userdata('level') == 1 || $this->session->userdata('level') == 4) { ?>
                                         <button class="btn btn-info edit-memo" id="<?= $rows->id_memo ?>" title="Edit"><i class="fa fa-edit"></i></button>
@@ -171,8 +171,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="col-md-12 col-12">
                                     <div class="form-group">
                                         <label class="control-label">Isi Memo :</label>
-                                        <input type="hidden" name="isi_memo" value="<?= set_value('isi_memo') ?>">
-                                        <div id="editor" style="min-height: 160px;"><?= set_value('isi_memo') ?></div>
+                                        <input type="hidden" name="isi_disposisi" value="<?= set_value('isi_disposisi') ?>">
+                                        <div id="editor" style="min-height: 160px;"><?= set_value('isi_disposisi') ?></div>
                                     </div>
                                 </div>
 
