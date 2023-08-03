@@ -1,37 +1,43 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>SIGAP (Sistem Agenda Pimpinan)</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
-  	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
-  
-  	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/demo.css" />
-  	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/templatemo-style.css">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/logotunggal.png"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/vendor/countdowntime/flipclock.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/main.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.css">
-  	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-  	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
+  <title>Sijanda - <?= $title ?></title>
 
-  	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/modernizr.custom.86080.js"></script>
+  <!-- Custom fonts for this template-->
+  <link href="<?php echo base_url(); ?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-<!--===============================================================================================-->
+  <!-- <link href="<?php echo base_url(); ?>assets/css/togle.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="<?php echo base_url(); ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="<?php echo base_url(); ?>assets/css/jquery-ui.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+  <link href="<?php echo base_url(); ?>assets/vendor/select2/dist/css/select2.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url(<?php echo base_url();?>./assets/img/background.jpg)
+    }
+  </style>
+
 </head>
-<body>

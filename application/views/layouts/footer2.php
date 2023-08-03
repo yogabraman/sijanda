@@ -1,109 +1,173 @@
-	
-	<script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-  	<script type="text/javascript">
-     // Start jQuery function after page is loaded
-        $(document).ready(function(){
+date_default_timezone_set('Asia/Jakarta');
+$waktu = date('Y-m-d H:i:s');
+$date = date_create($waktu);
 
-        	// CALL FUNCTION SHOW PRODUCT
-            show_usulan();
-         
-         	// Enable pusher logging - don't include this in production
-            Pusher.logToConsole = true;
- 
-            var pusher = new Pusher('10beb89b98a65159eba2', {
-                cluster: 'ap1',
-                forceTLS: true
-            });
- 
-            var channel = pusher.subscribe('my-channel');
-            channel.bind('my-event', function(data) {
-                if(data.message === 'success'){
-                    show_usulan();
+$result = date_format($date, "Y");
+?>
+
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- General JS Scripts -->
+<script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<!-- Edit Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableAgenda').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableAgenda').on('click', '.edit-agenda', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var agId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('agenda/get_agenda') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    agId: agId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#edit_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#editModal').modal('show');
                 }
             });
+            // End AJAX function
+        });
+    });
+</script>
 
-            // FUNCTION SHOW PRODUCT
-            function show_usulan(){
-                $.ajax({
-                    url   : '<?php echo site_url("home/get_terlaksana");?>',
-                    type  : 'GET',
-                    async : true,
-                    dataType : 'json',
-                    success : function(data){
-                        var html = '';
-                        var count = 1;
-                        var i;
-                        for(i=0; i<data.length; i++){
-                            html += '<tr>'+
-                                    '<td>'+ count++ +'</td>'+
-                                    '<td>'+ data[i].tanggal +'</td>'+
-                                    '<td>'+ data[i].pukul +'</td>'+
-                                    '<td>'+ data[i].nama_kegiatan +'</td>'+
-                                    '<td>'+ data[i].nama_instansi +'</td>'+
-                                    '<td>'+ data[i].tempat +'</td>'+
-                                    '<td>'+ data[i].usulan_pimpinan +'</td>'+
-                                    '<td>'+ data[i].status +'</td>'+
-                                    '</tr>';
-                        }
-                        $('.usulan').html(html);
-                    }
- 
-                });
-            } 
+<!-- Hapus Agenda -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataTableAgenda').DataTable();
+        $('#dataTableAgenda').on('click', '.hapus-agenda', function() {
+            var agId = $(this).attr('id');
+            $('#test').empty();
+            $('#hapusModal').modal('show');
+            $('#test').append('<a class="btn btn-danger" href="<?= site_url('agenda/hapus/') ?>' + agId + '">Hapus</a>');
+        });
+    });
+</script>
 
-     	});  
+<!-- Cetak Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableAgenda').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#btnSearch').click(function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var start = $('#start').val();
+            var end = $('#end').val();
 
-    </script>	
-<!--===============================================================================================-->
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/particles.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/app.js"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/popper.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url(); ?>assets/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url(); ?>assets/vendor/countdowntime/flipclock.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/countdowntime/moment.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/countdowntime/moment-timezone.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/countdowntime/moment-timezone-with-data.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/countdowntime/countdowntime.js"></script>
 
-  <script src="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/jquery-ui/jquery-ui.min.js"></script>
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo base_url('agenda/get_cetak2') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    start: start,
+                    end: end
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    //alert("What follows is blank: " + data);
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#cari').html(data);
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
 
-  <script src="<?php echo base_url(); ?>assets/js/page/modules-datatables.js"></script>
+<!-- Upload Dokumen Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        $('#dataTableAgenda').DataTable();
+        // Start jQuery click function to view Bootstrap modal when view info button is clicked
+        $('#dataTableAgenda').on('click', '.upload-dukung', function() {
+            // Get the id of selected phone and assign it in a variable called phoneData
+            var agId = $(this).attr('id');
+            // Start AJAX function
+            $.ajax({
+                // Path for controller function which fetches selected phone data
+                url: "<?php echo site_url('agenda/get_dokumen') ?>",
+                // Method of getting data
+                method: "POST",
+                // Data is sent to the server
+                data: {
+                    agId: agId
+                },
+                // Callback function that is executed after data is successfully sent and recieved
+                success: function(data) {
+                    // Print the fetched data of the selected phone in the section called #phone_result 
+                    // within the Bootstrap modal
+                    $('#upload_result').html(data);
+                    // Display the Bootstrap modal
+                    $('#uploadModal').modal('show');
+                }
+            });
+            // End AJAX function
+        });
+    });
+</script>
 
-	<script>
-		$('.cd100').countdown100({
-			/*Set Endtime here*/
-			/*Endtime must be > current time*/
-			endtimeYear: 0,
-			endtimeMonth: 0,
-			endtimeDate: 35,
-			endtimeHours: 18,
-			endtimeMinutes: 0,
-			endtimeSeconds: 0,
-			timeZone: "" 
-			// ex:  timeZone: "America/New_York"
-			//go to " http://momentjs.com/timezone/ " to get timezone
-		});
+<!-- Bootstrap core JavaScript-->
+<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-		
-	</script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url(); ?>assets/vendor/tilt/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url(); ?>assets/js/main.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="<?php echo base_url(); ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="<?php echo base_url(); ?>assets/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="<?php echo base_url(); ?>assets/vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="<?php echo base_url(); ?>assets/js/demo/chart-pie-demo.js"></script>
+
+<script src="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script src="<?php echo base_url(); ?>assets/vendor/select2/dist/js/select2.full.min.js"></script>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 </body>
+
 </html>

@@ -1,84 +1,82 @@
-<div id="particles-js"></div>
-    
-      <ul class="cb-slideshow">
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-          </ul>
-<!-- <div class="flex-w flex-sb-m p-l-80 p-r-74 p-b-5 respon5">
-      <div class="wrappic1 m-r-30 m-t-10 m-b-10">
-        <a href="#"><img src="images/logotunggal.png" alt="LOGO" width="6%"></a>
-      </div>
+<!-- Begin Page Content -->
 
-      <div class="flex-w m-t-10 m-b-10">
-        <a href="#" class="size3 flex-c-m how-social trans-04 m-r-6">
-          <i class="fa fa-facebook"></i>
-        </a>
+<body>
 
-        <a href="#" class="size3 flex-c-m how-social trans-04 m-r-6">
-          <i class="fa fa-twitter"></i>
-        </a>
+    <div class="container-fluid">
 
-        <a href="#" class="size3 flex-c-m how-social trans-04 m-r-6">
-          <i class="fa fa-youtube-play"></i>
-        </a>
-      </div>
-    </div> -->
-
-    <div class="respon1">
-
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-12 logo">
-          <center><img src="<?php echo base_url(); ?>assets/img/logosigap.png" width="100%"></center>
-        </div>
-
-              <div class="col-lg-11 col-12">
-                <div class="tm-content card">
-                  <div class="card-header">
-                    <center><h4>Jadwal Agenda Pimpinan</h4></center>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped" id="table-1">
-                        <thead>                                 
-                          <tr>
-                            <th class="text-center">
-                              #
-                            </th>
-                            <th>Tanggal</th>
-                            <th>Pukul</th>
-                            <th>Nama Kegiatan</th>
-                            <th>OPD/Instansi</th>
-                            <th>Tempat</th>
-                            <th>Pimpinan</th>
-                            <th>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody class="usulan"> 
-                        
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <center><a href="<?= site_url('home/terlaksana') ?>" target="_blank" class="btn btn-primary">Lihat Kegiatan Yang sudah Terlaksana</a></center>
-                  </div>
-                </div>
-              </div>
-
+        <!-- Page Heading -->
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-12 logo">
+                <center><img src="<?php echo base_url(); ?>assets/img/logo.png" width="100%"></center>
             </div>
 
-            <div class="footer-link">
-                <marquee direction="left" scrollamount="5">
-                  <p style="color: white; font-size: 18px; font-weight: bold;">
-                    <?php $no=1; foreach ($iklan as $ads) { ?>
-                      <?php echo $no++ .". ". $ads->iklan; ?>
-                    <?php } ?>
-                  </p>
-                </marquee>
-              </div>
+        </div>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTableAgenda" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Waktu</th>
+                                <th>Dari</th>
+                                <th>Tempat</th>
+                                <th>Acara</th>
+                                <th>Dispo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($agenda as $rows) { ?>
+                                <?php
+                                $y = substr($rows->tgl_agenda, 0, 4);
+                                $m = substr($rows->tgl_agenda, 5, 2);
+                                $d = substr($rows->tgl_agenda, 8, 2);
+
+                                if ($m == "01") {
+                                    $nm = "Januari";
+                                } elseif ($m == "02") {
+                                    $nm = "Februari";
+                                } elseif ($m == "03") {
+                                    $nm = "Maret";
+                                } elseif ($m == "04") {
+                                    $nm = "April";
+                                } elseif ($m == "05") {
+                                    $nm = "Mei";
+                                } elseif ($m == "06") {
+                                    $nm = "Juni";
+                                } elseif ($m == "07") {
+                                    $nm = "Juli";
+                                } elseif ($m == "08") {
+                                    $nm = "Agustus";
+                                } elseif ($m == "09") {
+                                    $nm = "September";
+                                } elseif ($m == "10") {
+                                    $nm = "Oktober";
+                                } elseif ($m == "11") {
+                                    $nm = "November";
+                                } elseif ($m == "12") {
+                                    $nm = "Desember";
+                                }
+
+                                $disp = !empty($rows->dispo) ? implode("<br>", json_decode($rows->dispo)) : "";
+                                ?>
+                                <tr>
+                                    <td><?= $d . " " . $nm . " " . $y ?></td>
+                                    <td><?= substr($rows->waktu_agenda, 0, 5) ?></td>
+                                    <td><?= $rows->asal ?></td>
+                                    <td><?= $rows->tempat ?></td>
+                                    <td><?= substr($rows->isi, 0, 200) ?></td>
+                                    <td><?= $disp ?></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
     </div>
+
+</body>
