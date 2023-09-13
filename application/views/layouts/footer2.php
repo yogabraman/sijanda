@@ -27,6 +27,26 @@ $result = date_format($date, "Y");
 
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
+
+<!-- Tabel Agenda -->
+<script type="text/javascript">
+    // Start jQuery function after page is loaded
+    $(document).ready(function() {
+        // Initiate DataTable function comes with plugin
+        var tabel = $('#dataTableAgenda').DataTable({
+            columnDefs: [{
+                targets: [6],
+                visible: false
+            }],
+            order: [
+                [6, 'asc'],
+                [1, 'asc']
+            ]
+        });
+
+    });
+</script>
+
 <!-- Edit Agenda -->
 <script type="text/javascript">
     // Start jQuery function after page is loaded

@@ -25,6 +25,7 @@
                                 <th>Tempat</th>
                                 <th>Acara</th>
                                 <th>Dispo</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,6 +70,7 @@
                                     <td><?= $rows->tempat ?></td>
                                     <td><?= substr($rows->isi, 0, 200) ?></td>
                                     <td><?= $disp ?></td>
+                                    <td><?= $rows->tgl_agenda ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
