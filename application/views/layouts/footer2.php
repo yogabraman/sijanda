@@ -184,6 +184,8 @@ $result = date_format($date, "Y");
 
 <script src="<?php echo base_url(); ?>assets/vendor/select2/dist/js/select2.full.min.js"></script>
 
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
+
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

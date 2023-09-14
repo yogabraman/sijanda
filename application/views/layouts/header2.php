@@ -34,9 +34,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="<?php echo base_url(); ?>assets/css/datepicker.css" rel="stylesheet">
+  
   <style>
     body {
-      background-image: url(<?php echo base_url();?>./assets/img/background.jpg)
+      background-image: url(<?php echo base_url(); ?>./assets/img/background.jpg)
     }
   </style>
 
