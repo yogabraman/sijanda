@@ -32,7 +32,7 @@
                                 <td>
                                     <div class="col-md-12 col-12">
                                         Semester II Th. 2023 (01 Juli 2023 s/d 31 Desember 2023)
-                                        <input type="hidden" name="periode" value="2">
+                                        <input type="hidden" name="periode">
 
                                     </div>
                                 </td>
@@ -55,7 +55,6 @@
                                     <div class="row">
                                         <div class="col-md-12 col-12">
                                             <input type="text" name="nama" id="namaResponden" class="form-control">
-                                            <input type="hidden" name="id" id="idResponden" class="form-control">
                                         </div>
                                     </div>
                                 </td>
@@ -77,7 +76,7 @@
                                 <td>
                                     <div class="row">
                                         <div class="col-md-12 col-12">
-                                            <input type="text" name="hp" id="noHp" class="form-control">
+                                            <input type="text" name="telp" id="telp" class="form-control">
                                         </div>
                                     </div>
 
@@ -116,29 +115,22 @@
                                     <div class="row">
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
-                                                <select class="form-control" id="tahun" type="text" name="tahun" required>
+                                                <select class="form-control" id="prop" type="text" name="prop" required>
                                                     <option value="">--Pilih Provinsi--</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
-                                                <select class="form-control" id="tahun" type="text" name="tahun" required>
-                                                    <option value="">--Pilih Provinsi--</option>
+                                                <select class="form-control" id="kab" type="text" name="kab" required>
+                                                    <option value="">--Pilih Kab/Kota--</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-group">
-                                                <select class="form-control" id="tahun" type="text" name="tahun" required>
-                                                    <option value="">--Pilih Provinsi--</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <select class="form-control" id="tahun" type="text" name="tahun" required>
-                                                    <option value="">--Pilih Provinsi--</option>
+                                                <select class="form-control" id="kec" type="text" name="kec" required>
+                                                    <option value="">--Pilih Kec--</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -167,18 +159,18 @@
                                 <td>
                                     <div class="col-md-12">
                                         <select name="pekerjaan" id="pekerjaan" class="form-control" onchange="pekerjaanganti(this)">
-                                            <option value="1">PNS / TNI / Polri</option>
-                                            <option value="2">Pensiunan</option>
-                                            <option value="3">Pegawai Swasta</option>
-                                            <option value="4">Wiraswasta</option>
-                                            <option value="5">Buruh (Tani/Bangunan)</option>
-                                            <option value="6">Petani</option>
-                                            <option value="7">Pelajar/Mahasiswa</option>
-                                            <option value="8">Tidak Bekerja</option>
-                                            <option value="9">Lainya</option>
+                                            <option value="pns/tni/polri">PNS / TNI / Polri</option>
+                                            <option value="pensiunan">Pensiunan</option>
+                                            <option value="swasta">Pegawai Swasta</option>
+                                            <option value="wiraswasta">Wiraswasta</option>
+                                            <option value="buruh">Buruh (Tani/Bangunan)</option>
+                                            <option value="petani">Petani</option>
+                                            <option value="pelajar/mahasiswa">Pelajar/Mahasiswa</option>
+                                            <option value="tidak bekerja">Tidak Bekerja</option>
+                                            <option value="0">Lainya</option>
                                         </select>
                                         <div id="divPekrjaanLain" style="display:none">
-                                            <input type="text" name="lainnya" placeholder="Tuliskan Nama Pekerjaan" class="form-control">
+                                            <input type="text" name="lain" placeholder="Tuliskan Nama Pekerjaan" class="form-control">
                                         </div>
                                     </div>
                                 </td>
@@ -199,145 +191,145 @@
                             <tr style="vertical-align: top;">
                                 <td>1</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap persyaratan untuk mendapatkan Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q1a')" type="radio" name="q1a" value="1"><label for="q1a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q1a')" type="radio" name="q1a" value="2"><label for="q1a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q1a')" type="radio" name="q1a" value="3"><label for="q1a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q1a')" type="radio" name="q1a" value="4"><label for="q1a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q1b')" type="radio" name="q1b" value="1"><label for="q1b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q1b')" type="radio" name="q1b" value="2"><label for="q1b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q1b')" type="radio" name="q1b" value="3"><label for="q1b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q1b')" type="radio" name="q1b" value="4"><label for="q1b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>2</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap prosedur untuk mendapatkan Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q2a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q2a')" type="radio" name="q2a" value="1"><label for="q2a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q2a')" type="radio" name="q2a" value="2"><label for="q2a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q2a')" type="radio" name="q2a" value="3"><label for="q2a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q2a')" type="radio" name="q2a" value="4"><label for="q2a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q2b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q2b')" type="radio" name="q2b" value="1"><label for="q2b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q2b')" type="radio" name="q2b" value="2"><label for="q2b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q2b')" type="radio" name="q2b" value="3"><label for="q2b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q2b')" type="radio" name="q2b" value="4"><label for="q2b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>3</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap kecepatan Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q3a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q3a')" type="radio" name="q3a" value="1"><label for="q3a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q3a')" type="radio" name="q3a" value="2"><label for="q3a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q3a')" type="radio" name="q3a" value="3"><label for="q3a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q3a')" type="radio" name="q3a" value="4"><label for="q3a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q3b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q3b')" type="radio" name="q3b" value="1"><label for="q3b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q3b')" type="radio" name="q3b" value="2"><label for="q3b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q3b')" type="radio" name="q3b" value="3"><label for="q3b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q3b')" type="radio" name="q3b" value="4"><label for="q3b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>4</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap biaya untuk mendapatkan Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q4a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q4a')" type="radio" name="q4a" value="1"><label for="q4a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q4a')" type="radio" name="q4a" value="2"><label for="q4a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q4a')" type="radio" name="q4a" value="3"><label for="q4a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q4a')" type="radio" name="q4a" value="4"><label for="q4a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q4b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q4b')" type="radio" name="q4b" value="1"><label for="q4b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q4b')" type="radio" name="q4b" value="2"><label for="q4b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q4b')" type="radio" name="q4b" value="3"><label for="q4b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q4b')" type="radio" name="q4b" value="4"><label for="q4b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>5</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap kualitas Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q5a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q5a')" type="radio" name="q5a" value="1"><label for="q5a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q5a')" type="radio" name="q5a" value="2"><label for="q5a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q5a')" type="radio" name="q5a" value="3"><label for="q5a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q5a')" type="radio" name="q5a" value="4"><label for="q5a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q5b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q5b')" type="radio" name="q5b" value="1"><label for="q5b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q5b')" type="radio" name="q5b" value="2"><label for="q5b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q5b')" type="radio" name="q5b" value="3"><label for="q5b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q5b')" type="radio" name="q5b" value="4"><label for="q5b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>6</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap kompetensi petugas dalam memberikan Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q6a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q6a')" type="radio" name="q6a" value="1"><label for="q6a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q6a')" type="radio" name="q6a" value="2"><label for="q6a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q6a')" type="radio" name="q6a" value="3"><label for="q6a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q6a')" type="radio" name="q6a" value="4"><label for="q6a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q6b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q6b')" type="radio" name="q6b" value="1"><label for="q6b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q6b')" type="radio" name="q6b" value="2"><label for="q6b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q6b')" type="radio" name="q6b" value="3"><label for="q6b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q6b')" type="radio" name="q6b" value="4"><label for="q6b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>7</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap perilaku petugas Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q7a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q7a')" type="radio" name="q7a" value="1"><label for="q7a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q7a')" type="radio" name="q7a" value="2"><label for="q7a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q7a')" type="radio" name="q7a" value="3"><label for="q7a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q7a')" type="radio" name="q7a" value="4"><label for="q7a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q7b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q7b')" type="radio" name="q7b" value="1"><label for="q7b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q7b')" type="radio" name="q7b" value="2"><label for="q7b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q7b')" type="radio" name="q7b" value="3"><label for="q7b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q7b')" type="radio" name="q7b" value="4"><label for="q7b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>8</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap tindak lanjut petugas dalam penanganan pengaduan, saran dan masukan pada Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q8a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q8a')" type="radio" name="q8a" value="1"><label for="q8a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q8a')" type="radio" name="q8a" value="2"><label for="q8a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q8a')" type="radio" name="q8a" value="3"><label for="q8a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q8a')" type="radio" name="q8a" value="4"><label for="q8a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q8b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q8b')" type="radio" name="q8b" value="1"><label for="q8b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q8b')" type="radio" name="q8b" value="2"><label for="q8b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q8b')" type="radio" name="q8b" value="3"><label for="q8b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q8b')" type="radio" name="q8b" value="4"><label for="q8b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td>9</td>
                                 <td>Bagaimana penilaian Bapak/Ibu/Saudara terhadap kelengkapan sarana dan prasarana dalam Pelayanan Fasilitasi Kelembagaan Perangkat Daerah ?</td>
-                                <td id="tanya1a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="1"><label for="tanya1" style="margin-left: 10px;">Tidak Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="2"><label for="tanya1" style="margin-left: 10px;">Kurang Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="3"><label for="tanya1" style="margin-left: 10px;">Mudah</label><br>
-                                    <input onclick="jawabanclick('tanya1')" type="radio" name="tanya2" value="4"><label for="tanya1" style="margin-left: 10px;">Sangat Mudah</label><br>
+                                <td id="q9a" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q9a')" type="radio" name="q9a" value="1"><label for="q9a" style="margin-left: 10px;">Tidak Mudah</label><br>
+                                    <input onclick="jawabanclick('q9a')" type="radio" name="q9a" value="2"><label for="q9a" style="margin-left: 10px;">Kurang Mudah</label><br>
+                                    <input onclick="jawabanclick('q9a')" type="radio" name="q9a" value="3"><label for="q9a" style="margin-left: 10px;">Mudah</label><br>
+                                    <input onclick="jawabanclick('q9a')" type="radio" name="q9a" value="4"><label for="q9a" style="margin-left: 10px;">Sangat Mudah</label><br>
                                 </td>
-                                <td id="tanya1b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="1"><label for="tanya1b" style="margin-left: 10px;">Tidak Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="2"><label for="tanya1b" style="margin-left: 10px;">Kurang Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="3"><label for="tanya1b" style="margin-left: 10px;">Penting</label><br>
-                                    <input onclick="jawabanclick('tanya1b')" type="radio" name="tanya2" value="4"><label for="tanya1b" style="margin-left: 10px;">Sangat Penting</label><br>
+                                <td id="q9b" class="td-jawaban-pilihan" style="background-color: antiquewhite;">
+                                    <input onclick="jawabanclick('q9b')" type="radio" name="q9b" value="1"><label for="q9b" style="margin-left: 10px;">Tidak Penting</label><br>
+                                    <input onclick="jawabanclick('q9b')" type="radio" name="q9b" value="2"><label for="q9b" style="margin-left: 10px;">Kurang Penting</label><br>
+                                    <input onclick="jawabanclick('q9b')" type="radio" name="q9b" value="3"><label for="q9b" style="margin-left: 10px;">Penting</label><br>
+                                    <input onclick="jawabanclick('q9b')" type="radio" name="q9b" value="4"><label for="q9b" style="margin-left: 10px;">Sangat Penting</label><br>
                                 </td>
                             </tr>
                             <tr>
@@ -362,7 +354,7 @@
                                 <td colspan="4">
                                     <div class="form-group col-md-12">
                                         <label class="control-label">Masukan / Saran untuk perbaikan pelayanan (<span><i>Jika Terdapat jawaban yang kurang, isikan saran/masukan.</i></span>) **)</label>
-                                        <textarea class="form-control" name="masukan"></textarea>
+                                        <textarea class="form-control" name="saran"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -424,7 +416,6 @@
     </script>
 
     <script type="text/javascript">
-        //stoken='uBNBx8IbiyyU8DT9E6ebm3fN9JoBlswmaIk10O3P' ;
         $(document).ready(function() {
             isikuesioner({
                 'fidKues': 2763,
