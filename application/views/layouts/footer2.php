@@ -165,6 +165,32 @@ $result = date_format($date, "Y");
     });
 </script>
 
+<script type="text/javascript">
+    function closeformdetil() {
+        $('#formdetil')[0].reset();
+        $('.td-jawaban-pilihan').css('background-color', 'antiquewhite');
+        $("#tambahFormKonfirmasi").hide();
+        $("#tambahForm").show();
+
+        $("html, body").animate({
+            scrollTop: 0
+        }, 1000);
+    }
+
+    function pekerjaanganti(obj) {
+        idKerjaPilih = $(obj).val();
+        if (idKerjaPilih == 0) {
+            $("#divPekrjaanLain").show();
+        } else {
+            $("#divPekrjaanLain").hide();
+        }
+    }
+
+    function jawabanclick(idObj) {
+        $("#" + idObj).css("background-color", "");
+    }
+</script>
+
 <!-- Bootstrap core JavaScript-->
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -189,6 +215,18 @@ $result = date_format($date, "Y");
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script type="text/javascript">
+    <?php if ($this->session->flashdata('success')) { ?>
+        toastr.success("<?php echo $this->session->flashdata('success'); ?>");
+    <?php } else if ($this->session->flashdata('error')) {  ?>
+        toastr.error("<?php echo $this->session->flashdata('error'); ?>");
+    <?php } else if ($this->session->flashdata('warning')) {  ?>
+        toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
+    <?php } else if ($this->session->flashdata('info')) {  ?>
+        toastr.info("<?php echo $this->session->flashdata('info'); ?>");
+    <?php } ?>
+</script>
 
 </body>
 
